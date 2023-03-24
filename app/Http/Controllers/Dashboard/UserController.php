@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Permission;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
@@ -15,10 +15,10 @@ class UserController extends Controller
     public function __construct()
     {
         //create read update delete
-        $this->middleware(['permission:read_users'])->only('index');
-        $this->middleware(['permission:create_users'])->only('create');
-        $this->middleware(['permission:update_users'])->only('edit');
-        $this->middleware(['permission:delete_users'])->only('destroy');
+        $this->middleware(['role:super_admin'])->only('index');
+        $this->middleware(['role:super_admin'])->only('create');
+        $this->middleware(['role:super_admin'])->only('edit');
+        $this->middleware(['role:super_admin'])->only('destroy');
 
     }//end of constructor
 
@@ -65,27 +65,27 @@ class UserController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|unique:users',
-            'image' => 'image',
+            'image' => 'required|File',
             'password' => 'required|confirmed',
             'permissions' => 'required|min:1'
         ]);
 
-        $request_data = $request->except(['password', 'password_confirmation', 'permissions', 'image']);
+        $request_data = $request->except(['first_name', 'last_name','password', 'password_confirmation', 'permissions', 'image']);
         $request_data['password'] = bcrypt($request->password);
+        $request_data['name'] = $request->first_name ." . ".$request->last_name;
 
         if ($request->image) {
-
             Image::make($request->image)
                 ->resize(300, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })
                 ->save(public_path('uploads/user_images/' . $request->image->hashName()));
-
             $request_data['image'] = $request->image->hashName();
 
         }//end of if
 
         $user = User::create($request_data);
+
         $user->attachRole('admin');
         $user->syncPermissions($request->permissions);
 

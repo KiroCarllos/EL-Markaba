@@ -1,7 +1,8 @@
 <?php
-use Illuminate\Support\Facades\Schema;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class LaratrustSeeder extends Seeder
 {
@@ -71,7 +72,7 @@ class LaratrustSeeder extends Seeder
                 foreach ($modules as $module => $value) {
 
                     // Create default user for each permission set
-                    $user = \App\User::create([
+                    $user = App\User::create([
                         'name' => ucwords(str_replace('_', ' ', $key)),
                         'email' => $key.'@app.com',
                         'password' => bcrypt('password'),
@@ -110,7 +111,7 @@ class LaratrustSeeder extends Seeder
         DB::table('permission_role')->truncate();
         DB::table('permission_user')->truncate();
         DB::table('role_user')->truncate();
-        \App\User::truncate();
+        App\User::truncate();
         \App\Role::truncate();
         \App\Permission::truncate();
         Schema::enableForeignKeyConstraints();

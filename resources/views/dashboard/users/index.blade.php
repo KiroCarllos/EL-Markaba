@@ -32,7 +32,7 @@
 
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
-                                @if (auth()->user()->hasPermission('create_users'))
+                                @if (auth()->user()->hasPermission('create_users') ||auth()->user()->hasRole('super_admin') )
                                     <a href="{{ route('dashboard.users.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.add')</a>
@@ -53,20 +53,18 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>@lang('site.first_name')</th>
-                                <th>@lang('site.last_name')</th>
+                                <th>@lang('site.name')</th>
                                 <th>@lang('site.email')</th>
                                 <th>@lang('site.image')</th>
                                 <th>@lang('site.action')</th>
                             </tr>
                             </thead>
-                            
+
                             <tbody>
                             @foreach ($users as $index=>$user)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $user->first_name }}</td>
-                                    <td>{{ $user->last_name }}</td>
+                                    <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td><img src="{{ $user->image_path }}" style="width: 100px;" class="img-thumbnail" alt=""></td>
                                     <td>
@@ -86,18 +84,18 @@
                                         @endif
                                     </td>
                                 </tr>
-                            
+
                             @endforeach
                             </tbody>
 
                         </table><!-- end of table -->
-                        
+
                         {{ $users->appends(request()->query())->links() }}
-                        
+
                     @else
-                        
+
                         <h2>@lang('site.no_data_found')</h2>
-                        
+
                     @endif
 
                 </div><!-- end of box body -->
