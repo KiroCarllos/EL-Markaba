@@ -79,4 +79,39 @@ return [
         'description' => 'الوصف بالغه الانجليزيه',
     ],
 
+
+    'job_companies' => 'شركات التوظيف',
+    'all_job_companies' => 'كل شركات التوظيف',
+    'mobile' => 'الموبيل',
+    'bio' => 'وصف عن نشاط الشركه',
+    'code' => 'كود الشركه',
+    'fax' => 'رقم الفاكس',
+    'commercial_record' => 'رقم السجل التجاري',
+    'tax_card' => 'رقم البطاقة الضريبيه',
+    'created_date' => 'تاريخ الانشاء',
+
+
+    'jobs' => 'الوظائف',
+    'job_title' => 'اسم الوظيفه',
+    'job_type' => 'نوع الوظيفه(part time - full time)',
+    'contact_email' => 'ايميل التواصل والاستعلامات',
+    'job_company_id' => 'شركه التوظيف',
+    'location' => 'اللوكيشن',
+    'salary' => 'الراتب',
+
+
+
+
+
+    'user_student_details' => 'بيانات الطلاب',
+    'national_id' => 'الرقم القومي',
+    'faculty' => 'الكلية',
+    'university' => 'الجامعة',
+    'graduated_at' => 'تاريخ النخرج',
+    'gender' => 'الجنس',
+    'male' => 'ذكر',
+    'female' => 'انثي',
+    'student_graduated' => 'طالب / خريج',
+
+
 ];

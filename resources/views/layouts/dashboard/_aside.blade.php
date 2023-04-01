@@ -33,6 +33,15 @@
             @if (auth()->user()->hasRole('super_admin'))
                 <li><a href="{{ route('dashboard.users.index') }}"><i class="fa fa-th"></i><span>@lang('site.users')</span></a></li>
             @endif
+            @if (auth()->user()->hasRole('super_admin'))
+                <li><a href="{{ route('dashboard.user_student_details.index') }}"><i class="fa fa-th"></i><span>@lang('site.student_graduated')</span></a></li>
+            @endif
+            @if (auth()->user()->hasRole('super_admin'))
+                <li><a href="{{ route('dashboard.jobs.index') }}"><i class="fa fa-th"></i><span>@lang('site.jobs')</span></a></li>
+            @endif
+            @if (auth()->user()->hasRole('super_admin'))
+                <li><a href="{{ route('dashboard.job_companies.index') }}"><i class="fa fa-th"></i><span>@lang('site.job_companies')</span></a></li>
+            @endif
 
             {{--<li><a href="{{ route('dashboard.categories.index') }}"><i class="fa fa-book"></i><span>@lang('site.categories')</span></a></li>--}}
             {{----}}

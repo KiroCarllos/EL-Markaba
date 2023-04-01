@@ -8,7 +8,9 @@ return [
         'super_admin' => [
             'users' => 'c,r,u,d',
         ],
-        'admin' => []
+        'admin' => [],
+        'student' => [],
+        'job_company' => [],
     ],
 
     'permissions_map' => [
@@ -18,3 +20,4 @@ return [
         'd' => 'delete'
     ]
 ];
+

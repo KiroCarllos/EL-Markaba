@@ -32,14 +32,11 @@
                         {{ csrf_field() }}
                         {{ method_field('post') }}
 
-                        <div class="form-group">
-                            <label>@lang('site.first_name')</label>
-                            <input type="text" name="first_name" class="form-control" value="{{ old('first_name') }}">
-                        </div>
+
 
                         <div class="form-group">
-                            <label>@lang('site.last_name')</label>
-                            <input type="text" name="last_name" class="form-control" value="{{ old('last_name') }}">
+                            <label>@lang('site.name')</label>
+                            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         </div>
 
                         <div class="form-group">

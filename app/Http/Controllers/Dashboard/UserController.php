@@ -62,18 +62,15 @@ class UserController extends Controller
     function store(Request $request)
     {
         $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
             'email' => 'required|unique:users',
             'image' => 'required|File',
             'password' => 'required|confirmed',
             'permissions' => 'required|min:1'
         ]);
 
-        $request_data = $request->except(['first_name', 'last_name','password', 'password_confirmation', 'permissions', 'image']);
+        $request_data = $request->except(['name','password', 'password_confirmation', 'permissions', 'image']);
         $request_data['password'] = bcrypt($request->password);
-        $request_data['name'] = $request->first_name ." . ".$request->last_name;
-
         if ($request->image) {
             Image::make($request->image)
                 ->resize(300, null, function ($constraint) {
@@ -105,8 +102,7 @@ class UserController extends Controller
     function update(Request $request, User $user)
     {
         $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
             'email' => ['required', Rule::unique('users')->ignore($user->id),],
             'image' => 'image',
             'permissions' => 'required|min:1'
@@ -144,9 +140,7 @@ class UserController extends Controller
     function destroy(User $user)
     {
         if ($user->image != 'default.png') {
-
             Storage::disk('public_uploads')->delete('/user_images/' . $user->image);
-
         }//end of if
 
         $user->delete();

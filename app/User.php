@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'image'
+        'name',"role","mobile", 'email', 'password', 'image'
     ];
 
     protected $appends = ['image_path'];
@@ -34,7 +34,6 @@ class User extends Authenticatable
     public function getFirstNameAttribute($value)
     {
         return ucfirst($value);
-
     }//end of get first name
 
     public function getLastNameAttribute($value)
