@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
-use App\Models\JobCompany;
 use App\Permission;
 use App\User;
 use Illuminate\Http\Request;
@@ -27,8 +26,8 @@ class JobController extends Controller
     public
     function create()
     {
-        $job_companies = JobCompany::all();
-        return view('dashboard.jobs.create',compact('job_companies'));
+        $companies = Company::all();
+        return view('dashboard.jobs.create',compact('companies'));
 
     }//end of create
 
@@ -41,12 +40,12 @@ class JobController extends Controller
             'description' => 'required',
             'type' => 'required',
             'contact_email' => 'required|email',
-            'job_company_id' => ['required','numeric',Rule::exists("job_companies","id")],
+            'company_id' => ['required','numeric',Rule::exists("companies","id")],
             'address' => 'required',
             'location' => 'nullable',
             'salary' => 'required',
         ]);
-        $request_data = $request->only(['title','job_company_id', 'description', 'type', 'contact_email', 'address', 'location', 'salary']);
+        $request_data = $request->only(['title','company_id', 'description', 'type', 'contact_email', 'address', 'location', 'salary']);
         $job = Job::create($request_data);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.jobs.index');
@@ -56,8 +55,8 @@ class JobController extends Controller
     public
     function edit(Job $job)
     {
-        $job_companies = JobCompany::all();
-        return view('dashboard.jobs.edit', compact('job','job_companies'));
+        $companies = JobCompany::all();
+        return view('dashboard.jobs.edit', compact('job','companies'));
 
     }//end of user
 
@@ -69,12 +68,12 @@ class JobController extends Controller
             'description' => 'required',
             'type' => 'required',
             'contact_email' => 'required|email',
-            'job_company_id' => ['required',Rule::exists('job_companies',"id")],
+            'company_id' => ['required',Rule::exists('companies',"id")],
             'address' => 'required',
             'location' => 'nullable',
             'salary' => 'required',
         ]);
-        $request_data = $request->only(['title','job_company_id', 'description', 'type', 'contact_email', 'address', 'location', 'salary']);
+        $request_data = $request->only(['title','company_id', 'description', 'type', 'contact_email', 'address', 'location', 'salary']);
         $job->update($request_data);
 
         session()->flash('success', __('site.updated_successfully'));

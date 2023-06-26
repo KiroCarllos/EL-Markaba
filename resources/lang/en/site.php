@@ -21,15 +21,19 @@ return[
 
 
 
-    'job_companies' => 'Job Companies',
-    'all_job_companies' => 'All Job Companies',
+
+    'all_companies' => 'All Companies',
+    'companies' => 'Companies',
     'mobile' => 'Mobile',
     'bio' => 'Bio',
     'code' => 'Code',
     'fax' => 'Fax',
     'commercial_record' => 'Commercial Record',
     'tax_card' => 'Tax Card',
-    'created_date' => 'Created Date',
+    'created_date' => 'Establishment Date',
+    'image_company' => 'Image Company',
+    'image_commercial_record' => 'Image Commercial Record',
+    'image_tax_card' => 'Image Tax Card',
 
 
 

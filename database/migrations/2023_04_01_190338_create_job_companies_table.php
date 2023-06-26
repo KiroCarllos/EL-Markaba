@@ -13,7 +13,7 @@ class CreateJobCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_companies', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->text("bio")->nullable();
             $table->unsignedInteger('user_id')->nullable();
@@ -37,6 +37,6 @@ class CreateJobCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_companies');
+        Schema::dropIfExists('companies');
     }
 }

@@ -6,12 +6,12 @@
 
         <section class="content-header">
 
-            <h1>@lang('site.job_companies')</h1>
+            <h1>@lang('site.companies')</h1>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
-                <li><a href="{{ route('dashboard.job_companies.index') }}"> @lang('site.job_companies')</a></li>
-                <li class="active">@lang('site.add')</li>
+                <li><a href="{{ route('dashboard.companies.index') }}"> @lang('site.companies')</a></li>
+                <li class="active">@lang('site.edit')</li>
             </ol>
         </section>
 
@@ -20,65 +20,63 @@
             <div class="box box-primary">
 
                 <div class="box-header">
-                    <h3 class="box-title">@lang('site.add')</h3>
+                    <h3 class="box-title">@lang('site.edit')</h3>
                 </div><!-- end of box header -->
 
                 <div class="box-body">
 
                     @include('partials._errors')
 
-                    <form action="{{ route('dashboard.job_companies.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard._companies.update', $jobCompany) }}" method="post" enctype="multipart/form-data">
 
                         {{ csrf_field() }}
-                        {{ method_field('post') }}
+                        {{ method_field('put') }}
+
 
                         <div class="form-group">
                             <label>@lang('site.name')</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                            <input type="text" name="name" class="form-control" value="{{ $jobCompany->user->name }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.email')</label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                            <input type="email" name="email" class="form-control" value="{{ $jobCompany->user->email }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.mobile')</label>
-                            <input type="text" name="mobile" class="form-control" value="{{ old('mobile') }}">
+                            <input type="text" name="mobile" class="form-control" value="{{ $jobCompany->user->mobile }}">
                         </div>
 
                         <div class="form-group">
                             <label>@lang('site.bio')</label>
-                            <input type="text" name="bio" class="form-control" value="{{ old('bio') }}">
+                            <input type="text" name="bio" class="form-control" value="{{ $jobCompany->bio }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.code')</label>
-                            <input type="text" name="code" class="form-control" value="{{ old('code') }}">
+                            <input type="text" name="code" class="form-control" value="{{ $jobCompany->code }}">
                         </div>
 
                         <div class="form-group">
                             <label>@lang('site.fax')</label>
-                            <input type="text" name="fax" class="form-control" value="{{ old('fax') }}">
+                            <input type="text" name="fax" class="form-control" value="{{ $jobCompany->fax }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.commercial_record')</label>
-                            <input type="text" name="commercial_record" class="form-control" value="{{ old('commercial_record') }}">
+                            <input type="text" name="commercial_record" class="form-control" value="{{ $jobCompany->commercial_record }}">
                         </div>
 
                         <div class="form-group">
                             <label>@lang('site.tax_card')</label>
-                            <input type="text" name="tax_card" class="form-control" value="{{ old('tax_card') }}">
+                            <input type="text" name="tax_card" class="form-control" value="{{ $jobCompany->tax_card }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.address')</label>
-                            <input type="text" name="address" class="form-control" value="{{ old('address') }}">
+                            <input type="text" name="address" class="form-control" value="{{ $jobCompany->address }}">
                         </div>
 
                         <div class="form-group">
                             <label>@lang('site.created_date')</label>
-                            <input type="date" name="created_date" class="form-control" value="{{ old('created_date') }}">
+                            <input type="date" name="created_date" class="form-control" value="{{ $jobCompany->created_date }}">
                         </div>
-
-
-
                         <div class="form-group">
                             <label>@lang('site.password')</label>
                             <input type="password" name="password" class="form-control">
@@ -89,16 +87,20 @@
                             <input type="password" name="password_confirmation" class="form-control">
                         </div>
                         <div class="form-group">
+                            <img src="{{ $jobCompany->user->image_path }}" style="width: 100px" class="img-thumbnail image-preview" alt="">
+                        </div>
+                        <div class="form-group">
                             <label>@lang('site.image')</label>
                             <input type="file" name="image" class="form-control image">
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset('uploads/user_images/default.png') }}"  style="width: 100px" class="img-thumbnail image-preview" alt="">
+                            <img src="{{ asset('uploads/company/default.png') }}"  style="width: 100px" class="img-thumbnail image-preview" alt="">
                         </div>
 
 
+
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')</button>
                         </div>
 
                     </form><!-- end of form -->

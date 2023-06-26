@@ -52,7 +52,7 @@
                             <label>@lang('site.job_company_id')</label>
                             <select name="job_company_id" class="form-control" >
                                 @isset($job_companies)
-                                    @foreach($job_companies as $job_company)
+                                    @foreach($companies as $job_company)
                                         <option {{ old('job_company_id') == $job_company->id ? "selected":'' }} value="{{ $job_company->id }}"> {{ $job_company->user->name }}</option>
                                     @endforeach
                                 @endisset

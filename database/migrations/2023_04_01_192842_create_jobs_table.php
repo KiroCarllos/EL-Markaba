@@ -19,8 +19,8 @@ class CreateJobsTable extends Migration
             $table->text('description')->nullable();
             $table->string('type')->nullable();
             $table->string('contact_email')->nullable();
-            $table->unsignedInteger('job_company_id');
-            $table->foreign('job_company_id')->references('id')->on('job_companies')->onDelete('cascade');
+            $table->unsignedInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->text('address')->nullable();
             $table->string('location')->nullable();
             $table->string('salary')->nullable();

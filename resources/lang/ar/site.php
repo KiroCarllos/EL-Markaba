@@ -4,6 +4,10 @@ return [
     'dashboard' => 'الرئيسيه',
     'logout' => 'تسجيل الخروج',
 
+
+    'all_companies' => 'كل الشركات',
+    'companies' => 'الشركات',
+
     'add' => 'اضف',
     'create' => 'اضافه',
     'read' => 'عرض',
@@ -80,16 +84,16 @@ return [
     ],
 
 
-    'job_companies' => 'شركات التوظيف',
-    'all_job_companies' => 'كل شركات التوظيف',
     'mobile' => 'الموبيل',
     'bio' => 'وصف عن نشاط الشركه',
     'code' => 'كود الشركه',
     'fax' => 'رقم الفاكس',
     'commercial_record' => 'رقم السجل التجاري',
     'tax_card' => 'رقم البطاقة الضريبيه',
-    'created_date' => 'تاريخ الانشاء',
-
+    'created_date' => 'تاريخ التأسيس',
+    'image_company' => 'صورة لوجو الشركه',
+    'image_commercial_record' => 'صورة السجل التجاري',
+    'image_tax_card' => 'صورة البطاقه الضريبية',
 
     'jobs' => 'الوظائف',
     'job_title' => 'اسم الوظيفه',

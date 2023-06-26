@@ -6,12 +6,12 @@
 
         <section class="content-header">
 
-            <h1>@lang('site.job_companies')</h1>
+            <h1>@lang('site.companies')</h1>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')
                     </a></li>
-                <li class="active">@lang('site.all_job_companies')</li>
+                <li class="active">@lang('site.all_companies')</li>
             </ol>
         </section>
 
@@ -21,10 +21,10 @@
 
                 <div class="box-header with-border">
 
-                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.job_companies')
-                        <small>{{ $job_companies->total() }}</small></h3>
+                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.companies')
+                        <small>{{ $companies->total() }}</small></h3>
 
-                    <form action="{{ route('dashboard.job_companies.index') }}" method="get">
+                    <form action="{{ route('dashboard.companies.index') }}" method="get">
 
                         <div class="row">
 
@@ -37,7 +37,7 @@
                                 <button type="submit" class="btn btn-primary"><i
                                         class="fa fa-search"></i> @lang('site.search')</button>
                                 @if (auth()->user()->hasRole('super_admin') )
-                                    <a href="{{ route('dashboard.job_companies.create') }}" class="btn btn-primary"><i
+                                    <a href="{{ route('dashboard.companies.create') }}" class="btn btn-primary"><i
                                             class="fa fa-plus"></i> @lang('site.add')</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled"><i
@@ -51,8 +51,8 @@
                 </div><!-- end of box header -->
 
                 <div class="box-body">
-                    @isset($job_companies)
-                        @if ($job_companies->count() > 0)
+                    @isset($companies)
+                        @if ($companies->count() > 0)
 
                             <table class="table table-hover">
 
@@ -66,16 +66,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($job_companies as $index=>$job_company)
+                                @foreach ($companies as $index=>$company)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ $job_company->user->image_path }}" style="width: 100px;"
+                                        <td><img src="{{ $company->user->image_path }}" style="width: 100px;"
                                                  class="img-thumbnail" alt=""></td>
-                                        <td>{{ $job_company->user->name }}</td>
-                                        <td>{{ $job_company->user->email }}</td>
+                                        <td>{{ $company->user->name }}</td>
+                                        <td>{{ $company->user->email }}</td>
                                         <td>
                                             @if (auth()->user()->hasRole('super_admin') )
-                                                <a href="{{ route('dashboard.job_companies.edit', $job_company->id) }}"
+                                                <a href="{{ route('dashboard.companies.edit', $company->id) }}"
                                                    class="btn btn-info btn-sm"><i
                                                         class="fa fa-edit"></i> @lang('site.edit')</a>
                                             @else
@@ -84,7 +84,7 @@
                                             @endif
                                             @if (auth()->user()->hasRole('super_admin') )
                                                 <form
-                                                    action="{{ route('dashboard.job_companies.destroy', $job_company->id) }}"
+                                                    action="{{ route('dashboard.companies.destroy', $company->id) }}"
                                                     method="post" style="display: inline-block">
                                                     {{ csrf_field() }}
                                                     {{ method_field('delete') }}
@@ -103,7 +103,7 @@
 
                             </table><!-- end of table -->
 
-                            {{ $job_companies->appends(request()->query())->links() }}
+                            {{ $companies->appends(request()->query())->links() }}
 
                         @else
 

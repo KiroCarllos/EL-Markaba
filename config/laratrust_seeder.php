@@ -10,7 +10,7 @@ return [
         ],
         'admin' => [],
         'student' => [],
-        'job_company' => [],
+        'company' => [],
     ],
 
     'permissions_map' => [

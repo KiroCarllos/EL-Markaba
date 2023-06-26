@@ -11,13 +11,13 @@ class Job extends Model
         "description",
         "type",
         "contact_email",
-        "job_company_id",
+        "company_id",
         "address",
         "location",
         "salary",
     ];
-    public function job_company()
+    public function company()
     {
-        return $this->belongsTo(JobCompany::class,"job_company_id","id");
+        return $this->belongsTo(Company::class,"company_id","id");
     }
 }

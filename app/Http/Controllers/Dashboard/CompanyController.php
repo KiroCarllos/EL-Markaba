@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\JobCompany;
+use App\Models\Company;
 use App\Permission;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
-class JobCompanyController extends Controller
-{public function index(Request $request)
+class CompanyController extends Controller
+{
+    public function index(Request $request)
     {
-        $job_companies = JobCompany::latest()->paginate(20);
-        return view('dashboard.job_companies.index', compact('job_companies'));
-
+        $companies = Company::latest()->paginate(20);
+        return view('dashboard.companies.index', compact('companies'));
     }//end of index
 
     public
     function create()
     {
-        return view('dashboard.job_companies.create');
+        return view('dashboard.companies.create');
 
     }//end of create
 
@@ -43,20 +43,20 @@ class JobCompanyController extends Controller
             'created_date' => 'nullable|date',
         ]);
 
-        $request_data = $request->only([  'name', 'mobile', 'email']);
+        $request_data = $request->only(['name', 'mobile', 'email']);
         $request_data['password'] = bcrypt($request->password);
-        $request_data['role'] = "job_company";
+        $request_data['role'] = "company";
         if ($request->image) {
             Image::make($request->image)
                 ->resize(300, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })
-                ->save(public_path('uploads/job_company_images/' . $request->image->hashName()));
+                ->save(public_path('uploads/company_images/' . $request->image->hashName()));
             $request_data['image'] = $request->image->hashName();
         }//end of if
         $user = User::create($request_data);
-        $user->attachRole('job_company');
-        $job_company = JobCompany::create([
+        $user->attachRole('company');
+        $company = Company::create([
             "user_id" => $user->id,
             "name" => $request->name,
             "bio" => $request->bio,
@@ -68,19 +68,19 @@ class JobCompanyController extends Controller
             "address" => $request->address,
         ]);
         session()->flash('success', __('site.added_successfully'));
-        return redirect()->route('dashboard.job_companies.index');
+        return redirect()->route('dashboard.companies.index');
 
     }//end of store
 
     public
-    function edit(JobCompany $jobCompany)
+    function edit(Company $jobCompany)
     {
-        return view('dashboard.job_companies.edit', compact('jobCompany'));
+        return view('dashboard.companies.edit', compact('jobCompany'));
 
     }//end of user
 
     public
-    function update(Request $request, JobCompany $jobCompany)
+    function update(Request $request, Company $jobCompany)
     {
         $request->validate([
             'name' => 'required',
@@ -95,20 +95,20 @@ class JobCompanyController extends Controller
             'address' => 'nullable|string',
             'created_date' => 'nullable|date',
         ]);
-        $request_user_data = $request->only(['name', 'mobile','email']);
+        $request_user_data = $request->only(['name', 'mobile', 'email']);
         $request_user_data['password'] = bcrypt($request->password);
-        $request_company_data = $request->only(['bio', 'code','fax', 'commercial_record', 'tax_card','address', 'created_date']);
+        $request_company_data = $request->only(['bio', 'code', 'fax', 'commercial_record', 'tax_card', 'address', 'created_date']);
 
         if ($request->image) {
             if ($jobCompany->user->image != 'default.png') {
-                Storage::disk('public_uploads')->delete('/job_company_images/' . $jobCompany->user->image);
+                Storage::disk('public_uploads')->delete('/company_images/' . $jobCompany->user->image);
             }//end of inner if
 
             Image::make($request->image)
                 ->resize(300, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })
-                ->save(public_path('uploads/job_company_images/' . $request->image->hashName()));
+                ->save(public_path('uploads/company_images/' . $request->image->hashName()));
 
             $request_user_data['image'] = $request->image->hashName();
 
@@ -119,20 +119,20 @@ class JobCompanyController extends Controller
 
 
         session()->flash('success', __('site.updated_successfully'));
-        return redirect()->route('dashboard.job_companies.index');
+        return redirect()->route('dashboard.companies.index');
 
     }//end of update
 
     public
-    function destroy(JobCompany $jobCompany)
+    function destroy(Company $jobCompany)
     {
         if ($jobCompany->user->image != 'default.png') {
-            Storage::disk('public_uploads')->delete('/job_company_images/' . $jobCompany->user->image);
+            Storage::disk('public_uploads')->delete('/company_images/' . $jobCompany->user->image);
         }//end of if
 
         $jobCompany->delete();
         session()->flash('success', __('site.deleted_successfully'));
-        return redirect()->route('dashboard.job_companies.index');
+        return redirect()->route('dashboard.companies.index');
 
     }//end of destroy
 
