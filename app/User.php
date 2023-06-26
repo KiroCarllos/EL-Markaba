@@ -12,11 +12,6 @@ class User extends Authenticatable  implements JWTSubject
     use LaratrustUserTrait,Notifiable;
 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',"role","mobile", 'email', 'password', 'image','auth_token'
     ];

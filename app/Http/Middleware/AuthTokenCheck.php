@@ -16,7 +16,7 @@ class AuthTokenCheck
      */
     public function handle($request, Closure $next)
     {
-        $authToken = $request->header('Authorization');
+        $authToken =str_replace("Bearer ","",$request->header('Authorization')) ;
         // Check if the 'auth_token' exists in the database
         $user = User::where('auth_token', $authToken)->first();
 
