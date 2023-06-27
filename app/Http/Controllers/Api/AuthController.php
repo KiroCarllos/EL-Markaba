@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
 
 class AuthController extends Controller
 {
@@ -20,7 +22,7 @@ class AuthController extends Controller
             return api_response(0, "These credentials do not match our records.", "", 401);
         }
         $user = User::where("email", $request->email)->first();
-       $user->update(["auth_token" => $token]);
+        $user->update(["auth_token" => $token]);
         return api_response(1, "successfully login", $user);
     }
     public function profile(Request $request){
