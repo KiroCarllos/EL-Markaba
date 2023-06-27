@@ -23,8 +23,13 @@ class CompanyController extends Controller
         }
         $user = User::where("email", $request->email)->first();
         if ($user->role == "company" || $user->role == "super_admin"){
-            $user->update(["auth_token" => $token]);
-            return api_response(1, "company successfully login", $user);
+            if ($user->status == "active"){
+                $user->update(["auth_token" => $token]);
+                return api_response(1, "company successfully login", $user);
+            }else{
+                return api_response(0, "Sorry Your Account is ".$user->status." now");
+            }
+
         }else{
             return api_response(0, "Sorry Your Account Not Be Company", "", 401);
         }
