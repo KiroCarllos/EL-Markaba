@@ -7,6 +7,7 @@ use App\Models\CompanyDetail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
@@ -52,33 +53,41 @@ class CompanyController extends Controller
         ]);
         $userData = $request->only(["name","mobile","email"]);
         $userData["password"] = Hash::make($request->password);
-        $user = User::query()->firstOrCreate([
-            "mobile" => $userData["mobile"]
-        ],[
-            "name" => $userData["name"],
-            "email" => $userData["email"],
-            "password" => $userData["password"],
-            "role" =>  "company",
-        ]);
-        deleteOldFiles("uploads/companies/".$user->id."/logo");
-        if ($request->logo) {
-            $user->update(["image" => uploadImage($request->logo,"uploads/companies/".$user->id."/logo/".generateBcryptHash($user->id)."/logo")]);
+        try{
+            DB::beginTransaction();
+            $user = User::query()->firstOrCreate([
+                "mobile" => $userData["mobile"]
+            ],[
+                "name" => $userData["name"],
+                "email" => $userData["email"],
+                "password" => $userData["password"],
+                "role" =>  "company",
+            ]);
+            deleteOldFiles("uploads/companies/".$user->id."/logo");
+            if ($request->logo) {
+                $user->update(["image" => uploadImage($request->logo,"uploads/companies/".$user->id."/logo/".generateBcryptHash($user->id)."/logo")]);
+            }
+            $user->attachRole('company');
+            $companyData = $request->only(["administrator_name","administrator_mobile","bio","address"]);
+            $companyData["created_date"] = Carbon::parse($request->created_date)->toDateString();
+            $company = CompanyDetail::query()->updateOrCreate([
+                "user_id" => $user->id
+            ],$companyData);
+            deleteOldFiles("uploads/companies/".$user->id."/commercial_record");
+            if ($request->commercial_record_image) {
+                $company->update(["commercial_record_image" => uploadImage($request->commercial_record_image,"uploads/companies/".$user->id."/commercial_record/".generateBcryptHash($user->id)."/commercial_record")]);
+            }
+            deleteOldFiles("uploads/companies/".$user->id."/tax_card");
+            if ($request->tax_card_image) {
+                $company->update(["tax_card_image" => uploadImage($request->tax_card_image,"uploads/companies/".$user->id."/tax_card/".generateBcryptHash($user->id)."/tax_card")]);
+            }
+            return api_response(1,"company created successfully wait admins for approve");
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+            return api_response(0,$exception);
         }
-        $user->attachRole('company');
-        $companyData = $request->only(["administrator_name","administrator_mobile","bio","address"]);
-        $companyData["created_date"] = Carbon::parse($request->created_date)->toDateString();
-        $company = CompanyDetail::query()->updateOrCreate([
-            "user_id" => $user->id
-        ],$companyData);
-        deleteOldFiles("uploads/companies/".$user->id."/commercial_record");
-        if ($request->commercial_record_image) {
-            $company->update(["commercial_record_image" => uploadImage($request->commercial_record_image,"uploads/companies/".$user->id."/commercial_record/".generateBcryptHash($user->id)."/commercial_record")]);
-        }
-        deleteOldFiles("uploads/companies/".$user->id."/tax_card");
-        if ($request->tax_card_image) {
-            $company->update(["tax_card_image" => uploadImage($request->tax_card_image,"uploads/companies/".$user->id."/tax_card/".generateBcryptHash($user->id)."/tax_card")]);
-        }
-        return api_response(1,"company created successfully wait admins for approve");
+
     }
 
     // company profile
