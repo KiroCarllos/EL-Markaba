@@ -3,14 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Permission;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Intervention\Image\Facades\Image;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 
 class AuthController extends Controller
@@ -25,6 +19,9 @@ class AuthController extends Controller
         $user->update(["auth_token" => $token]);
         return api_response(1, "successfully login", $user);
     }
+
+
+
     public function profile(Request $request){
         dd($request->all());
     }

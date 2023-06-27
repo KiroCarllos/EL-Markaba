@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
-use App\Permission;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -28,11 +27,12 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
+//        dd($request->all());
         $request->validate([
             'name' => 'required',
             'mobile' => 'required|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
+//            'password' => 'required|confirmed',
             'bio' => 'nullable|string',
             'code' => 'nullable|string',
             'fax' => 'nullable|string',

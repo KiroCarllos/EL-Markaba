@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = App\User::create([
+        $user = \App\Models\User::create([
             'name' => 'super admin',
             'role' => 'super_admin',
             'mobile' => '01148721605',

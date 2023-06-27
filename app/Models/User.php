@@ -1,22 +1,20 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use function asset;
 
 class User extends Authenticatable  implements JWTSubject
 {
     use LaratrustUserTrait,Notifiable;
-
-
     protected $fillable = [
-        'name',"role","mobile", 'email', 'password', 'image','auth_token'
+        'name',"status","role","mobile", 'email', 'password', 'image','auth_token'
     ];
 
-    protected $appends = ['image_path'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,13 +36,12 @@ class User extends Authenticatable  implements JWTSubject
 
     }//end of get last name
 
-    public function getImagePathAttribute()
-    {
-        return asset('uploads/user_images/' . $this->image);
-
-    }//end of get image path
-    // Rest omitted for brevity
-
+    public function getImageAttribute($image){
+        return asset($image);
+    }
+    public function company_details(){
+        return $this->hasOne(CompanyDetail::class,"user_id","id");
+    }
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

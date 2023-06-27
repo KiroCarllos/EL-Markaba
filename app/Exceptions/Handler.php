@@ -5,6 +5,9 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\ValidationException;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -52,9 +55,16 @@ class Handler extends ExceptionHandler
     public function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return api_response(1,"Invalid or expired token","",401);
+            return api_response(0,"Invalid or expired token","",401);
         }
-
         return redirect()->guest($exception->redirectTo() ?? route('login'));
+    }
+    public function invalidJson($request, ValidationException $exception)
+    {
+        if (Request::wantsJson()) {
+            foreach ($exception->errors() as $key => $value) {
+                return api_response(0, $value[0], '',200,"ae",false);
+            }
+        }
     }
 }

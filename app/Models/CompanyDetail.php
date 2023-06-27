@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Company extends Model
+class CompanyDetail extends Model
 {
     use SoftDeletes;
-    protected $table = "companiess";
+    protected $table = "company_details";
     protected $fillable = [
         "user_id",
+        "administrator_name",
+        "administrator_mobile",
         "bio",
-        "code",
-        "fax",
-        "commercial_record",
-        "tax_card",
-        "address",
         "created_date",
+        "address",
+        "commercial_record_image",
+        "tax_card_image",
     ];
+    public $timestamps = false;
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
     }

@@ -4,13 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
-use App\Permission;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Validation\Rule;
-use Intervention\Image\Facades\Image;
 
 class JobController extends Controller
 {

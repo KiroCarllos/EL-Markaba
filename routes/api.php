@@ -17,9 +17,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('profile', 'AuthController@profile');
-
 });
+
+
+
 Route::group(['namespace' => 'Api'], function () {
     Route::post('login', 'AuthController@login');
 
 });
+
+
+// company
+Route::group(['prefix' => "company",'namespace' => 'Api'], function () {
+    Route::post('login', 'CompanyController@login');
+    Route::post('register', 'CompanyController@register');
+
+});
+Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
+    Route::post('profile', 'CompanyController@profile');
+    Route::post('logout', 'CompanyController@logout');
+});
+// end company routes
