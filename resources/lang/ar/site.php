@@ -13,7 +13,7 @@ return [
     'pending' => 'قيد المراجعه',
     'status_account' => 'حالة الحساب',
     'are_you_sure_approve?' => 'هل انت متاكد من تفعيل هذا الحساب ؟',
-    'are_you_sure_disApprove?' => 'هل انت متاكد من اعادة التفعيل ؟',
+    'are_you_sure_disApprove?' => 'هل انت متاكد من تحويل الحساب لقيد المراجعه ؟',
 
     'active' => 'مفعل',
     'inProgress' => 'تحت المراجعه',
