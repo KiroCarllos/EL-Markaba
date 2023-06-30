@@ -11,6 +11,7 @@ use function asset;
 class User extends Authenticatable  implements JWTSubject
 {
     use LaratrustUserTrait,Notifiable;
+
     protected $fillable = [
         'name',"status","role","mobile", 'email', 'password', 'image','auth_token'
     ];
@@ -24,6 +25,9 @@ class User extends Authenticatable  implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function scopeCompany($q){
+        return $this->where("role","company")->whereIn("status",["pending","inProgress","active","blocked"]);
+    }
 
     public function getFirstNameAttribute($value)
     {

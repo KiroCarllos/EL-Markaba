@@ -4,9 +4,20 @@ return [
     'dashboard' => 'الرئيسيه',
     'logout' => 'تسجيل الخروج',
 
+    'administrator_name' => 'اسم المسئول',
+    'administrator_mobile' => 'هاتف المسئول',
+
 
     'all_companies' => 'كل الشركات',
     'companies' => 'الشركات',
+    'pending' => 'قيد المراجعه',
+    'status_account' => 'حالة الحساب',
+    'are_you_sure_approve?' => 'هل انت متاكد من تفعيل هذا الحساب ؟',
+    'are_you_sure_disApprove?' => 'هل انت متاكد من اعادة التفعيل ؟',
+
+    'active' => 'مفعل',
+    'inProgress' => 'تحت المراجعه',
+    'blocked' => 'محظور',
 
     'add' => 'اضف',
     'create' => 'اضافه',
@@ -85,6 +96,7 @@ return [
 
 
     'mobile' => 'الموبيل',
+    'approve' => 'تفعيل',
     'bio' => 'وصف عن نشاط الشركه',
     'code' => 'كود الشركه',
     'fax' => 'رقم الفاكس',

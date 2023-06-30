@@ -13,6 +13,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             //user routes
             Route::resource('users', 'UserController')->except(['show']);
             Route::resource('companies', 'CompanyController');
+            Route::post('companies/updateStatus', 'CompanyController@updateStatus')->name("companies.updateStatus");
 
             Route::resource('user_student_details', 'UserStudentDetailController');
             Route::resource('jobs', 'JobController');

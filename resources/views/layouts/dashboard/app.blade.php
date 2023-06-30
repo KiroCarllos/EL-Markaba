@@ -304,7 +304,36 @@
             n.show();
 
         });//end of delete
+            $('.approveIndexCompanies').click(function (e) {
+            e.preventDefault();
+            var that = $(this)
+            var status = that.attr('data-status');
+            var message;
+            if(status == "pending"){
+                message = "@lang("site.are_you_sure_approve?") ";
+            }else{
+                message = "@lang("site.are_you_sure_disApprove?")";
+            }
 
+            console.log(status)
+            console.log(that)
+            var n = new Noty({
+                text: message ,
+                type: "warning",
+                killer: true,
+                buttons: [
+                    Noty.button("@lang('site.yes')", 'btn btn-success mr-2', function () {
+                        that.closest('form').submit();
+                    }),
+                    Noty.button("@lang('site.no')", 'btn btn-primary mr-2', function () {
+                        n.close();
+                    })
+                ]
+            });
+
+            n.show();
+
+        });//end of delete
         // // image preview
         // $(".image").change(function () {
         //

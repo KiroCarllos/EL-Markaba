@@ -33,31 +33,42 @@
                         {{ csrf_field() }}
                         {{ method_field('post') }}
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>@lang('site.name')</label>
                                     <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>@lang('site.mobile')</label>
+                                    <input maxlength="11" type="text" name="mobile" class="form-control" value="{{ old('mobile') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>@lang('site.email')</label>
                                     <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>@lang('site.mobile')</label>
-                                    <input type="text" name="mobile" class="form-control" value="{{ old('mobile') }}">
+                                    <label>@lang('site.administrator_name')</label>
+                                    <input type="text" name="administrator_name" class="form-control" value="{{ old('administrator_name') }}">
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>@lang('site.administrator_mobile')</label>
+                                    <input maxlength="11" type="text" name="administrator_mobile" class="form-control" value="{{ old('administrator_mobile') }}">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>@lang('site.bio')</label>
                                     <input type="text" name="bio" class="form-control" value="{{ old('bio') }}">
                                 </div>
-
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -73,25 +84,17 @@
                                     <input type="password" name="password" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>@lang('site.commercial_record')</label>
-                                    <input type="text" name="commercial_record" class="form-control"
-                                           value="{{ old('commercial_record') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>@lang('site.tax_card')</label>
-                                    <input type="text" name="tax_card" class="form-control"
-                                           value="{{ old('tax_card') }}">
+                                    <label>@lang('site.address')</label>
+                                    <textarea class="form-control" name="address" id="" cols="1" rows="2">{{ old("address") }}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>@lang('site.image_tax_card')</label>
-                                    <input type="file" name="image_tax_card" class="form-control image_tax_card">
+                                    <input type="file" name="tax_card_image" class="form-control image_tax_card">
                                 </div>
                                 <div class="form-group">
                                     <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 100px"
@@ -101,8 +104,9 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>@lang('site.image_commercial_record')</label>
-                                    <input type="file" name="image_commercial_record" class="form-control image_commercial_record">
+                                    <input type="file" name="commercial_record_image" class="form-control image_commercial_record">
                                 </div>
+
                                 <div class="form-group">
                                     <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 100px"
                                          class="img-thumbnail image_commercial_record-preview" alt="">
@@ -111,7 +115,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>@lang('site.image_company')</label>
-                                    <input type="file" name="image_company" class="form-control image_company">
+                                    <input type="file" name="logo" class="form-control image_company">
                                 </div>
                                 <div class="form-group">
                                     <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 100px"

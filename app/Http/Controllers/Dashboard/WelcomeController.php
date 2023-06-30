@@ -12,7 +12,6 @@ class WelcomeController extends Controller
     {
         $users_count = User::whereRoleIs('admin')->count();
         return view('dashboard.welcome', compact(   'users_count'));
-
     }//end of index
 
 }//end of controller

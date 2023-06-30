@@ -47,9 +47,9 @@ class CompanyController extends Controller
             'bio' => 'required|string',
             'created_date' => 'required|date',
             'address' => 'required|string',
-            'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'commercial_record_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'tax_card_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:2048',
         ]);
         $userData = $request->only(["name","mobile","email"]);
         $userData["password"] = Hash::make($request->password);
@@ -81,8 +81,8 @@ class CompanyController extends Controller
             if ($request->tax_card_image) {
                 $company->update(["tax_card_image" => uploadImage($request->tax_card_image,"uploads/companies/".$user->id."/tax_card/".generateBcryptHash($user->id)."/tax_card")]);
             }
-            return api_response(1,"company created successfully wait admins for approve");
             DB::commit();
+            return api_response(1,"company created successfully wait admins for approve");
         }catch (\Exception $exception){
             DB::rollBack();
             return api_response(0,$exception);

@@ -53,13 +53,12 @@
                 <div class="box-body">
                     @isset($companies)
                         @if ($companies->count() > 0)
-
                             <table class="table table-hover">
-
                                 <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>@lang('site.image')</th>
+                                    <th>@lang('site.status_account')</th>
                                     <th>@lang('site.name')</th>
                                     <th>@lang('site.email')</th>
                                     <th>@lang('site.action')</th>
@@ -69,10 +68,11 @@
                                 @foreach ($companies as $index=>$company)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ $company->user->image_path }}" style="width: 100px;"
+                                        <td><img src="{{ $company->image }}" style="width: 100px;"
                                                  class="img-thumbnail" alt=""></td>
-                                        <td>{{ $company->user->name }}</td>
-                                        <td>{{ $company->user->email }}</td>
+                                        <td>{{ $company->status }}</td>
+                                        <td>{{ $company->name }}</td>
+                                        <td>{{ $company->email }}</td>
                                         <td>
                                             @if (auth()->user()->hasRole('super_admin') )
                                                 <a href="{{ route('dashboard.companies.edit', $company->id) }}"
@@ -82,6 +82,21 @@
                                                 <a href="#" class="btn btn-info btn-sm disabled"><i
                                                         class="fa fa-edit"></i> @lang('site.edit')</a>
                                             @endif
+                                            @if (auth()->user()->hasRole('super_admin') )
+                                                    <form
+                                                        action="{{ route('dashboard.companies.updateStatus') }}"
+                                                        method="post" style="display: inline-block">
+                                                        {{ csrf_field() }}
+                                                       <input type="hidden" name="user_id" value="{{ $company->id }}">
+                                                       <input type="hidden" name="status" value="{{ $company->status == "active" ? "pending" : "active" }}">
+                                                        <button type="submit" class="btn btn-primary approveIndexCompanies btn-sm" data-status="{{ $company->status }}"><i
+                                                                class="fa fa-check"></i> {{ $company->status == "active" ? __("site.pending") : __("site.approve") }}</button>
+                                                    </form><!-- end of form -->
+                                            @else
+                                                <a href="#" class="btn btn-primary btn-sm disabled"><i
+                                                        class="fa fa-check"></i> @lang('site.approve')</a>
+                                            @endif
+
                                             @if (auth()->user()->hasRole('super_admin') )
                                                 <form
                                                     action="{{ route('dashboard.companies.destroy', $company->id) }}"
