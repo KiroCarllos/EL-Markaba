@@ -10,7 +10,7 @@ return [
 
     'all_companies' => 'كل الشركات',
     'companies' => 'الشركات',
-    'pending' => 'تعطيل الحساب',
+    'pending' => 'قيد المراجعه',
     'status_account' => 'حالة الحساب',
     'are_you_sure_approve?' => 'هل انت متاكد من تفعيل هذا الحساب ؟',
     'are_you_sure_disApprove?' => 'هل انت متاكد من اعادة التفعيل ؟',
