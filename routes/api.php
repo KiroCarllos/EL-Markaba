@@ -38,3 +38,16 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth"],'nam
     Route::post('logout', 'CompanyController@logout');
 });
 // end company routes
+
+
+// student
+Route::group(['prefix' => "student",'namespace' => 'Api'], function () {
+    Route::post('login', 'StudentController@login');
+    Route::post('register', 'StudentController@register');
+
+});
+Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
+    Route::post('profile', 'StudentController@profile');
+    Route::post('logout', 'StudentController@logout');
+});
+// end student routes

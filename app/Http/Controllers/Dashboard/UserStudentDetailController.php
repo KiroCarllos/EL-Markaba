@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserStudentDetail;
+use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -14,7 +14,7 @@ class UserStudentDetailController extends Controller
 {
     public function index(Request $request)
     {
-        $user_student_details = UserStudentDetail::latest()->paginate(20);
+        $user_student_details = StudentDetail::latest()->paginate(20);
         return view('dashboard.user_student_details.index', compact('user_student_details'));
     }//end of index
 
@@ -59,7 +59,7 @@ class UserStudentDetailController extends Controller
 
         $user = User::create($request_user_data);
         $request_user_detail_data["user_id"] =$user->id;
-        $user_details = UserStudentDetail::create($request_user_detail_data);
+        $user_details = StudentDetail::create($request_user_detail_data);
         $user->attachRole('student');
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.user_student_details.index');
@@ -67,14 +67,14 @@ class UserStudentDetailController extends Controller
     }//end of store
 
     public
-    function edit(UserStudentDetail $userStudentDetail)
+    function edit(StudentDetail $userStudentDetail)
     {
         return view('dashboard.user_student_details.edit', compact('userStudentDetail'));
 
     }//end of user
 
     public
-    function update(Request $request, UserStudentDetail $userStudentDetail)
+    function update(Request $request, StudentDetail $userStudentDetail)
     {
         $request->validate([
             'name' => 'required',
@@ -120,7 +120,7 @@ class UserStudentDetailController extends Controller
     }//end of update
 
     public
-    function destroy(UserStudentDetail $userStudentDetail)
+    function destroy(StudentDetail $userStudentDetail)
     {
         if ($userStudentDetail->user->image != 'default.png') {
             Storage::disk('public_uploads')->delete('/user_images/' . $userStudentDetail->user->image);

@@ -99,6 +99,6 @@ class CompanyController extends Controller
     public function logout(){
         $user = auth("api")->user();
         $user->update(["auth_token"=> null]);
-        return api_response(1,"profile company get successfully",$user);
+        return api_response(1,"company signOut successfully");
     }
 }//end of controller
