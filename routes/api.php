@@ -16,13 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
-    Route::post('profile', 'AuthController@profile');
 });
 
 
 
 Route::group(['namespace' => 'Api'], function () {
-    Route::post('login', 'AuthController@login');
+
+    // General
+    Route::post('getUniversities', 'GeneralController@getUniversities');
+    Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity');
+    Route::post('getMajorByFaculty', 'GeneralController@getMajorByFaculty');
 
 });
 
