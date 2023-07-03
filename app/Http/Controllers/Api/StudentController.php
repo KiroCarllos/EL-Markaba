@@ -36,7 +36,7 @@ class StudentController extends Controller
             }
 
         } else {
-            return api_response(0, "Sorry Your Account Not Be Student", "", 403);
+            return api_response(0, "Sorry Your Account Not Be Student", "");
         }
     }
 

@@ -32,7 +32,7 @@ class CompanyController extends Controller
             }
 
         }else{
-            return api_response(0, "Sorry Your Account Not Be Company", "", 403);
+            return api_response(0, "Sorry Your Account Not Be Company", "");
         }
     }
     // company register
