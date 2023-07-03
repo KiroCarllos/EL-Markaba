@@ -24,7 +24,7 @@ class StudentController extends Controller
         ]);
         $credentials = ["email" => $request->email, "password" => $request->password];
         if (!$token = auth("api")->attempt($credentials)) {
-            return api_response(0, "These credentials do not match our records.", "", 401);
+            return api_response(0, "These credentials do not match our records.", "");
         }
         $user = User::where("email", $request->email)->first();
         if ($user->role == "student" || $user->role == "super_admin") {
@@ -36,7 +36,7 @@ class StudentController extends Controller
             }
 
         } else {
-            return api_response(0, "Sorry Your Account Not Be Student", "", 401);
+            return api_response(0, "Sorry Your Account Not Be Student", "", 403);
         }
     }
 
