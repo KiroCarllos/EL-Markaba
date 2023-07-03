@@ -69,17 +69,17 @@
 
     {{--noty--}}
     <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/noty/noty.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_files/css/select2.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{ asset('dashboard_files/plugins/noty/noty.min.js') }}"></script>
 
     {{--morris--}}
-    <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/morris/morris.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/morris/morris.css') }}">--}}
 
     {{--<!-- iCheck -->--}}
-    <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/icheck/all.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/icheck/all.css') }}">--}}
 
-    {{--html in  ie--}}
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -238,7 +238,8 @@
     </footer>
 
 </div><!-- end of wrapper -->
-
+<script src="{{ asset("dashboard_files/js/select2.min.js") }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {{--<!-- Bootstrap 3.3.7 -->--}}
 <script src="{{ asset('dashboard_files/js/bootstrap.min.js') }}"></script>
 
@@ -270,6 +271,10 @@
 
 <script>
     $(document).ready(function () {
+        $(".js-enable-tags").select2({
+            tags: true
+        });
+
 
         $('.sidebar-menu').tree();
 

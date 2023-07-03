@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('site.password')</label>
-                            <input type="password" name="password" placeholder="fill password if need to reset only" class="form-control" >
+                            <input type="password" name="password" placeholder="@lang("site.fill password if need to reset only")" class="form-control" >
                         </div>
                         <div class="form-group">
                             <label>@lang('site.administrator_name')</label>

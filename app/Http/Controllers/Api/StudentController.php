@@ -85,7 +85,6 @@ class StudentController extends Controller
             DB::rollBack();
             return api_response(0, $exception);
         }
-
     }
 
     // student profile

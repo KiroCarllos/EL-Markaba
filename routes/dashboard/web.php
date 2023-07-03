@@ -12,10 +12,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             //user routes
             Route::resource('users', 'UserController')->except(['show']);
+
+            // companies
             Route::resource('companies', 'CompanyController');
             Route::post('companies/updateStatus', 'CompanyController@updateStatus')->name("companies.updateStatus");
 
-            Route::resource('user_student_details', 'UserStudentDetailController');
+            //students
+            Route::resource('student_details', 'StudentDetailController');
             Route::resource('jobs', 'JobController');
 
         });//end of dashboard routes

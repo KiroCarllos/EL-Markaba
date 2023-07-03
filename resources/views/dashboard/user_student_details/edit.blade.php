@@ -10,7 +10,7 @@
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
-                <li><a href="{{ route('dashboard.user_student_details.index') }}"> @lang('site.user_student_details')</a></li>
+                <li><a href="{{ route('dashboard.student_details.index') }}"> @lang('site.user_student_details')</a></li>
                 <li class="active">@lang('site.edit')</li>
             </ol>
         </section>
@@ -27,53 +27,103 @@
 
                     @include('partials._errors')
 
-                    <form action="{{ route('dashboard.user_student_details.update', $userStudentDetail) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route("dashboard.student_details.update",$userStudentDetail->id) }}" method="post" enctype="multipart/form-data">
 
                         {{ csrf_field() }}
                         {{ method_field('put') }}
+                        <input type="hidden" name="user_id" value="{{$userStudentDetail->id}}">
 
                         <div class="form-group">
                             <label>@lang('site.name')</label>
-                            <input type="text" name="name" class="form-control" value="{{ $userStudentDetail->user->name }}">
+                            <input type="text" name="name" class="form-control" value="{{ $userStudentDetail->name }}">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.status_account')</label>
+                            <select name="status" class="form-control">
+                                <option value="active" {{ $userStudentDetail->status == "active" ? "selected" :"" }}>@lang("site.active")</option>
+                                <option value="inProgress" {{ $userStudentDetail->status == "inProgress" ? "selected" :"" }}>@lang("site.inProgress")</option>
+                                <option value="pending" {{ $userStudentDetail->status == "pending" ? "selected" :"" }}>@lang("site.pending")</option>
+                                <option value="blocked" {{ $userStudentDetail->status == "blocked" ? "selected" :"" }}>@lang("site.blocked")</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>@lang('site.email')</label>
-                            <input type="email" name="email" class="form-control" value="{{ $userStudentDetail->user->email }}">
+                            <input type="email" name="email" class="form-control" value="{{ $userStudentDetail->email }}">
                         </div>
 
 
                         <div class="form-group">
                             <label>@lang('site.mobile')</label>
-                            <input type="text" name="mobile" class="form-control" value="{{ $userStudentDetail->user->mobile }}">
+                            <input type="text" name="mobile" class="form-control" value="{{ $userStudentDetail->mobile }}">
                         </div>
 
                         <div class="form-group">
                             <label>@lang('site.national_id')</label>
                             <input type="text" name="national_id" maxlength="14" minlength="14" class="form-control"
-                                   value="{{ $userStudentDetail->national_id }}">
-                        </div>
-                        <div class="form-group">
-                            <label>@lang('site.faculty')</label>
-                            <input type="text" name="faculty" class="form-control" value="{{$userStudentDetail->faculty }}">
+                                   value="{{ $userStudentDetail->student_details->national_id }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.university')</label>
-                            <input type="text" name="university" class="form-control" value="{{ $userStudentDetail->university }}">
+                            <select id="university_select" class="form-control">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.faculty')</label>
+                            <select id="faculty_select" class="form-control">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.major')</label>
+                            <select id="major_select" name="major_id" class="form-control ">
+                                <option value="{{ $userStudentDetail->student_details->major_id }}">
+                                    @if($userStudentDetail->student_details->major)
+                                        @if(app()->getLocale() == "ar")
+                                            {{ $userStudentDetail->student_details->major->name_ar }}
+                                        @else
+                                            {{ $userStudentDetail->student_details->major->name_en }}
+                                        @endif
+                                    @else
+                                        {{ $userStudentDetail->student_details->major_id }}
+                                    @endif
+                                </option>
+                            </select>
+                        </div>
+                        <div id="else_major" class="form-group">
+                            <label>@lang('site.else_major')</label>
+                            <input id="else_major_input" type="text" name="else_major" class="form-control" value="{{ old('else_major') }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.graduated_at')</label>
-                            <input type="date" name="graduated_at" class="form-control"
-                                   value="{{ $userStudentDetail->graduated_at }}">
+                            <input type="text" name="graduated_at" class="form-control"
+                                   value="{{ $userStudentDetail->student_details->graduated_at }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.address')</label>
-                            <input type="text" name="address" class="form-control" value="{{ $userStudentDetail->address }}">
+                            <input type="text" name="address" class="form-control" value="{{ $userStudentDetail->student_details->address }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.gender')</label>
                             <select name="gender" class="form-control">
-                                <option  {{ $userStudentDetail->gender == "male" ?"selected" :'' }} value="male">@lang('site.male')</option>
-                                <option {{ $userStudentDetail->gender == "female" ?"selected" :'' }}  value="female">@lang('site.female')</option>
+                                <option  {{ $userStudentDetail->student_details->gender == "male" ?"selected" :'' }} value="male">@lang('site.male')</option>
+                                <option {{ $userStudentDetail->student_details->gender == "female" ?"selected" :'' }}  value="female">@lang('site.female')</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.prior_experiences')</label>
+                            <select name="prior_experiences[]" class="form-control js-enable-tags" multiple="multiple">
+                                @foreach($userStudentDetail->student_details->prior_experiences as $prior_experience)
+                                    <option selected value="{{$prior_experience}}">{{$prior_experience}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.courses')</label>
+                            <select class="form-control js-enable-tags" name="courses[]" multiple="multiple">
+                                @foreach($userStudentDetail->student_details->courses as $course)
+                                    <option selected value="{{$course}}">{{$course}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -81,18 +131,14 @@
                             <input type="file" name="image" class="form-control image">
                         </div>
                         <div class="form-group">
-                            <img src="{{ $userStudentDetail->user->image_path }}" style="width: 100px" class="img-thumbnail image-preview" alt="">
+                            <img src="{{ $userStudentDetail->image }}" style="width: 100px" class="img-thumbnail image-preview" alt="">
                         </div>
 
                         <div class="form-group">
                             <label>@lang('site.password')</label>
-                            <input type="password" name="password" class="form-control">
+                            <input type="password" name="password" placeholder="@lang("site.fill password if need to reset only")" class="form-control" >
                         </div>
 
-                        <div class="form-group">
-                            <label>@lang('site.password_confirmation')</label>
-                            <input type="password" name="password_confirmation" class="form-control">
-                        </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')</button>
@@ -109,3 +155,107 @@
     </div><!-- end of content wrapper -->
 
 @endsection
+
+
+@push("scripts")
+    <script>
+        // university
+        $(document).ready(function() {
+            // AJAX request to fetch universities
+            $.ajax({
+                url: '{{ route("getUniversities") }}', // Replace with the actual endpoint to fetch universities
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    var universities = response.data; // Assuming the response contains an array of universities
+                    // Populate select element with universities
+                    var selectElement = $('#university_select');
+                    selectElement.empty(); // Clear existing options
+                    var defaultOption = $('<option>').val('').text("{{__("site.select_student_university")}}");
+                    selectElement.append(defaultOption);
+                    $.each(universities, function(index, university) {
+                        var option = $('<option>').val(university.id).text(university.name_{{app()->getLocale()}});
+                        selectElement.append(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+        //faculty
+        $(document).ready(function() {
+            var universitySelect = $('#university_select');
+            var facultySelect = $('#faculty_select');
+
+            universitySelect.on('change', function() {
+                var universityId = $(this).val();
+                facultySelect.empty();
+                var defaultOption = $('<option>').val('').text("{{__("site.select_student_faculty")}}");
+                facultySelect.append(defaultOption);
+                $.ajax({
+                    url: '{{ route("getFacultyByUniversity") }}', // Replace with the actual endpoint to fetch faculties
+                    method: 'POST',
+                    data: { university_id : universityId },
+                    dataType: 'json',
+                    success: function(response) {
+                        var faculties = response.data; // Assuming the response contains an array of faculties
+
+                        // Populate faculty select element with faculties
+                        $.each(faculties, function(index, faculty) {
+                            var option = $('<option>').val(faculty.id).text(faculty.name_{{app()->getLocale()}});
+                            facultySelect.append(option);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+        // major
+        $(document).ready(function() {
+            var facultySelect = $('#faculty_select');
+            var majorSelect = $('#major_select');
+            facultySelect.on('change', function() {
+                var facultyId = $(this).val();
+                majorSelect.empty();
+                $.ajax({
+                    url: '{{ route("getMajorByFaculty") }}',
+                    method: 'POST',
+                    data: { faculty_id: facultyId },
+                    dataType: 'json',
+                    success: function(response) {
+                        var majors = response.data;
+                        var defaultOption = $('<option>').val('').text("{{__("site.select_student_major")}}");
+                        majorSelect.append(defaultOption);
+                        $.each(majors, function(index, major) {
+                            var option = $('<option>').val(major.id).text(major.name_{{app()->getLocale()}});
+                            majorSelect.append(option);
+                        });
+                        var defaultOption = $('<option>').val('not_from_above').text("{{__("site.not_from_above")}}");
+                        majorSelect.append(defaultOption);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+        $(document).ready(function(){
+            $("#else_major").hide();
+            $("#else_major_input").val("");
+            var majorSelect = $('#major_select');
+            majorSelect.on('change', function() {
+                var majorId = $(this).val();
+                if(majorId == "not_from_above"){
+                    $("#else_major").show();
+                }else{
+                    $("#else_major").hide();
+                    $("#else_major_input").val("");
+                }
+            });
+        });
+    </script>
+@endpush
+

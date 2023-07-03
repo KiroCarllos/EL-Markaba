@@ -56,6 +56,7 @@ class CompanyController extends Controller
                 "email" => $userData["email"],
                 "password" => $userData["password"],
                 "role" =>  "company",
+                "status" => "active",
             ]);
             deleteOldFiles("uploads/companies/".$user->id."/logo");
             if ($request->logo) {
@@ -122,7 +123,6 @@ class CompanyController extends Controller
                 deleteOldFiles("uploads/companies/".$user->id."/logo");
                 $user->update(["image" => uploadImage($request->logo,"uploads/companies/".$user->id."/logo/".generateBcryptHash($user->id)."/logo")]);
             }
-
             $companyData = $request->only(["administrator_name","administrator_mobile","bio","address"]);
             $companyData["created_date"] = Carbon::parse($request->created_date)->toDateString();
             $company = CompanyDetail::whereUserId($id)->first();

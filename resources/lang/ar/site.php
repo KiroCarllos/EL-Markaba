@@ -6,6 +6,12 @@ return [
 
     'administrator_name' => 'اسم المسئول',
     'administrator_mobile' => 'هاتف المسئول',
+    'select_student_university' => 'اختر جماعة الطالب',
+    'select_student_faculty' => 'اختر كلية الطالب',
+    'select_student_major' => 'اختر تخصص الطالب',
+    'not_from_above' => 'ليس شي من الاعلي ؟',
+    'else_major' => 'تخصص أخر',
+    'fill password if need to reset only' => 'اكتب الباسورد في حاله تريد تغيريه فقط',
 
 
     'all_companies' => 'كل الشركات',
@@ -18,6 +24,12 @@ return [
     'active' => 'مفعل',
     'inProgress' => 'تحت المراجعه',
     'blocked' => 'محظور',
+    'major' => 'التخصص',
+
+
+    'prior_experiences' => 'خيرات سابقه',
+    'courses' => 'الكورسات',
+    'write year only as 2020 or 2021 ....' => 'اكتب سنه التخرج مثل 2021 او 2020 ....',
 
     'add' => 'اضف',
     'create' => 'اضافه',
