@@ -8,16 +8,22 @@ class Job extends Model
 {
     protected $fillable = [
         "title",
+        "user_id",
+        "status",
         "description",
-        "type",
+        "work_type",
+        "work_hours",
         "contact_email",
-        "company_id",
         "address",
         "location",
-        "salary",
+        "expected_salary_from",
+        "expected_salary_to",
     ];
+    public function scopeActive($q){
+        return $this->whereIn("status",["pending","inProgress","active"]);
+    }
     public function company()
     {
-        return $this->belongsTo(Company::class,"company_id","id");
+        return $this->belongsTo(User::class,"user_id","id");
     }
 }

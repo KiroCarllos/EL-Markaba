@@ -59,7 +59,9 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>@lang('site.image')</th>
                                     <th>@lang('site.job_title')</th>
+                                    <th>@lang('site.status_job')</th>
                                     <th>@lang('site.job_type')</th>
                                     <th>@lang('site.action')</th>
                                 </tr>
@@ -69,8 +71,12 @@
                                 @foreach ($jobs as $index=>$job)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+
+                                        <td><img src="{{ $job->company->image }}" style="width: 100px;"
+                                                 class="img-thumbnail" alt=""></td>
                                         <td>{{ $job->title }}</td>
-                                        <td>{{ $job->type }}</td>
+                                        <td>{{ $job->status }}</td>
+                                        <td>{{ $job->work_type }}</td>
                                         <td>
                                             @if (auth()->user()->hasRole('super_admin') )
                                                 <a href="{{ route('dashboard.jobs.edit', $job->id) }}"

@@ -11,6 +11,12 @@ return [
     'select_student_major' => 'اختر تخصص الطالب',
     'not_from_above' => 'ليس شي من الاعلي ؟',
     'else_major' => 'تخصص أخر',
+    'part_time' => 'دوام جزئي',
+    'full_time' => 'دوام كامل',
+    'work_hours' => 'سعات العمل',
+    'expected_salary_from' => 'الراتب المتوقع من ',
+    'expected_salary_to' => 'الراتب المتوقع الي ',
+    'select_work_type' => 'اختر نوع الدوام',
     'fill password if need to reset only' => 'اكتب الباسورد في حاله تريد تغيريه فقط',
 
 
@@ -18,6 +24,7 @@ return [
     'companies' => 'الشركات',
     'pending' => 'قيد المراجعه',
     'status_account' => 'حالة الحساب',
+    'status_job' => 'حالة الوظيفه',
     'are_you_sure_approve?' => 'هل انت متاكد من تفعيل هذا الحساب ؟',
     'are_you_sure_disApprove?' => 'هل انت متاكد من تحويل الحساب لقيد المراجعه ؟',
 

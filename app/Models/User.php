@@ -11,7 +11,7 @@ use function asset;
 class User extends Authenticatable  implements JWTSubject
 {
     use LaratrustUserTrait,Notifiable;
-
+    protected $connection = "mysql";
     protected $fillable = [
         'name',"status","role","mobile", 'email', 'password', 'image','auth_token'
     ];
