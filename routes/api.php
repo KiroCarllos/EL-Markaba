@@ -30,7 +30,18 @@ Route::group(['namespace' => 'Api'], function () {
 });
 
 
-// company
+// Job
+Route::group(['prefix' => "job",'namespace' => 'Api'], function () {
+
+
+});
+Route::group(['prefix' => "job",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
+    Route::post('getAvailJobs', 'JobController@getAvailJobs');
+    Route::post('getJobDetails', 'JobController@getJobDetails');
+});
+// end Job routes
+
+/// // company
 Route::group(['prefix' => "company",'namespace' => 'Api'], function () {
     Route::post('login', 'CompanyController@login');
     Route::post('register', 'CompanyController@register');
