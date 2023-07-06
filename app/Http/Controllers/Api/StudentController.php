@@ -124,7 +124,7 @@ class StudentController extends Controller
     }
 
     public function getTrainings(){
-        $trainings = Training::active()->paginate(6);
+        $trainings = Training::active()->withCount("applications")->paginate(6);
         return api_response(1,"",$trainings);
     }
     public function applyTraining(Request $request){

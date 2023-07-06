@@ -21,6 +21,9 @@ class Training extends Model
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
     }
+    public function applications(){
+        return $this->hasMany(TrainingApplication::class,"training_id","id");
+    }
     public function scopeActive($q){
         return $this->where("status","active");
     }
