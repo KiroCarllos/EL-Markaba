@@ -29,7 +29,7 @@ class GeneralController extends Controller
         return api_response(1,"",Major::query()->select("id","name_".app()->getLocale())->where("faculty_id",$request->faculty_id)->get());
     }
     public function getPosts(){
-       $posts = Post::paginate(6);
+       $posts = Post::active()->paginate(6);
        return api_response(1,"",$posts);
     }
 }//end of controller
