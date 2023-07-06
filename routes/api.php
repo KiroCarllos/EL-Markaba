@@ -21,14 +21,11 @@ Route::group(['middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], fun
 
 
 Route::group(['namespace' => 'Api'], function () {
-
     // General
     Route::post('getUniversities', 'GeneralController@getUniversities')->name("getUniversities");
     Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity')->name("getFacultyByUniversity");
     Route::post('getMajorByFaculty', 'GeneralController@getMajorByFaculty')->name("getMajorByFaculty");
 
-
-    Route::post('getPosts', 'GeneralController@getPosts');
 
 });
 
@@ -62,9 +59,17 @@ Route::group(['prefix' => "student",'namespace' => 'Api'], function () {
     Route::post('login', 'StudentController@login');
     Route::post('register', 'StudentController@register');
 
+    // POSTS
+    Route::post('getPosts', 'StudentController@getPosts');
+    Route::post('getTrainings', 'StudentController@getTrainings');
 });
 Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('profile', 'StudentController@profile');
     Route::post('logout', 'StudentController@logout');
+
+    // POSTS
+    Route::post('replyPost', 'StudentController@replyPost');
+    Route::post('applyTraining', 'StudentController@applyTraining');
+
 });
 // end student routes

@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\CompanyDetail;
 use App\Models\Major;
+use App\Models\Post;
+use App\Models\PostReply;
+use App\Models\Training;
+use App\Models\TrainingApplication;
 use App\Models\User;
 use App\Models\StudentDetail;
 use Carbon\Carbon;
@@ -101,4 +105,38 @@ class StudentController extends Controller
         $user->update(["auth_token" => null]);
         return api_response(1, "student signOut successfully");
     }
+
+    public function getPosts(){
+        $posts = Post::active()->withCount("replies")->paginate(6);
+        return api_response(1,"",$posts);
+    }
+    public function replyPost(Request $request){
+        $request->validate([
+            "post_id" => ["required",Rule::exists("posts","id")->where("status","active")],
+            "reply" => ["required","string"],
+        ]);
+        $postReply = PostReply::query()->firstOrCreate([
+            "post_id" => $request->post_id,
+            "user_id" => auth("api")->id(),
+            "reply" => $request->reply,
+        ]);
+        return api_response(1,"Replied Successfully","");
+    }
+
+    public function getTrainings(){
+        $trainings = Training::active()->paginate(6);
+        return api_response(1,"",$trainings);
+    }
+    public function applyTraining(Request $request){
+        $request->validate([
+            "training_id" => ["required",Rule::exists("trainings","id")->where("status","active")],
+        ]);
+        $applyTraining = TrainingApplication::query()->firstOrCreate([
+            "training_id" => $request->training_id,
+            "user_id" => auth("api")->id(),
+        ]);
+        return api_response(1,"Applied Training Successfully",$applyTraining);
+    }
+
+
 }//end of controller

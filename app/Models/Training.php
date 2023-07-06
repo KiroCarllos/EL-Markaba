@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Training extends Model
 {
-    protected $table = "posts";
+    protected $table = "trainings";
     protected $fillable = [
         "status",
         "title_en",
@@ -20,9 +20,6 @@ class Post extends Model
     public $timestamps = false;
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
-    }
-    public function replies(){
-        return $this->hasMany(PostReply::class,"post_id","id");
     }
     public function scopeActive($q){
         return $this->where("status","active");
