@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Models\Major;
+use App\Models\Post;
 use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -26,5 +27,9 @@ class GeneralController extends Controller
             "faculty_id" => ["required","numeric",Rule::exists("faculties","id")]
         ]);
         return api_response(1,"",Major::query()->select("id","name_".app()->getLocale())->where("faculty_id",$request->faculty_id)->get());
+    }
+    public function getPosts(){
+       $posts = Post::paginate(6);
+       return api_response(1,"",$posts);
     }
 }//end of controller

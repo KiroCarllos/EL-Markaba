@@ -27,6 +27,9 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity')->name("getFacultyByUniversity");
     Route::post('getMajorByFaculty', 'GeneralController@getMajorByFaculty')->name("getMajorByFaculty");
 
+
+    Route::post('getPosts', 'GeneralController@getPosts');
+
 });
 
 
