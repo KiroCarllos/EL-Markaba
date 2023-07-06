@@ -21,6 +21,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::resource('student_details', 'StudentDetailController');
             Route::resource('jobs', 'JobController');
 
+            Route::resource('posts', 'PostController');
+
+            Route::resource('trainings', 'TrainingController');
+
         });//end of dashboard routes
     });
 

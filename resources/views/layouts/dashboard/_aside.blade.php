@@ -26,6 +26,12 @@
             @if (auth()->user()->hasRole('super_admin'))
                 <li><a href="{{ route('dashboard.companies.index') }}"><i class="fa fa-th"></i><span>@lang('site.companies')</span></a></li>
             @endif
+            @if (auth()->user()->hasRole('super_admin'))
+                <li><a href="{{ route('dashboard.posts.index') }}"><i class="fa fa-th"></i><span>@lang('site.posts')</span></a></li>
+            @endif
+            @if (auth()->user()->hasRole('super_admin'))
+                <li><a href="{{ route('dashboard.trainings.index') }}"><i class="fa fa-th"></i><span>@lang('site.trainings')</span></a></li>
+            @endif
 
             {{--<li><a href="{{ route('dashboard.categories.index') }}"><i class="fa fa-book"></i><span>@lang('site.categories')</span></a></li>--}}
             {{----}}
