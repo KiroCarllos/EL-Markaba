@@ -22,6 +22,11 @@ class StudentDetail extends Model
         "courses" => "json",
         "prior_experiences" => "json",
     ];
+    protected $appends = ["major"];
+
+    public function getMajorAttribute(){
+        return Major::query()->select(["id","name_".app()->getLocale()])->where("id",$this->major_id)->first();
+    }
     public function user(){
         return $this->belongsTo(User::class,"user_id",'id');
     }
