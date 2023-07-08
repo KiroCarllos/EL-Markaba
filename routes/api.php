@@ -51,6 +51,12 @@ Route::group(['prefix' => "company",'namespace' => 'Api'], function () {
 Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('profile', 'CompanyController@profile');
     Route::post('logout', 'CompanyController@logout');
+
+    // Jobs
+    Route::post('getMyJobs', 'CompanyController@getMyJobs');
+    Route::post('addJob', 'CompanyController@addJob');
+    Route::post('updateJob', 'CompanyController@updateJob');
+    Route::post('deleteJob', 'CompanyController@deleteJob');
 });
 // end company routes
 
