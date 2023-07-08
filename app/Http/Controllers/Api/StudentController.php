@@ -124,7 +124,11 @@ class StudentController extends Controller
     }
 
     public function getTrainings(){
-        $trainings = Training::active()->withCount("applications")->paginate(6);
+        $trainings = Training::active()->withCount("applications")->paginate(2);
+        foreach ($trainings as $training){
+            $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
+            $training->setAttribute("applied",in_array(auth("api")->id(),$mytraining_ids));
+        }
         return api_response(1,"",$trainings);
     }
     public function applyTraining(Request $request){
@@ -137,6 +141,35 @@ class StudentController extends Controller
         ]);
         return api_response(1,"Applied Training Successfully",$applyTraining);
     }
+    public function myTrainings(){
+//        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
+        $mytraining_ids = TrainingApplication::where("user_id",auth("api")->id())->pluck("training_id")->toArray();
+        $mytrainings = Training::whereIn("id",$mytraining_ids)->get()->makeHidden(["user_id"]);
+        return api_response(1,"",$mytrainings);
+    }
+    public function confirmAppliedTraining(Request $request){
+        $request->validate([
+            "training_id" => ["required",Rule::exists("trainings","id")],
+            "receipt_image" => 'required|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $mytraining_ids = TrainingApplication::where("user_id",auth("api")->id())->pluck("training_id")->toArray();
+        if (in_array($request->training_id,$mytraining_ids)){
+            $training_application = TrainingApplication::whereUserId(auth("api")->id())->where("training_id",$request->training_id)->first();
+            if ($training_application->status == "pending" && !is_null($training_application->receipt_image)){
+                return api_response(1,"Please Wait Admins Confirmation");
+            }else if ($training_application->status !== "confirmed"){
+                if ($request->has("receipt_image") && is_file($request->receipt_image)){
+                    deleteOldFiles("uploads/student/" . auth("api")->id() . "/training/".$request->training_id."/receipt_image");
+                    if ($request->receipt_image) {
+                        $training_application->update(["status" => "pending","receipt_image" => uploadImage($request->receipt_image, "uploads/student/training/" . auth("api")->id() . "/".$request->training_id."/receipt_image")]);
+                    }
+                }
+            }
+            return api_response(1,"Your Application Applied Please Wait Admins Confirmation");
 
+        }else{
+            return api_response(1,"sorry this training you haven't applied before");
 
+        }
+    }
 }//end of controller

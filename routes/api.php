@@ -25,6 +25,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('getUniversities', 'GeneralController@getUniversities')->name("getUniversities");
     Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity')->name("getFacultyByUniversity");
     Route::post('getMajorByFaculty', 'GeneralController@getMajorByFaculty')->name("getMajorByFaculty");
+    Route::post('getSlider', 'GeneralController@getSlider');
 
 
 });
@@ -61,7 +62,7 @@ Route::group(['prefix' => "student",'namespace' => 'Api'], function () {
 
     // POSTS
     Route::post('getPosts', 'StudentController@getPosts');
-    Route::post('getTrainings', 'StudentController@getTrainings');
+
 });
 Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('profile', 'StudentController@profile');
@@ -69,7 +70,11 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'nam
 
     // POSTS
     Route::post('replyPost', 'StudentController@replyPost');
-    Route::post('applyTraining', 'StudentController@applyTraining');
 
+    // Trainings
+    Route::post('getTrainings', 'StudentController@getTrainings');
+    Route::post('applyTraining', 'StudentController@applyTraining');
+    Route::post('myTrainings', 'StudentController@myTrainings');
+    Route::post('confirmAppliedTraining', 'StudentController@confirmAppliedTraining');
 });
 // end student routes

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Models\Major;
+use App\Models\Slider;
 use App\Models\University;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,6 +29,12 @@ class GeneralController extends Controller
         ]);
         return api_response(1,"",Major::query()->select("id","name_".app()->getLocale())->where("faculty_id",$request->faculty_id)->get());
     }
-
+    public function getSlider(Request $request){
+        $request->validate([
+            "role" => ["required","in:super_admin,admin,student,job_company,company"]
+        ]);
+        $sliders = Slider::active()->whereJsonContains("role",$request->role)->get()->makeHidden(['role','status','created_at','updated_at']);
+        return api_response(1,"",$sliders);
+    }
 
 }//end of controller

@@ -11,6 +11,8 @@ class TrainingApplication extends Model
     protected $fillable = [
         "training_id",
         "user_id",
+        "receipt_image",
+        "status",
     ];
     public $timestamps = false;
     protected $casts = [
