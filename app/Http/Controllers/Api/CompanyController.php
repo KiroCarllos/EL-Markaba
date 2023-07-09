@@ -112,7 +112,7 @@ class CompanyController extends Controller
 
     public function getMyJobs()
     {
-        $jobs = Job::whereUserId(auth("api")->id())->paginate(6);
+        $jobs = Job::whereUserId(auth("api")->id())->ActiveJob()->paginate(6);
         return api_response(1, "", $jobs);
     }
 
@@ -124,16 +124,17 @@ class CompanyController extends Controller
             'work_type' => 'required|in:part_time,full_time',
             'work_hours' => 'nullable',
             'contact_email' => 'required|email',
-            'user_id' => ['required', 'numeric', Rule::exists("users", "id")->where("role", "company")],
             'address' => 'required',
             'location' => 'nullable',
             'expected_salary_from' => 'required|numeric',
             'expected_salary_to' => 'required|numeric',
         ]);
-        $request_data = $request->only(['title', 'user_id', 'description', 'work_type', "work_hours", 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
+        $request_data = $request->only(['title', 'description', 'work_type', "work_hours", 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
+        $request_data["status"] = "pending";
+        $request_data["user_id"] = auth("api")->id();
         try {
             DB::beginTransaction();
-            $job = Job::create($request_data);
+            $job = Job::query()->firstOrCreate($request_data);
             DB::commit();
             return api_response(1, __('site.added_successfully'));
         } catch (\Exception $exception) {
@@ -150,7 +151,6 @@ class CompanyController extends Controller
             'work_type' => 'required|in:part_time,full_time',
             'work_hours' => 'nullable',
             'contact_email' => 'required|email',
-            'user_id' => ['required','numeric',Rule::exists("users","id")->where("role","company")],
             'address' => 'required',
             'location' => 'nullable',
             'expected_salary_from' => 'required|numeric',
@@ -159,11 +159,14 @@ class CompanyController extends Controller
 
         try {
             DB::beginTransaction();
-            $job = Job::find($request->job_id);
-            if ($job->status == "active"){
-                return  api_response(1,"sorry job is active cant updated it now please contact support");
+            $job = Job::whereId($request->job_id)->whereUserId(auth("api")->id())->first();
+            if (is_null($job)){
+                return  api_response(0,"sorry job is inValid");
             }
-            $request_data = $request->only(['title','user_id','status', 'description', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            $request_data = $request->only(['title', 'description', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            if ($job->status == "active" || $job->status == "enough"){
+                $request_data["status"] = "pending";
+            }
             $job->update($request_data);
             DB::commit();
             return api_response(1, __('site.updated_successfully'));
@@ -174,15 +177,16 @@ class CompanyController extends Controller
     }
     public function deleteJob(Request $request){
         $request->validate([
+           "job_id"=> ["required","numeric",Rule::exists("jobs","id")],
            "status"=> "required|in:enough,deleted"
         ]);
-        $job = Job::find($request->job_id);
-        if ($request->status == "deleted" && $job->status == "active"){
-            return  api_response(1,"sorry job is active cant updated it now please contact support");
+        $job = Job::whereId($request->job_id)->whereUserId(auth("api")->id())->first();
+        if (is_null($job)){
+            return  api_response(0,"sorry job is inValid");
         }
         $job->status =$request->status;
         $job->save();
-        return api_response(1, "your jos ".$request->status ." successfully");
+        return api_response(1, "your job ".$request->status ." successfully");
     }
 
 }//end of controller

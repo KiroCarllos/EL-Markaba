@@ -22,6 +22,9 @@ class Job extends Model
     public function scopeActive($q){
         return $this->whereIn("status",["pending","inProgress","active"]);
     }
+    public function scopeActiveJob($q){
+        return $this->whereIn("status",["active"]);
+    }
     public function company()
     {
         return $this->belongsTo(User::class,"user_id","id");
