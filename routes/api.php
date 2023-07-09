@@ -92,6 +92,7 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'nam
     // job
     Route::post('applyJob', 'StudentController@applyJob');
     Route::post('myJobs', 'StudentController@myJobs');
+    Route::post('cancelAppliedJob', 'StudentController@cancelAppliedJob');
 
 });
 // end student routes

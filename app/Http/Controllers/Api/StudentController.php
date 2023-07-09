@@ -190,6 +190,7 @@ class StudentController extends Controller
         return api_response(1,"Training Canceled Successfully");
 
     }
+
     public function applyJob(Request $request){
         $request->validate([
             "job_id" => ["required",Rule::exists("jobs","id")],
@@ -214,5 +215,16 @@ class StudentController extends Controller
             $job->setAttribute("application_status",$myJob_ids);
         }
         return api_response(1,"",$myJobs);
+    }
+    public function cancelAppliedJob(Request $request){
+        $request->validate([
+            "job_id" => ["required",Rule::exists("jobs","id")->where("status","active")],
+        ]);
+        $applyJob = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
+        if ($applyJob->status == "pending"){
+            $applyJob->update(["status" => "canceled"]);
+        }
+        return api_response(1,"Job Canceled Successfully");
+
     }
 }//end of controller
