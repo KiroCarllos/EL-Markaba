@@ -129,7 +129,10 @@ class StudentController extends Controller
         $trainings = Training::active()->withCount("applications")->paginate(6);
         foreach ($trainings as $training){
             $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
+            $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
+            $status = in_array(auth("api")->id(),$mytraining_ids) ? TrainingApplication::where("training_id",$training->id)->pluck("status")->toArray(): null;
             $training->setAttribute("applied",in_array(auth("api")->id(),$mytraining_ids));
+            $training->setAttribute("application_status",$status);
         }
         return api_response(1,"",$trainings);
     }
