@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Api'], function () {
     // Forget Password
     Route::post('sendMailForReset', 'GeneralController@sendMailForReset');
     Route::post('confirmTokenForReset', 'GeneralController@confirmTokenForReset');
+    Route::post('resetPassword', 'GeneralController@resetPassword');
 
 });
 

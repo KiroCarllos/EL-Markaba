@@ -91,4 +91,17 @@ class GeneralController extends Controller
             return api_response(0, $exception->getMessage());
         }
     }
+    public function resetPassword(Request $request){
+        $request->validate([
+            "user_id" => ["required","numeric",Rule::exists("users","id")],
+            'password' => 'required|confirmed|min:8',
+        ]);
+        try {
+            $user = User::whereId($request->user_id)->first();
+            $user->update(["password" => Hash::make($request->password)]);
+            return api_response(1, "Password reset successfully");
+        } catch (\Exception $exception) {
+            return api_response(0, $exception->getMessage());
+        }
+    }
 }//end of controller
