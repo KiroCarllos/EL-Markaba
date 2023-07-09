@@ -621,7 +621,7 @@
                                                                 </div>
                                                                 <h1
                                                                     style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:25px;text-align:center;">
-                                                                    El Markaba Dev
+                                                                    El Markaba
                                                                 </h1>
 
 
