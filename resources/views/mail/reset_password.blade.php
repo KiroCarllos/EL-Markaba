@@ -617,7 +617,7 @@
                                                             <td align="center" valign="top" class="textContent">
                                                                 <div
                                                                     style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;">
-                                                                    <img src="http://el-markaba.kirellos.com/logo.png" width="200px" style="margin: auto;" alt="logo">
+                                                                    <img src="http://el-markaba.kirellos.com/logo.PNG" width="200px" style="margin: auto;" alt="logo">
                                                                 </div>
                                                                 <h1
                                                                     style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:25px;text-align:center;">
