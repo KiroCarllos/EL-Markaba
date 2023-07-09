@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\CompanyDetail;
+use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\Major;
 use App\Models\Post;
 use App\Models\PostReply;
@@ -151,6 +153,7 @@ class StudentController extends Controller
         }
         return api_response(1,"",$mytrainings);
     }
+
     public function confirmAppliedTraining(Request $request){
         $request->validate([
             "training_id" => ["required",Rule::exists("trainings","id")],
@@ -175,5 +178,31 @@ class StudentController extends Controller
             return api_response(1,"sorry this training you haven't applied before");
 
         }
+    }
+
+    public function applyJob(Request $request){
+        $request->validate([
+            "job_id" => ["required",Rule::exists("jobs","id")],
+        ]);
+        $job = Job::find($request->job_id);
+        if ($job->status == "active"){
+            $applyJob = JobApplication::query()->firstOrCreate([
+                "job_id" => $request->job_id,
+                "user_id" => auth("api")->id(),
+            ]);
+            return api_response(1,"Applied Job Successfully");
+        }else{
+            return api_response(0,"Sorry This Job ".$job->status." Please try later");
+        }
+    }
+    public function myJobs(){
+//        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
+        $myJob_ids = JobApplication::where("user_id",auth("api")->id())->pluck("job_id")->toArray();
+        $myJobs = Job::whereIn("id",$myJob_ids)->get()->makeHidden(["user_id"]);
+        foreach ($myJobs as $job){
+            $myJob_ids = JobApplication::where("job_id",$job->id)->where("user_id",auth("api")->id())->pluck("status")->first();
+            $job->setAttribute("application_status",$myJob_ids);
+        }
+        return api_response(1,"",$myJobs);
     }
 }//end of controller
