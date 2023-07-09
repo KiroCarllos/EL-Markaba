@@ -133,6 +133,7 @@ class StudentController extends Controller
         }
         return api_response(1,"",$trainings);
     }
+
     public function applyTraining(Request $request){
         $request->validate([
             "training_id" => ["required",Rule::exists("trainings","id")->where("status","active")],
@@ -173,13 +174,22 @@ class StudentController extends Controller
                 }
             }
             return api_response(1,"Your Application Applied Please Wait Admins Confirmation");
-
         }else{
             return api_response(1,"sorry this training you haven't applied before");
 
         }
     }
+    public function cancelAppliedTraining(Request $request){
+        $request->validate([
+            "training_id" => ["required",Rule::exists("trainings","id")->where("status","active")],
+        ]);
+        $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
+        if ($applyTraining->status == "pending"){
+            $applyTraining->update(["status" => "canceled"]);
+        }
+        return api_response(1,"Training Canceled Successfully");
 
+    }
     public function applyJob(Request $request){
         $request->validate([
             "job_id" => ["required",Rule::exists("jobs","id")],
