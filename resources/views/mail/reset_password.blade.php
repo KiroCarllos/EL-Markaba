@@ -604,7 +604,7 @@
                     <tr>
                         <td align="center" valign="top">
                             <table dir="ltr"  border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;"
-                                   bgcolor="##c42128">
+                                   bgcolor="#c42128">
                                 <tr>
                                     <td align="center" valign="top">
                                         <table dir="ltr"  border="0" cellpadding="0" cellspacing="0" width="500"
@@ -619,6 +619,8 @@
                                                                     style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;">
                                                                     <img src="http://el-markaba.kirellos.com/logo.PNG" width="200px" style="margin: auto;" alt="logo">
                                                                 </div>
+                                                                <br>
+                                                                <br>
                                                                 <h1
                                                                     style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:25px;text-align:center;">
                                                                     El Markaba
