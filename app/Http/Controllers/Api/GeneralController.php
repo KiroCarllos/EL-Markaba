@@ -33,7 +33,7 @@ class GeneralController extends Controller
         $request->validate([
             "role" => ["required","in:super_admin,admin,student,job_company,company"]
         ]);
-        $sliders = Slider::active()->whereJsonContains("role",$request->role)->get()->makeHidden(['role','status','created_at','updated_at']);
+        $sliders = Slider::active()->whereJsonContains("role",$request->role)->get()->makeHidden(['id','role','status','created_at','updated_at']);
         return api_response(1,"",$sliders);
     }
 
