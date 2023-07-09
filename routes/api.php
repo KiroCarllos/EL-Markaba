@@ -87,6 +87,7 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'nam
     Route::post('applyTraining', 'StudentController@applyTraining');
     Route::post('myTrainings', 'StudentController@myTrainings');
     Route::post('confirmAppliedTraining', 'StudentController@confirmAppliedTraining');
+    Route::post('cancelAppliedTraining', 'StudentController@cancelAppliedTraining');
 
     // job
     Route::post('applyJob', 'StudentController@applyJob');
