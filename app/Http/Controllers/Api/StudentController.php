@@ -141,7 +141,7 @@ class StudentController extends Controller
             "training_id" => $request->training_id,
             "user_id" => auth("api")->id(),
         ]);
-        return api_response(1,"Applied Training Successfully",$applyTraining);
+        return api_response(1,"Applied Training Successfully",TrainingApplication::find($applyTraining->id));
     }
     public function myTrainings(){
 //        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
