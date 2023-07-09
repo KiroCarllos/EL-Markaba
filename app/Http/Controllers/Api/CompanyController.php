@@ -119,8 +119,10 @@ class CompanyController extends Controller
     public function addJob(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title_en' => 'required',
+            'title_ar' => 'required',
+            'description_en' => 'required',
+            'description_ar' => 'required',
             'work_type' => 'required|in:part_time,full_time',
             'work_hours' => 'nullable',
             'contact_email' => 'required|email',
@@ -129,7 +131,7 @@ class CompanyController extends Controller
             'expected_salary_from' => 'required|numeric',
             'expected_salary_to' => 'required|numeric',
         ]);
-        $request_data = $request->only(['title', 'description', 'work_type', "work_hours", 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
+        $request_data = $request->only(['title_en', 'description_en','description_ar','title_ar', 'work_type', "work_hours", 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
         $request_data["status"] = "pending";
         $request_data["user_id"] = auth("api")->id();
         try {
@@ -146,8 +148,10 @@ class CompanyController extends Controller
     public function updateJob(Request $request){
         $request->validate([
             'job_id' => ['required',Rule::exists("jobs","id")],
-            'title' => 'required',
-            'description' => 'required',
+            'title_en' => 'required',
+            'title_ar' => 'required',
+            'description_en' => 'required',
+            'description_ar' => 'required',
             'work_type' => 'required|in:part_time,full_time',
             'work_hours' => 'nullable',
             'contact_email' => 'required|email',
@@ -163,7 +167,7 @@ class CompanyController extends Controller
             if (is_null($job)){
                 return  api_response(0,"sorry job is inValid");
             }
-            $request_data = $request->only(['title', 'description', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            $request_data = $request->only(['title_ar','title_en', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
             if ($job->status == "active" || $job->status == "enough"){
                 $request_data["status"] = "pending";
             }

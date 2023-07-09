@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     protected $fillable = [
-        "title",
+        "title_en",
+        "title_ar",
         "user_id",
         "status",
-        "description",
+        "description_en",
+        "description_ar",
         "work_type",
         "work_hours",
         "contact_email",
