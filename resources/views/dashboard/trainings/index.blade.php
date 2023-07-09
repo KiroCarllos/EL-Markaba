@@ -67,7 +67,7 @@
                                 @foreach ($trainings as $index=>$training)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ asset($training->image) }}" style="width: 100px;"
+                                        <td><img src="{{ $training->image }}" style="width: 100px;"
                                                  class="img-thumbnail" alt=""></td>
                                         <td>{{ $training->status }}</td>
                                         <td>{{ app()->getLocale() == "ar" ? $training->title_ar : $training->title_en }}</td>

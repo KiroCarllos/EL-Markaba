@@ -20,4 +20,7 @@ class Slider extends Model
     public function scopeActive($q){
         return $this->where("status","active");
     }
+    public function getImageAttribute($image){
+        return asset($image);
+    }
 }

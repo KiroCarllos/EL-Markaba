@@ -124,7 +124,7 @@ class StudentController extends Controller
     }
 
     public function getTrainings(){
-        $trainings = Training::active()->withCount("applications")->paginate(2);
+        $trainings = Training::active()->withCount("applications")->paginate(6);
         foreach ($trainings as $training){
             $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
             $training->setAttribute("applied",in_array(auth("api")->id(),$mytraining_ids));
