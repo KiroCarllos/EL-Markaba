@@ -21,6 +21,7 @@ class Job extends Model
         "expected_salary_from",
         "expected_salary_to",
     ];
+    protected $appends = ["image"];
     public function scopeActive($q){
         return $this->whereIn("status",["pending","inProgress","active"]);
     }
@@ -30,5 +31,8 @@ class Job extends Model
     public function company()
     {
         return $this->belongsTo(User::class,"user_id","id");
+    }
+    public function getImageAttribute(){
+        return User::whereId($this->user_id)->pluck("image")->first();
     }
 }
