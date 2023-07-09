@@ -604,7 +604,7 @@
                     <tr>
                         <td align="center" valign="top">
                             <table dir="ltr"  border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;"
-                                   bgcolor="#224a37">
+                                   bgcolor="##c42128">
                                 <tr>
                                     <td align="center" valign="top">
                                         <table dir="ltr"  border="0" cellpadding="0" cellspacing="0" width="500"
@@ -693,7 +693,7 @@
                                                             <td align="center" valign="top">
                                                                 <table  dir="ltr" border="0" cellpadding="0" cellspacing="0"
                                                                         width="50%" class="emailButton"
-                                                                        style="background-color: #224a37;">
+                                                                        style="background-color: #c42128;">
                                                                     <tr>
                                                                         <td align="center" valign="middle"
                                                                             class="buttonContent"
