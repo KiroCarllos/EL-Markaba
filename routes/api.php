@@ -27,7 +27,10 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('getMajorByFaculty', 'GeneralController@getMajorByFaculty')->name("getMajorByFaculty");
     Route::post('getSlider', 'GeneralController@getSlider');
 
+
+    // Forget Password
     Route::post('sendMailForReset', 'GeneralController@sendMailForReset');
+    Route::post('confirmTokenForReset', 'GeneralController@confirmTokenForReset');
 
 });
 

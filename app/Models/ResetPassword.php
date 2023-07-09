@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class ResetPassword extends Model
 {
     protected $table = 'password_resets';
-    protected $guarded = ["id"];
+    protected $guarded = [];
     public $timestamps = false;
 }

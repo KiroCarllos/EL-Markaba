@@ -11,6 +11,7 @@ use App\Models\University;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
@@ -42,10 +43,10 @@ class GeneralController extends Controller
 
 
 
-    //
+    // Forget Password
     public function sendMailForReset(Request $request){
         $request->validate([
-            "email" => ["required","email","string"]
+            "email" => ["required","email","string",Rule::exists("password_resets","email")]
         ]);
         try {
             $token = rand(10000,50000);
@@ -71,5 +72,23 @@ class GeneralController extends Controller
             return api_response(0, $exception->getMessage());
         }
     }
-
+    public function confirmTokenForReset(Request $request){
+        $request->validate([
+            "email" => ["required","email","string",Rule::exists("password_resets","email"),Rule::exists("users","email")],
+            "token" => ["required","numeric",Rule::exists("password_resets")],
+            'password' => 'required|confirmed|min:8',
+        ]);
+        try {
+            $user_data = ResetPassword::where("email", $request->email)->where("token",$request->token)->first();
+            if (is_null($user_data)) {
+                return api_response(0, "sorry, invalid token code");
+            }
+            $user = User::where("email",$request->email)->first();
+            $user->update(["password" => Hash::make($request->password)]);
+            ResetPassword::where("email", $request->email)->delete();
+            return api_response(1, "Password reset successfully");
+        } catch (\Exception $exception) {
+            return api_response(0, $exception->getMessage());
+        }
+    }
 }//end of controller
