@@ -615,6 +615,10 @@
                                                     <table dir="ltr"  border="0" cellpadding="30" cellspacing="0" width="100%">
                                                         <tr>
                                                             <td align="center" valign="top" class="textContent">
+                                                                <div
+                                                                    style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;">
+                                                                    <img src="https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-1/301808737_438656314953464_1287197454823305324_n.jpg?stp=dst-jpg_p200x200&_nc_cat=103&ccb=1-7&_nc_sid=c6021c&_nc_eui2=AeFJ0p0NNzqtGr5w81RlRtBdxnWWohcUNSXGdZaiFxQ1Ja89P6Q_WbiBQ6A3Og0FIiy-ptzsPeJXfR6i45RR_8oE&_nc_ohc=60S3GmilR8QAX-8RvXl&_nc_ht=scontent.fcai19-8.fna&oh=00_AfBHlZafZA8md62U-kg5R1k2P3Y7zlnwrN_QwtkHsXq4wQ&oe=64AF7D20" width="200px" style="margin: auto;" alt="logo">
+                                                                </div>
                                                                 <h1
                                                                     style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:25px;text-align:center;">
                                                                     El Markaba Dev
@@ -645,7 +649,6 @@
                                                     <table dir="ltr"  border="0" cellpadding="30" cellspacing="0" width="100%">
                                                         <tr>
                                                             <td align="center" valign="top">
-
                                                                 <table dir="ltr"  border="0" cellpadding="0" cellspacing="0"
                                                                        width="100%">
                                                                     <tr>
