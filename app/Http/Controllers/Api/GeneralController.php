@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Models\Major;
+use App\Models\ResetPassword;
 use App\Models\Slider;
 use App\Models\University;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class GeneralController extends Controller
@@ -35,6 +38,38 @@ class GeneralController extends Controller
         ]);
         $sliders = Slider::active()->whereJsonContains("role",$request->role)->pluck("image")->toArray();
         return api_response(1,"",$sliders);
+    }
+
+
+
+    //
+    public function sendMailForReset(Request $request){
+        $request->validate([
+            "email" => ["required","email","string"]
+        ]);
+        try {
+            $token = rand(10000,50000);
+            ResetPassword::where("email", $request->email)->delete();
+            ResetPassword::create([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+            $userEmail = $request->email;
+            $data["token"] = $token;
+            $data["email"] = $userEmail;
+            Mail::send("mail.reset_password", ['data' => $data], function ($message) use ($userEmail) {
+                $message->from("carloskiro217@gmail.com", 'El Markaba');
+                $message->to($userEmail);
+                $message->subject('El Markaba Reset Password');
+            });
+            if (Mail::failures()) {
+                return api_response(0, "sorry,some thing went error In Mail please try again");
+            }
+            return api_response(1, "Sent successfully Please, Check Your Inbox or Spam");
+        } catch (\Exception $exception) {
+            return api_response(0, $exception->getMessage());
+        }
     }
 
 }//end of controller
