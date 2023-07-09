@@ -615,18 +615,11 @@
                                                     <table dir="ltr"  border="0" cellpadding="30" cellspacing="0" width="100%">
                                                         <tr>
                                                             <td align="center" valign="top" class="textContent">
-                                                                <div
-                                                                    style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;">
-                                                                    <img src="http://lowcalories.ae/images/site_images/Logo_1651235830.png" width="200px" style="margin: auto;" alt="logo">
-                                                                </div>
                                                                 <h1
                                                                     style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:25px;text-align:center;">
-                                                                    Reset your password?
+                                                                    El Markaba Dev
                                                                 </h1>
-                                                                <h2
-                                                                    style="text-align:center;font-weight:normal;font-family:Helvetica,Arial,sans-serif;font-size:23px;margin-bottom:10px;color:rgb(244, 255, 182);line-height:135%;">
-                                                                    This will help you to <br> secure your password!
-                                                                </h2>
+
 
                                                             </td>
                                                         </tr>
