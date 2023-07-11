@@ -163,7 +163,7 @@ class CompanyController extends Controller
 
         try {
             DB::beginTransaction();
-            $job = Job::whereId($request->job_id)->whereUserId(auth("api")->id())->first();
+            $job = Job::where("id",$request->job_id)->where("user_id",auth("api")->id())->first();
             if (is_null($job)){
                 return  api_response(0,"sorry job is inValid");
             }
