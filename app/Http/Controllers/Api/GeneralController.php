@@ -93,11 +93,10 @@ class GeneralController extends Controller
     }
     public function resetPassword(Request $request){
         $request->validate([
-            "user_id" => ["required","numeric",Rule::exists("users","id")],
             'password' => 'required|confirmed|min:8',
         ]);
         try {
-            $user = User::whereId($request->user_id)->first();
+            $user = User::whereId(auth("api")->id())->first();
             $user->update(["password" => Hash::make($request->password)]);
             return api_response(1, "Password reset successfully");
         } catch (\Exception $exception) {

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
+
 });
 
 
@@ -31,9 +32,9 @@ Route::group(['namespace' => 'Api'], function () {
     // Forget Password
     Route::post('sendMailForReset', 'GeneralController@sendMailForReset');
     Route::post('confirmTokenForReset', 'GeneralController@confirmTokenForReset');
-    Route::post('resetPassword', 'GeneralController@resetPassword');
 
 });
+
 
 
 // Job
@@ -44,6 +45,7 @@ Route::group(['prefix' => "job",'namespace' => 'Api'], function () {
 Route::group(['prefix' => "job",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('getAvailJobs', 'JobController@getAvailJobs');
     Route::post('getJobDetails', 'JobController@getJobDetails');
+
 });
 // end Job routes
 
@@ -56,6 +58,8 @@ Route::group(['prefix' => "company",'namespace' => 'Api'], function () {
 Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('profile', 'CompanyController@profile');
     Route::post('logout', 'CompanyController@logout');
+    Route::post('resetPassword', 'GeneralController@resetPassword');
+
 
     // Jobs
     Route::post('getMyJobs', 'CompanyController@getMyJobs');
@@ -78,6 +82,7 @@ Route::group(['prefix' => "student",'namespace' => 'Api'], function () {
 Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('profile', 'StudentController@profile');
     Route::post('logout', 'StudentController@logout');
+    Route::post('resetPassword', 'GeneralController@resetPassword');
 
     // POSTS
     Route::post('replyPost', 'StudentController@replyPost');
