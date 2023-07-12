@@ -232,10 +232,13 @@ class StudentController extends Controller
             "job_id" => ["required",Rule::exists("jobs","id")->where("status","active")],
         ]);
         $applyJob = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
-        if ($applyJob->status == "pending"){
-            $applyJob->update(["status" => "canceled"]);
+        if (is_null($applyJob)){
+            return api_response(0,"Sorry inValid Job");
+        }else{
+            if ($applyJob->status == "pending"){
+                $applyJob->update(["status" => "canceled"]);
+            }
+            return api_response(1,"Job Canceled Successfully");
         }
-        return api_response(1,"Job Canceled Successfully");
-
     }
 }//end of controller
