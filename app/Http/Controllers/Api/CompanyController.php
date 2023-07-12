@@ -155,6 +155,7 @@ class CompanyController extends Controller
             'description_ar' => 'required',
             'work_type' => 'required|in:part_time,full_time',
             'work_hours' => 'nullable',
+            'status' => 'nullable',
             'contact_email' => 'required|email',
             'address' => 'required',
             'location' => 'nullable',
@@ -168,7 +169,7 @@ class CompanyController extends Controller
             if (is_null($job)){
                 return  api_response(0,"sorry job is inValid");
             }
-            $request_data = $request->only(['title_ar','title_en', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            $request_data = $request->only(['title_ar','title_en', 'description_ar', 'status','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
             if ($job->status == "active" || $job->status == "enough"){
                 $request_data["status"] = "pending";
             }
