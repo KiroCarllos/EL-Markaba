@@ -162,7 +162,6 @@ class CompanyController extends Controller
             'expected_salary_from' => 'required|numeric',
             'expected_salary_to' => 'required|numeric',
         ]);
-
         try {
             DB::beginTransaction();
             $job = Job::where("id",$request->job_id)->where("user_id",auth("api")->id())->first();
