@@ -142,6 +142,11 @@ class StudentController extends Controller
         $request->validate([
             "training_id" => ["required",Rule::exists("trainings","id")->where("status","active")],
         ]);
+        $training = Training::find($request->training_id);
+        $trainingApplication = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
+        if ($training->status == "enough"){
+            return api_response(0,"Sorry this Job Enough You can choose anther");
+        }
         $applyTraining = TrainingApplication::query()->firstOrCreate([
             "training_id" => $request->training_id,
             "user_id" => auth("api")->id(),
