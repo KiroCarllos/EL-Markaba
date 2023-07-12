@@ -200,6 +200,12 @@ class StudentController extends Controller
             "job_id" => ["required",Rule::exists("jobs","id")],
         ]);
         $job = Job::find($request->job_id);
+        $jobApplication = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
+        if (!is_null($jobApplication)){
+            if ($jobApplication->status == "canceled"){
+                $jobApplication->update(["status" => "pending"]);
+            }
+        }
         if ($job->status == "active"){
             $applyJob = JobApplication::query()->firstOrCreate([
                 "job_id" => $request->job_id,
@@ -209,6 +215,7 @@ class StudentController extends Controller
         }else{
             return api_response(0,"Sorry This Job ".$job->status." Please try later");
         }
+
     }
     public function myJobs(){
 //        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
