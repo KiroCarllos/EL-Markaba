@@ -46,7 +46,7 @@ class GeneralController extends Controller
     // Forget Password
     public function sendMailForReset(Request $request){
         $request->validate([
-            "email" => ["required","email","string",Rule::exists("password_resets","email")]
+            "email" => ["required","email","string",Rule::exists("users","email")]
         ]);
         try {
             $token = rand(10000,50000);
