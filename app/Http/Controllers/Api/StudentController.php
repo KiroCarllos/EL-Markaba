@@ -201,6 +201,9 @@ class StudentController extends Controller
         ]);
         $job = Job::find($request->job_id);
         $jobApplication = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
+        if ($job->status == "enough"){
+            return api_response(0,"Sorry this Job Enough You can choose anther");
+        }
         if (!is_null($jobApplication)){
             if ($jobApplication->status == "canceled"){
                 $jobApplication->update(["status" => "pending"]);
