@@ -131,9 +131,10 @@ class CompanyController extends Controller
             'expected_salary_from' => 'required|numeric',
             'expected_salary_to' => 'required|numeric',
         ]);
-        $request_data = $request->only(['title_en', 'description_en','description_ar','title_ar', 'work_type', "work_hours", 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
+        $request_data = $request->only(['title_en', 'description_en','description_ar','title_ar', 'work_type', 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
         $request_data["status"] = "pending";
         $request_data["user_id"] = auth("api")->id();
+        $request_data["work_hours"] = $request->has("work_hours") && !is_null($request->work_hours) ? $request->work_hours : 8;
         try {
             DB::beginTransaction();
             $job = Job::query()->firstOrCreate($request_data);
