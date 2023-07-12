@@ -27,7 +27,7 @@ class JobController extends Controller
     }
     public function getJobDetails(Request $request){
         $request->validate([
-            "job_id" => ["required","numeric",Rule::exists("jobs","id")->where("status","active")]
+            "job_id" => ["required","numeric",Rule::exists("jobs","id")]
         ]);
         $job = Job::whereId($request->job_id)->with("company")->first();
         return api_response(1,"",$job);
