@@ -149,18 +149,18 @@ class CompanyController extends Controller
     public function updateJob(Request $request){
         $request->validate([
             'job_id' => ['required',Rule::exists("jobs","id")],
-            'title_en' => 'required',
-            'title_ar' => 'required',
-            'description_en' => 'required',
-            'description_ar' => 'required',
-            'work_type' => 'required|in:part_time,full_time',
+            'title_en' => 'nullable',
+            'title_ar' => 'nullable',
+            'description_en' => 'nullable',
+            'description_ar' => 'nullable',
+            'work_type' => 'nullable|in:part_time,full_time',
             'work_hours' => 'nullable',
             'status' => 'nullable',
-            'contact_email' => 'required|email',
-            'address' => 'required',
+            'contact_email' => 'nullable|email',
+            'address' => 'nullable',
             'location' => 'nullable',
-            'expected_salary_from' => 'required|numeric',
-            'expected_salary_to' => 'required|numeric',
+            'expected_salary_from' => 'nullable|numeric',
+            'expected_salary_to' => 'nullable|numeric',
         ]);
         try {
             DB::beginTransaction();
@@ -169,6 +169,9 @@ class CompanyController extends Controller
                 return  api_response(0,"sorry job is inValid");
             }
             $request_data = $request->only(['title_ar','title_en', 'description_ar', 'status','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            if (count($request_data) == 0){
+                return api_response(0, "please fill data for update");
+            }
             if ($job->status == "active" || $job->status == "enough"){
                 $request_data["status"] = "pending";
             }
