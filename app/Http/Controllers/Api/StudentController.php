@@ -220,7 +220,7 @@ class StudentController extends Controller
     public function myJobs(){
 //        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
         $myJob_ids = JobApplication::where("user_id",auth("api")->id())->pluck("job_id")->toArray();
-        $myJobs = Job::whereIn("id",$myJob_ids)->get()->makeHidden(["user_id"]);
+        $myJobs = Job::whereIn("id",$myJob_ids)->with("company")->get();
         foreach ($myJobs as $job){
             $myJob_ids = JobApplication::where("job_id",$job->id)->where("user_id",auth("api")->id())->pluck("status")->first();
             $job->setAttribute("application_status",$myJob_ids);
