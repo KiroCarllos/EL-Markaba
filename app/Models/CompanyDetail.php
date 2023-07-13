@@ -23,4 +23,10 @@ class CompanyDetail extends Model
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
     }
+    public function getCommercialRecordImageAttribute($image){
+        return asset($image);
+    }
+    public function getTaxCardImageAttribute($image){
+        return asset($image);
+    }
 }
