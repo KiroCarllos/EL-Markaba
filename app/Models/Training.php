@@ -27,6 +27,9 @@ class Training extends Model
     public function scopeActive($q){
         return $this->where("status","active");
     }
+    public function scopeActiveMyTraining($q){
+        return $this->whereIn("status",["pending","inProgress","active"]);
+    }
     public function getImageAttribute($image){
         return asset($image);
     }

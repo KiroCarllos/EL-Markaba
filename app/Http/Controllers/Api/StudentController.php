@@ -156,7 +156,7 @@ class StudentController extends Controller
     public function myTrainings(){
 //        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
         $mytraining_ids = TrainingApplication::where("user_id",auth("api")->id())->pluck("training_id")->toArray();
-        $mytrainings = Training::whereIn("id",$mytraining_ids)->get()->makeHidden(["user_id"]);
+        $mytrainings = Training::whereIn("id",$mytraining_ids)->ActiveMyTraining()->get()->makeHidden(["user_id"]);
         foreach ($mytrainings as $training){
             $mytraining_ids = TrainingApplication::where("training_id",$training->id)->where("user_id",auth("api")->id())->pluck("status")->first();
             $training->setAttribute("application_status",$mytraining_ids);
