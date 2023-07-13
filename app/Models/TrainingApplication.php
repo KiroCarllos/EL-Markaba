@@ -24,5 +24,7 @@ class TrainingApplication extends Model
     public function training(){
         return $this->belongsTo(Training::class,"training_id","id");
     }
-
+    public function scopeIgnoreCancel($q){
+        return $q->whereNotIn("status",["canceled"]);
+    }
 }

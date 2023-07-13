@@ -154,9 +154,8 @@ class StudentController extends Controller
         return api_response(1,"Applied Training Successfully",TrainingApplication::find($applyTraining->id));
     }
     public function myTrainings(){
-//        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
-        $mytraining_ids = TrainingApplication::where("user_id",auth("api")->id())->pluck("training_id")->toArray();
-        $mytrainings = Training::whereIn("id",$mytraining_ids)->ActiveMyTraining()->get()->makeHidden(["user_id"]);
+        $mytraining_ids = TrainingApplication::IgnoreCancel()->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
+        $mytrainings = Training::ActiveMyTraining()->whereIn("id",$mytraining_ids)->get();
         foreach ($mytrainings as $training){
             $mytraining_ids = TrainingApplication::where("training_id",$training->id)->where("user_id",auth("api")->id())->pluck("status")->first();
             $training->setAttribute("application_status",$mytraining_ids);
@@ -227,8 +226,8 @@ class StudentController extends Controller
     }
     public function myJobs(){
 //        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
-        $myJob_ids = JobApplication::where("user_id",auth("api")->id())->pluck("job_id")->toArray();
-        $myJobs = Job::whereIn("id",$myJob_ids)->with("company")->get();
+        $myJob_ids = JobApplication::IgnoreCancel()->where("user_id",auth("api")->id())->pluck("job_id")->toArray();
+        $myJobs = Job::Active()->whereIn("id",$myJob_ids)->with("company")->get();
         foreach ($myJobs as $job){
             $myJob_ids = JobApplication::where("job_id",$job->id)->where("user_id",auth("api")->id())->pluck("status")->first();
             $job->setAttribute("application_status",$myJob_ids);
@@ -237,7 +236,7 @@ class StudentController extends Controller
     }
     public function cancelAppliedJob(Request $request){
         $request->validate([
-            "job_id" => ["required",Rule::exists("jobs","id")->where("status","active")],
+            "job_id" => ["required",Rule::exists("jobs","id")],
         ]);
         $applyJob = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
         if (is_null($applyJob)){

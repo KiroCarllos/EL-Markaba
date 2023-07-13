@@ -21,4 +21,7 @@ class JobApplication extends Model
     public function job(){
         return $this->belongsTo(Job::class,"job_id","id");
     }
+    public function scopeIgnoreCancel($q){
+        return $q->whereNotIn("status",["canceled"]);
+    }
 }
