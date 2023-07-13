@@ -170,7 +170,7 @@ class StudentController extends Controller
         $mytraining_ids = TrainingApplication::where("user_id",auth("api")->id())->pluck("training_id")->toArray();
         if (in_array($request->training_id,$mytraining_ids)){
             $training_application = TrainingApplication::whereUserId(auth("api")->id())->where("training_id",$request->training_id)->first();
-            if ($training_application->status == "pending" && !is_null($training_application->receipt_image)){
+            if ($training_application->status == "inProgress" && !is_null($training_application->receipt_image)){
                 return api_response(1,"Please Wait Admins Confirmation");
             }else if ($training_application->status !== "confirmed"){
                 if ($request->has("receipt_image") && is_file($request->receipt_image)){
