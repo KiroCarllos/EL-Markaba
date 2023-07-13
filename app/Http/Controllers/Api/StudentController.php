@@ -176,7 +176,7 @@ class StudentController extends Controller
                 if ($request->has("receipt_image") && is_file($request->receipt_image)){
                     deleteOldFiles("uploads/student/" . auth("api")->id() . "/training/".$request->training_id."/receipt_image");
                     if ($request->receipt_image) {
-                        $training_application->update(["status" => "pending","receipt_image" => uploadImage($request->receipt_image, "uploads/student/training/" . auth("api")->id() . "/".$request->training_id."/receipt_image")]);
+                        $training_application->update(["status" => "inProgress","receipt_image" => uploadImage($request->receipt_image, "uploads/student/training/" . auth("api")->id() . "/".$request->training_id."/receipt_image")]);
                     }
                 }
             }
@@ -197,7 +197,6 @@ class StudentController extends Controller
         }else{
             return api_response(0,"Invalid Training id");
         }
-
     }
 
     public function applyJob(Request $request){
