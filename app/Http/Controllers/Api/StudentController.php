@@ -195,6 +195,7 @@ class StudentController extends Controller
             if ($applyTraining->status == "pending"){
                 $applyTraining->delete();
             }
+            return api_response(0,"Training applied successfully");
         }else{
             return api_response(0,"Invalid Training id");
         }
