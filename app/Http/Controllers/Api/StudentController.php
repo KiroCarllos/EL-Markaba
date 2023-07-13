@@ -192,10 +192,8 @@ class StudentController extends Controller
         ]);
         $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
         if (!is_null($applyTraining)){
-            if ($applyTraining->status == "pending"){
-                $applyTraining->delete();
-            }
-            return api_response(0,"Training applied successfully");
+            $applyTraining->delete();
+            return api_response(0,"Training canceled successfully");
         }else{
             return api_response(0,"Invalid Training id");
         }
