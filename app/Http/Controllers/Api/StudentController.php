@@ -143,7 +143,6 @@ class StudentController extends Controller
             "training_id" => ["required",Rule::exists("trainings","id")->where("status","active")],
         ]);
         $training = Training::find($request->training_id);
-        $trainingApplication = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
         if ($training->status == "enough"){
             return api_response(0,"Sorry this Job Enough You can choose anther");
         }
@@ -192,8 +191,10 @@ class StudentController extends Controller
             "training_id" => ["required",Rule::exists("trainings","id")->where("status","active")],
         ]);
         $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
-        if ($applyTraining->status == "pending"){
-            $applyTraining->delete();
+        if (!is_null($applyTraining)){
+            if ($applyTraining->status == "pending"){
+                $applyTraining->delete();
+            }
         }
         return api_response(1,"Training Canceled Successfully");
 
