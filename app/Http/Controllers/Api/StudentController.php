@@ -193,7 +193,7 @@ class StudentController extends Controller
         ]);
         $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
         if ($applyTraining->status == "pending"){
-            $applyTraining->update(["status" => "canceled"]);
+            $applyTraining->delete();
         }
         return api_response(1,"Training Canceled Successfully");
 
@@ -243,7 +243,7 @@ class StudentController extends Controller
             return api_response(0,"Sorry inValid Job");
         }else{
             if ($applyJob->status == "pending"){
-                $applyJob->update(["status" => "canceled"]);
+                $applyJob->delete();
             }
             return api_response(1,"Job Canceled Successfully");
         }
