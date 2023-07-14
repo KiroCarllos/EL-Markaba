@@ -148,7 +148,7 @@ class CompanyController extends Controller
 
     public function updateJob(Request $request){
         $request->validate([
-            'job_id' => ['required',Rule::exists("jobs","id")],
+            'job_id' => ['required',Rule::exists("jobs","id")->where("user_id",auth("api")->id())],
             'title_en' => 'nullable',
             'title_ar' => 'nullable',
             'description_en' => 'nullable',
@@ -164,13 +164,16 @@ class CompanyController extends Controller
         ]);
         try {
             DB::beginTransaction();
-            $job = Job::where("id",$request->job_id)->where("user_id",auth("api")->id())->first();
+            $job = Job::find($request->job_id);
             if (is_null($job)){
                 return  api_response(0,"sorry job is inValid");
             }
-            $request_data = $request->only(['title_ar','title_en', 'description_ar', 'status','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            $request_data = $request->only(['title_ar','title_en', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
             if (count($request_data) == 0){
                 return api_response(0, "please fill data for update");
+            }
+            if ($request->has("status") && !is_null($request->status)){
+                $request_data["status"] =$request->status == "enough" ?  "enough" : $request->status == "deleted" ? "deleted" : $job->status ;
             }
             if ($job->status == "active" || $job->status == "enough"){
                 $request_data["status"] = "pending";
