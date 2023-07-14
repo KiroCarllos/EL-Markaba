@@ -113,7 +113,7 @@ class CompanyController extends Controller
     public function getMyJobs()
     {
         $jobs = Job::where('user_id', auth("api")->id())
-
+            ->whereIn("status",["pending","inProgress","active"])
             ->latest()
             ->paginate(6);
         return api_response(1, "", $jobs);
