@@ -172,9 +172,7 @@ class CompanyController extends Controller
             if (count($request_data) == 0){
                 return api_response(0, "please fill data for update");
             }
-            if ($request->has("status") && !is_null($request->status)){
-                $request_data["status"] =$request->status == "enough" ?  "enough" : $request->status == "deleted" ? "deleted" : $job->status ;
-            }
+            $request_data["status"] =$request->status == "enough" ?  "enough" : $request->status == "deleted" ? "deleted" : $job->status ;
             if ($job->status == "active" || $job->status == "enough"){
                 $request_data["status"] = "pending";
             }
