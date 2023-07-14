@@ -25,7 +25,7 @@ class Post extends Model
         return $this->hasMany(PostReply::class,"post_id","id");
     }
     public function scopeActive($q){
-        return $this->where("status","active");
+        return $q->where("status","active");
     }
     public function getImageAttribute($image){
         return asset($image);

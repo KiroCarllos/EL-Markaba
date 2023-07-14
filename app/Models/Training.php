@@ -25,10 +25,10 @@ class Training extends Model
         return $this->hasMany(TrainingApplication::class,"training_id","id");
     }
     public function scopeActive($q){
-        return $this->where("status","active");
+        return $q->where("status","active");
     }
     public function scopeActiveMyTraining($q){
-        return $this->whereIn("status",["pending","inProgress","active"]);
+        return $q->whereIn("status",["pending","inProgress","active"]);
     }
     public function getImageAttribute($image){
         return asset($image);

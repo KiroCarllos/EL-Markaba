@@ -18,7 +18,7 @@ class Slider extends Model
         "role" => "array"
     ];
     public function scopeActive($q){
-        return $this->where("status","active");
+        return $q->where("status","active");
     }
     public function getImageAttribute($image){
         return asset($image);

@@ -26,10 +26,10 @@ class User extends Authenticatable  implements JWTSubject
         'password', 'remember_token',
     ];
     public function scopeCompany($q){
-        return $this->where("role","company")->whereIn("status",["pending","inProgress","active","blocked"]);
+        return $q->where("role","company")->whereIn("status",["pending","inProgress","active","blocked"]);
     }
     public function scopeStudent($q){
-        return $this->where("role","student")->whereIn("status",["pending","inProgress","active","blocked"]);
+        return $q->where("role","student")->whereIn("status",["pending","inProgress","active","blocked"]);
     }
 
     public function getFirstNameAttribute($value)

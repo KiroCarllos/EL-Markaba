@@ -26,10 +26,10 @@ class Job extends Model
         "user_id" => "integer"
     ];
     public function scopeActive($q){
-        return $this->whereIn("status",["pending","inProgress","active"]);
+        return $q->whereIn("status",["pending","inProgress","active"]);
     }
     public function scopeActiveJob($q){
-        return $this->whereIn("status",["active"]);
+        return $q->whereIn("status",["active"]);
     }
     public function company()
     {
