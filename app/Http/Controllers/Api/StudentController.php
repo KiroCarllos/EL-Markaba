@@ -242,9 +242,7 @@ class StudentController extends Controller
         if (is_null($applyJob)){
             return api_response(0,"Sorry inValid Job");
         }else{
-            if ($applyJob->status == "pending"){
-                $applyJob->delete();
-            }
+            $applyJob->delete();
             return api_response(1,"Job Canceled Successfully");
         }
     }
