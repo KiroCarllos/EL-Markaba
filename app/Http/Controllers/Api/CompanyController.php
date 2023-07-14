@@ -112,7 +112,7 @@ class CompanyController extends Controller
 
     public function getMyJobs()
     {
-        $userId = auth("api")->id();
+        $userId = auth("api")->user()->id;
 
         $jobs = Job::where('user_id', $userId)
             ->active()
