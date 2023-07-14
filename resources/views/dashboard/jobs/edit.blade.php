@@ -37,22 +37,31 @@
                                 <option value="active" {{ $job->status == "active" ? "selected" :"" }}>@lang("site.active")</option>
                                 <option value="inProgress" {{ $job->status == "inProgress" ? "selected" :"" }}>@lang("site.inProgress")</option>
                                 <option value="pending" {{ $job->status == "pending" ? "selected" :"" }}>@lang("site.pending")</option>
+                                <option value="pending" {{ $job->status == "enough" ? "selected" :"" }}>@lang("site.enough")</option>
+                                <option value="pending" {{ $job->status == "deleted" ? "selected" :"" }}>@lang("site.deleted")</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>@lang('site.job_title')</label>
-                            <input type="text" name="title" class="form-control" value="{{ $job->title }}">
+                            <label>@lang('site.title_ar')</label>
+                            <input type="text" name="title_ar" class="form-control" value="{{ $job->title_ar }}">
                         </div>
                         <div class="form-group">
-                            <label>@lang('site.description')</label>
-                            <input type="text" name="description" class="form-control" value="{{ $job->description }}">
+                            <label>@lang('site.title_en')</label>
+                            <input type="text" name="title_en" class="form-control" value="{{ $job->title_en }}">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.description_ar')</label>
+                            <input type="text" name="description_ar" class="form-control" value="{{ $job->description_ar }}">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.description_en')</label>
+                            <input type="text" name="description_en" class="form-control" value="{{ $job->description_en }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.job_type')</label>
                             <select name="work_type" id="work_type" class="form-control">
-                                <option >@lang("site.select_work_type")</option>
-                                <option {{ $job->work_type == "part_time" ? "selected" :"" }} value="part_time">@lang("site.part_time")</option>
                                 <option {{ $job->work_type == "full_time" ? "selected" :"" }} value="full_time">@lang("site.full_time")</option>
+                                <option {{ $job->work_type == "part_time" ? "selected" :"" }} value="part_time">@lang("site.part_time")</option>
                             </select>
                         </div>
 
@@ -118,20 +127,4 @@
     </div><!-- end of content wrapper -->
 
 @endsection
-@push("scripts")
-    <script>
-        $(document).ready(function(){
 
-            var work_type = $('#work_type');
-            work_type.on('change', function() {
-                var work_type_value = $(this).val();
-                if(work_type_value == "part_time"){
-                    $("#work_hours").show();
-                }else{
-                    $("#work_hours").hide();
-                    $("#work_hours").val("");
-                }
-            });
-        });
-    </script>
-@endpush

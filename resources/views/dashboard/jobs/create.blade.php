@@ -34,25 +34,32 @@
                         {{ method_field('post') }}
 
                         <div class="form-group">
-                            <label>@lang('site.job_title')</label>
-                            <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                            <label>@lang('site.title_ar')</label>
+                            <input type="text" name="title_ar" class="form-control" value="{{ old('title_ar') }}">
                         </div>
                         <div class="form-group">
-                            <label>@lang('site.description')</label>
-                            <input type="text" name="description" class="form-control" value="{{ old('description') }}">
+                            <label>@lang('site.title_en')</label>
+                            <input type="text" name="title_en" class="form-control" value="{{ old('title_en') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.description_ar')</label>
+                            <input type="text" name="description_ar" class="form-control" value="{{ old('description_ar') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('site.description_en')</label>
+                            <input type="text" name="description_en" class="form-control" value="{{ old('description_en') }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.job_type')</label>
                             <select name="work_type" id="work_type" class="form-control">
-                                <option >@lang("site.select_work_type")</option>
-                                <option {{ old("work_type") == "part_time" ? "selected" :"" }} value="part_time">@lang("site.part_time")</option>
                                 <option {{ old("work_type") == "full_time" ? "selected" :"" }} value="full_time">@lang("site.full_time")</option>
+                                <option {{ old("work_type") == "part_time" ? "selected" :"" }} value="part_time">@lang("site.part_time")</option>
                             </select>
                         </div>
 
                         <div id="work_hours" class="form-group">
                             <label>@lang('site.work_hours')</label>
-                            <input max="10" type="number" name="work_hours" class="form-control" value="{{ old('work_hours') }}">
+                            <input max="10" type="number" name="work_hours" class="form-control" value="{{ old('work_hours') ?? 8 }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.contact_email')</label>
@@ -108,21 +115,3 @@
 
 @endsection
 
-@push("scripts")
-    <script>
-        $(document).ready(function(){
-            $("#work_hours").hide();
-            $("#work_hours").val("");
-            var work_type = $('#work_type');
-            work_type.on('change', function() {
-                var work_type_value = $(this).val();
-                if(work_type_value == "part_time"){
-                    $("#work_hours").show();
-                }else{
-                    $("#work_hours").hide();
-                    $("#work_hours").val("");
-                }
-            });
-        });
-    </script>
-@endpush

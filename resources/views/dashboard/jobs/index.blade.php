@@ -68,6 +68,7 @@
                                 </thead>
 
                                 <tbody>
+
                                 @foreach ($jobs as $index=>$job)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>

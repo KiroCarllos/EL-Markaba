@@ -13,7 +13,9 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
-        $jobs = Job::Active()->latest()->paginate(20);
+
+        $jobs = Job::Active()->whereHas("company")->latest()->paginate(20);
+//        dd($jobs);
         return view('dashboard.jobs.index', compact('jobs'));
 
     }//end of index
@@ -30,8 +32,10 @@ class JobController extends Controller
     function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title_ar' => 'required',
+            'title_en' => 'required',
+            'description_ar' => 'required',
+            'description_en' => 'required',
             'work_type' => 'required|in:part_time,full_time',
             'work_hours' => 'nullable',
             'contact_email' => 'required|email',
@@ -41,7 +45,7 @@ class JobController extends Controller
             'expected_salary_from' => 'required|numeric',
             'expected_salary_to' => 'required|numeric',
         ]);
-        $request_data = $request->only(['title','user_id', 'description', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+        $request_data = $request->only(['title_ar','title_en','user_id', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
         $job = Job::create($request_data);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.jobs.index');
@@ -60,8 +64,10 @@ class JobController extends Controller
     function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title_ar' => 'required',
+            'title_en' => 'required',
+            'description_ar' => 'required',
+            'description_en' => 'required',
             'work_type' => 'required|in:part_time,full_time',
             'work_hours' => 'nullable',
             'contact_email' => 'required|email',
@@ -73,7 +79,7 @@ class JobController extends Controller
         ]);
         $job = Job::findOrFail($id);
 
-        $request_data = $request->only(['title','user_id','status', 'description', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+        $request_data = $request->only(['title_ar','title_en','user_id','status', 'description_en','description_ar', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
         $job->update($request_data);
         session()->flash('success', __('site.updated_successfully'));
         return redirect()->route('dashboard.jobs.index');

@@ -21,6 +21,8 @@ return [
 
 
     'all_companies' => 'كل الشركات',
+    'enough' => 'تم الاكتفاء',
+    'deleted' => 'محذوفة',
     'posts' => 'المنشورات',
     'disActive' => 'غير مفعل',
     'trainings' => 'التدريبات',
