@@ -168,7 +168,7 @@ class CompanyController extends Controller
             if (is_null($job)){
                 return  api_response(0,"sorry job is inValid");
             }
-            $request_data = $request->only(['title_ar','title_en', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            $request_data = $request->only(['title_ar','title_en','status', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
             if (count($request_data) == 0){
                 return api_response(0, "please fill data for update");
             }
