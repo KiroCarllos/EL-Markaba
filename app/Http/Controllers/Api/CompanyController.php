@@ -113,7 +113,7 @@ class CompanyController extends Controller
     public function getMyJobs()
     {
         $userId = auth("api")->user()->id;
-
+        dd($userId);
         $jobs = Job::where('user_id', $userId)
             ->active()
             ->latest()

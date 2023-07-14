@@ -22,6 +22,9 @@ class Job extends Model
         "expected_salary_to",
     ];
     protected $appends = ["image"];
+    protected $casts = [
+        "user_id" => "integer"
+    ];
     public function scopeActive($q){
         return $this->whereIn("status",["pending","inProgress","active"]);
     }
