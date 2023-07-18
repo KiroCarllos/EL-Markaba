@@ -30,6 +30,10 @@ class JobController extends Controller
             "job_id" => ["required","numeric",Rule::exists("jobs","id")]
         ]);
         $job = Job::whereId($request->job_id)->with("company")->first();
+        $myJob_ids = JobApplication::where("job_id",$job->id)->pluck("user_id")->toArray();
+        // remove status
+        $status = in_array(auth("api")->id(),$myJob_ids) ? JobApplication::where("job_id",$job->id)->pluck("status")->first(): null;
+        $job->setAttribute("application_status",$status);
         return api_response(1,"",$job);
     }
 }//end of controller
