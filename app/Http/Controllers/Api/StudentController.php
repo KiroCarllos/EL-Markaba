@@ -246,4 +246,16 @@ class StudentController extends Controller
             return api_response(1,"Job Canceled Successfully");
         }
     }
+    public function getJobDetails(Request $request){
+        $request->validate([
+            "job_id" => ["required","numeric",Rule::exists("job_applications","job_id")->where("user_id",auth("api")->id())]
+        ]);
+        $job = Job::whereId($request->job_id)->with("company")->first();
+        if (is_null($job) || $job->status == "deleted"){
+            return api_response(0,"sorry inValid Job ID","");
+        }
+        $myJob_ids = JobApplication::where("job_id",$job->id)->where("user_id",auth("api"))->first();
+        $job->setAttribute("application_status",$myJob_ids->status);
+        return api_response(1,"",$job);
+    }
 }//end of controller
