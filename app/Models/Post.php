@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,6 +19,10 @@ class Post extends Model
         "image",
     ];
     public $timestamps = false;
+    protected $appends = ["ago"];
+    public function getAgoAttribute(){
+        return Carbon::parse($this->created_at)->diffForHumans();
+    }
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
     }
