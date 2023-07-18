@@ -22,6 +22,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::resource('jobs', 'JobController');
 
             Route::resource('posts', 'PostController');
+            Route::resource('sliders', 'SliderController');
 
             Route::resource('trainings', 'TrainingController');
 
