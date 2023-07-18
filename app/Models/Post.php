@@ -19,8 +19,8 @@ class Post extends Model
         "image",
     ];
     public $timestamps = false;
-    protected $appends = ["ago"];
-    public function getAgoAttribute(){
+    protected $appends = ["created_ago"];
+    public function getCreatedAgoAttribute(){
         return Carbon::parse($this->created_at)->diffForHumans();
     }
     public function user(){
