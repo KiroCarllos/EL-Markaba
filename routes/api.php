@@ -44,7 +44,6 @@ Route::group(['prefix' => "job",'namespace' => 'Api'], function () {
 });
 Route::group(['prefix' => "job",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
     Route::post('getAvailJobs', 'JobController@getAvailJobs');
-    Route::post('getJobDetails', 'JobController@getJobDetails');
 
 });
 // end Job routes
@@ -63,6 +62,7 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth"],'nam
 
     // Jobs
     Route::post('getMyJobs', 'CompanyController@getMyJobs');
+    Route::post('getJobDetails', 'JobController@getJobDetails');
     Route::post('addJob', 'CompanyController@addJob');
     Route::post('updateJob', 'CompanyController@updateJob');
     Route::post('deleteJob', 'CompanyController@deleteJob');
@@ -97,6 +97,7 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'nam
     // job
     Route::post('applyJob', 'StudentController@applyJob');
     Route::post('myJobs', 'StudentController@myJobs');
+    Route::post('getJobDetails', 'JobController@getJobDetails');
     Route::post('cancelAppliedJob', 'StudentController@cancelAppliedJob');
 
 });
