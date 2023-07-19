@@ -157,7 +157,7 @@ class StudentController extends Controller
     }
     public function myTrainings(){
         $mytraining_ids = TrainingApplication::IgnoreCancel()->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
-        $mytrainings = Training::ActiveMyTraining()->whereIn("id",$mytraining_ids)->get();
+        $mytrainings = Training::ActiveMyTraining()->whereIn("id",$mytraining_ids)->latest()->get();
         foreach ($mytrainings as $training){
             $mytraining_ids = TrainingApplication::where("training_id",$training->id)->where("user_id",auth("api")->id())->pluck("status")->first();
             $training->setAttribute("application_status",$mytraining_ids);
