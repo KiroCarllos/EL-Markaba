@@ -126,7 +126,7 @@ class StudentController extends Controller
     }
 
     public function getTrainings(){
-        $trainings = Training::active()->withCount("applications")->paginate(6);
+        $trainings = Training::active()->withCount("applications")->latest()->paginate(6);
         foreach ($trainings as $training){
             $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
             // remove status
@@ -153,7 +153,7 @@ class StudentController extends Controller
         if ($training->paid == "no"){
             return $applyTraining->update(["status" => "inProgress"]);
         }
-        return api_response(1,"Applied Training Successfully",TrainingApplication::find($applyTraining->id));
+        return api_response(1,"Applied Training Successfully","");
     }
     public function myTrainings(){
         $mytraining_ids = TrainingApplication::IgnoreCancel()->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
