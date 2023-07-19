@@ -109,7 +109,7 @@ class StudentController extends Controller
     }
 
     public function getPosts(){
-        $posts = Post::active()->withCount("replies")->paginate(6);
+        $posts = Post::active()->withCount("replies")->latest()->paginate(6);
         return api_response(1,"",$posts);
     }
     public function replyPost(Request $request){
