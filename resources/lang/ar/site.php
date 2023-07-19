@@ -25,6 +25,9 @@ return [
     'deleted' => 'محذوفة',
     'setting' => 'الاعدادات',
     'company' => 'شركه',
+    'paid' => 'مدفوع',
+    'yes' => 'نعم',
+    'no' => 'لا',
     'student' => 'طالب',
     'sliders' => 'سلايدر الاعلانات',
     'user_views' => 'الجمهور',
@@ -68,8 +71,7 @@ return [
     'print' => 'طبع',
 
     'confirm_delete' => 'تاكيد الحذف',
-    'yes' => 'نعم',
-    'no' => 'لا',
+
 
     'login' => 'تسجيل الدخول',
     'remember_me' => 'تذكرني',

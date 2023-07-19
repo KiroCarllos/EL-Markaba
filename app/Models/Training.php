@@ -14,6 +14,7 @@ class Training extends Model
         "title_ar",
         "description_en",
         "description_ar",
+        "paid",
         "user_id",
         "image",
     ];

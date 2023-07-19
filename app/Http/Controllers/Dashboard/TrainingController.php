@@ -33,9 +33,10 @@ class TrainingController extends Controller
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
             'status' => 'required|in:active,disActive',
+            'paid' => 'required|in:yes,no',
             'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
         ]);
-        $trainingData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
+        $trainingData = $request->only(["title_en","paid","title_ar","description_en","description_ar","status"]);
         try{
             DB::beginTransaction();
             $training = Training::query()->firstOrCreate($trainingData);
@@ -64,10 +65,11 @@ class TrainingController extends Controller
             'title_ar' => 'required|string',
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
+            'paid' => 'required|in:yes,no',
             'status' => 'required|in:active,disActive',
             'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
         ]);
-        $trainingData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
+        $trainingData = $request->only(["title_en","paid","title_ar","description_en","description_ar","status"]);
 
         try{
             DB::beginTransaction();

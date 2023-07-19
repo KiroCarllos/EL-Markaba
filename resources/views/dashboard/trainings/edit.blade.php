@@ -37,6 +37,13 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>@lang('site.paid')</label>
+                            <select name="paid" class="form-control">
+                                <option value="yes" {{ $training->paid == "yes" ? "selected" :"" }}>@lang("site.yes")</option>
+                                <option value="no" {{ $training->paid == "no" ? "selected" :"" }}>@lang("site.no")</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>@lang('site.title_en')</label>
                             <input type="text" name="title_en" class="form-control" value="{{ $training->title_en }}">
                         </div>

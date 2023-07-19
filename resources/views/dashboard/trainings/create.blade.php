@@ -40,6 +40,13 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>@lang('site.paid')</label>
+                            <select name="paid" class="form-control">
+                                <option value="yes" {{ old("paid") == "yes" ? "selected" :"" }}>@lang("site.yes")</option>
+                                <option value="no" {{ old("paid") == "no" ? "selected" :"" }}>@lang("site.no")</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>@lang('site.title_en')</label>
                             <input type="text" name="title_en" class="form-control" value="{{ old("title_en") }}">
                         </div>
