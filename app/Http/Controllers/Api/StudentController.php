@@ -151,9 +151,9 @@ class StudentController extends Controller
             "user_id" => auth("api")->id(),
         ]);
         if ($training->paid == "no"){
-            return $applyTraining->update(["status" => "inProgress"]);
+             $applyTraining->update(["status" => "inProgress"]);
         }
-        return api_response(1,"Applied Training Successfully","");
+        return api_response(1,"Applied Training Successfully",TrainingApplication::find($applyTraining->id));
     }
     public function myTrainings(){
         $mytraining_ids = TrainingApplication::IgnoreCancel()->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
