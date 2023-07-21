@@ -1,6 +1,6 @@
-@if ($errors->any())
+@if ($errors)
     <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
+        @foreach ($errors as $error)
             <p>{{ $error }}</p>
         @endforeach
     </div>

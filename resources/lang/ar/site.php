@@ -53,6 +53,7 @@ return [
     'inProgress' => 'تحت المراجعه',
     'blocked' => 'محظور',
     'major' => 'التخصص',
+    'deleteAccount' => 'حذف الحساب',
 
 
     'prior_experiences' => 'خيرات سابقه',
