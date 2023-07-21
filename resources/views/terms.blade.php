@@ -46,8 +46,8 @@
 
     <h2>Contact</h2>
     <p>If you have any questions or concerns regarding these terms and conditions, please contact us at:</p>
-    <p>Email: contact@elmarkaba.com</p>
-    <p>Phone: +123456789</p>
+    <p>Email: elmarkaba.careerguidance@gmail.com</p>
+    <p>Phone: +20 01288834652</p>
 </main>
 </body>
 </html>
