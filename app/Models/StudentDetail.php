@@ -24,7 +24,7 @@ class StudentDetail extends Model
     ];
     protected $appends = ["major_name"];
     public function getMajorIdAttribute($value){
-        return Major::where("id",$value)->pluck("name_".app()->getLocale())->first() ?? null;
+        return Major::where("id",$this->major_id)->pluck("name_".app()->getLocale())->first() ?? null;
     }
     public function getMajorNameAttribute(){
         return Major::where("id",$this->major_id)->pluck("name_".app()->getLocale())->first();
