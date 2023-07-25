@@ -50,6 +50,7 @@ return [
     'are_you_sure_disApprove?' => 'هل انت متاكد من تحويل الحساب لقيد المراجعه ؟',
 
     'active' => 'مفعل',
+    'Logout' => 'تسجيل الخروج',
     'inProgress' => 'تحت المراجعه',
     'blocked' => 'محظور',
     'major' => 'التخصص',

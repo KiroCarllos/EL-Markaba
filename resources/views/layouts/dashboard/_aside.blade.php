@@ -65,18 +65,13 @@
 {{--                    <li>--}}
 {{--                        <a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a>--}}
 {{--                    </li>--}}
-
-
-
-
-
                 </ul>
             </li>
             <li>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out"></i>{{ __('Logout') }}
+                    <i class="fa fa-sign-out"></i>{{ __('site.Logout') }}
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
