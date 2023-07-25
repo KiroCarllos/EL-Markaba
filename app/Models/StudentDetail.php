@@ -23,7 +23,9 @@ class StudentDetail extends Model
         "prior_experiences" => "json",
     ];
     protected $appends = ["major_name"];
-
+    public function getMajorNameAttribute(){
+        return Major::where("id",$this->major_id)->pluck("name_".app()->getLocale())->first();
+    }
     public function getMajorIdAttribute($major_id){
         return Major::where("id",$major_id)->pluck("name_".app()->getLocale())->first();
     }
