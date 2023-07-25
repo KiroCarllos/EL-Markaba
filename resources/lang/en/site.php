@@ -107,6 +107,7 @@ return[
     "Job Canceled Successfully" => 'Job Canceled Successfully',
     "student deleted successfully" => 'Student Deleted Successfully',
     "company deleted successfully" => 'Company Deleted Successfully',
+    "Invalid or expired token" => 'Invalid or expired token',
 
 
 

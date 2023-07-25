@@ -211,6 +211,7 @@ return [
     "Job Canceled Successfully" => 'تم إلغاء الوظيفة بنجاح',
     "student deleted successfully" => 'تم حذف الطالب بنجاح',
     "company deleted successfully" => 'تم حذف الشركة بنجاح',
+    "Invalid or expired token" => 'ناسف رمز التسجيل منتهي او غير صحيح',
 
 
 ];

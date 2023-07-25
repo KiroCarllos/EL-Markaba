@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
     public function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return api_response(0,"Invalid or expired token","",401);
+            return api_response(0,__("site.Invalid or expired token"),"",401);
         }
         return redirect()->guest($exception->redirectTo() ?? route('login'));
     }
