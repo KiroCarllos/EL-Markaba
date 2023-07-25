@@ -67,7 +67,7 @@ class GeneralController extends Controller
             if (Mail::failures()) {
                 return api_response(0, "sorry,some thing went error In Mail please try again");
             }
-            return api_response(1, "Sent successfully Please, Check Your Inbox or Spam");
+            return api_response(1, __("site.Sent successfully Please, Check Your Inbox or Spam"));
         } catch (\Exception $exception) {
             return api_response(0, $exception->getMessage());
         }
@@ -81,12 +81,12 @@ class GeneralController extends Controller
         try {
             $user_data = ResetPassword::where("email", $request->email)->where("token",$request->token)->first();
             if (is_null($user_data)) {
-                return api_response(0, "sorry, invalid token code");
+                return api_response(0, __("site.sorry, invalid token code"));
             }
             $user = User::where("email",$request->email)->first();
             $user->update(["password" => Hash::make($request->password)]);
             ResetPassword::where("email", $request->email)->delete();
-            return api_response(1, "Password reset successfully");
+            return api_response(1, __("site.Password reset successfully"));
         } catch (\Exception $exception) {
             return api_response(0, $exception->getMessage());
         }
@@ -98,7 +98,7 @@ class GeneralController extends Controller
         try {
             $user = User::whereId(auth("api")->id())->first();
             $user->update(["password" => Hash::make($request->password)]);
-            return api_response(1, "Password reset successfully");
+            return api_response(1, __("site.Password reset successfully"));
         } catch (\Exception $exception) {
             return api_response(0, $exception->getMessage());
         }

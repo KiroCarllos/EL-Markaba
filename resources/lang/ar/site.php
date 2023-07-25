@@ -3,7 +3,6 @@
 return [
     'dashboard' => 'الرئيسيه',
     'logout' => 'تسجيل الخروج',
-
     'administrator_name' => 'اسم المسئول',
     'administrator_mobile' => 'هاتف المسئول',
     'select_student_university' => 'اختر جماعة الطالب',
@@ -18,8 +17,6 @@ return [
     'expected_salary_to' => 'الراتب المتوقع الي ',
     'select_work_type' => 'اختر نوع الدوام',
     'fill password if need to reset only' => 'اكتب الباسورد في حاله تريد تغيريه فقط',
-
-
     'all_companies' => 'كل الشركات',
     'enough' => 'تم الاكتفاء',
     'deleted' => 'محذوفة',
@@ -28,6 +25,7 @@ return [
     'paid' => 'مدفوع',
     'yes' => 'نعم',
     'no' => 'لا',
+
     'student' => 'طالب',
     'sliders' => 'سلايدر الاعلانات',
     'user_views' => 'الجمهور',
@@ -48,7 +46,6 @@ return [
     'status_job' => 'حالة الوظيفه',
     'are_you_sure_approve?' => 'هل انت متاكد من تفعيل هذا الحساب ؟',
     'are_you_sure_disApprove?' => 'هل انت متاكد من تحويل الحساب لقيد المراجعه ؟',
-
     'active' => 'مفعل',
     'Logout' => 'تسجيل الخروج',
     'inProgress' => 'تحت المراجعه',
@@ -168,6 +165,50 @@ return [
     'male' => 'ذكر',
     'female' => 'انثي',
     'student_graduated' => 'طالب / خريج',
+
+
+
+    // api
+    'successfully login' => 'تم تسجيل الدخول بنجاح',
+    'student successfully login' => 'تم تسجيل دخول الطالب بنجاح',
+    'These credentials do not match our records.' => 'هذه البيانات لا تتطابق مع سجلاتنا',
+    'company successfully login' => 'تم تسجيل دخول الشركة بنجاح',
+    "Sorry Your Account is pending now" => 'عذرًا، حسابك قيد الانتظار الآن',
+    "Sorry Your Account is inProgress now" => 'عذرًا، حسابك قيد التقدم الآن',
+    "Sorry Your Account is deleted now" => 'عذرًا، تم حذف حسابك الآن',
+    "Sorry Your Account is blocked now" => 'عذرًا، تم حظر حسابك الآن',
+    "Sorry Your Account Not Be Company" => 'عذرًا، حسابك ليس حساب شركة',
+    "company created successfully wait admins for approve" => 'تم إنشاء الشركة بنجاح، انتظر الموافقة من المشرفين',
+    "profile company get successfully" => 'تم جلب بيانات الشركة بنجاح',
+    "company signOut successfully" => 'تم تسجيل خروج الشركة بنجاح',
+    "sorry job is inValid" => 'عذرًا، الوظيفة غير صالحة',
+    "your job pending successfully" => 'تم تعليق وظيفتك بنجاح',
+    "your job inProgress successfully" => 'تم بدء تنفيذ وظيفتك بنجاح',
+    "your job active successfully" => 'تم تفعيل وظيفتك بنجاح',
+    "your job deleted successfully" => 'تم حذف وظيفتك بنجاح',
+    "your job enough successfully" => 'تم تكفيف وظيفتك بنجاح',
+    "Sent successfully Please, Check Your Inbox or Spam" => 'تم الإرسال بنجاح، يرجى التحقق من صندوق الوارد أو البريد الغير هام',
+    "sorry, invalid token code" => 'عذرًا، رمز الرمز غير صالح',
+    "Password reset successfully" => 'تم إعادة تعيين كلمة المرور بنجاح',
+    "Sorry Your Account Not Be Student" => 'عذرًا، حسابك ليس حساب طالب',
+    "student created successfully wait admins for approve" => 'تم إنشاء الطالب بنجاح، انتظر الموافقة من المشرفين',
+    "profile student get successfully" => 'تم جلب بيانات الطالب بنجاح',
+    "student signOut successfully" => 'تم تسجيل خروج الطالب بنجاح',
+    "Replied Successfully" => 'تم الرد بنجاح',
+    "Applied Training Successfully" => 'تم التقديم على التدريب بنجاح',
+    "Your Application Applied Please Wait Admins Confirmation" => 'تم تقديم طلبك، يرجى انتظار تأكيد المشرفين',
+    "sorry this training you haven't applied before" => 'عذرًا، لم تقدم على هذا التدريب من قبل',
+    "Training canceled successfully" => 'تم إلغاء التدريب بنجاح',
+    "Invalid Training id" => 'رقم التدريب غير صالح',
+    "Sorry this Job Enough You can choose anther" => 'عذرًا، هذه الوظيفة مكتفية بعدد كافٍ من المتقدمين',
+    "Applied Job Successfully" => 'تم التقديم على الوظيفة بنجاح',
+    "Sorry This Job pending Please try later" => 'عذرًا، هذه الوظيفة قيد الانتظار، يرجى المحاولة لاحقًا',
+    "Sorry This Job inProgress Please try later" => 'عذرًا، هذه الوظيفة قيد التنفيذ، يرجى المحاولة لاحقًا',
+    "Sorry This Job active Please try later" => 'عذرًا، هذه الوظيفة قيد التفعيل، يرجى المحاولة لاحقًا',
+    "Sorry This Job deleted Please try later" => 'عذرًا، تم حذف هذه الوظيفة، يرجى المحاولة لاحقًا',
+    "Sorry This Job enough Please try later" => 'عذرًا، هذه الوظيفة مكتفية بعدد كافٍ من المتقدمين، يرجى المحاولة لاحقًا',
+    "Sorry inValid Job" => 'عذرًا، وظيفة غير صالحة',
+    "Job Canceled Successfully" => 'تم إلغاء الوظيفة بنجاح',
 
 
 ];

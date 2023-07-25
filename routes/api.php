@@ -21,7 +21,7 @@ Route::group(['middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], fun
 
 
 
-Route::group(['namespace' => 'Api'], function () {
+Route::group(['namespace' => 'Api',"middleware"=>["changeLanguage"]], function () {
     // General
     Route::post('getUniversities', 'GeneralController@getUniversities')->name("getUniversities");
     Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity')->name("getFacultyByUniversity");
@@ -42,19 +42,19 @@ Route::group(['prefix' => "job",'namespace' => 'Api'], function () {
 
 
 });
-Route::group(['prefix' => "job",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
+Route::group(['prefix' => "job",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
     Route::post('getAvailJobs', 'JobController@getAvailJobs');
 
 });
 // end Job routes
 
 /// // company
-Route::group(['prefix' => "company",'namespace' => 'Api'], function () {
+Route::group(['prefix' => "company",'namespace' => 'Api',"middleware" =>["changeLanguage"]], function () {
     Route::post('login', 'CompanyController@login');
     Route::post('register', 'CompanyController@register');
 
 });
-Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
+Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
     Route::post('profile', 'CompanyController@profile');
     Route::post('logout', 'CompanyController@logout');
     Route::post('resetPassword', 'GeneralController@resetPassword');
@@ -71,7 +71,7 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth"],'nam
 
 
 // student
-Route::group(['prefix' => "student",'namespace' => 'Api'], function () {
+Route::group(['prefix' => "student",'namespace' => 'Api',"middleware" => ["changeLanguage"]], function () {
     Route::post('login', 'StudentController@login');
     Route::post('register', 'StudentController@register');
 
@@ -79,7 +79,7 @@ Route::group(['prefix' => "student",'namespace' => 'Api'], function () {
     Route::post('getPosts', 'StudentController@getPosts');
 
 });
-Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], function () {
+Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
     Route::post('profile', 'StudentController@profile');
     Route::post('logout', 'StudentController@logout');
     Route::post('resetPassword', 'GeneralController@resetPassword');

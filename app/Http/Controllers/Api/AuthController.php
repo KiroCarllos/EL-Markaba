@@ -17,7 +17,7 @@ class AuthController extends Controller
         }
         $user = User::where("email", $request->email)->first();
         $user->update(["auth_token" => $token]);
-        return api_response(1, "successfully login", $user);
+        return api_response(1, __("site.successfully login"), $user);
     }
 
 

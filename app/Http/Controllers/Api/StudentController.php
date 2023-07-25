@@ -30,19 +30,20 @@ class StudentController extends Controller
         ]);
         $credentials = ["email" => $request->email, "password" => $request->password];
         if (!$token = auth("api")->attempt($credentials)) {
-            return api_response(0, "These credentials do not match our records.", "");
+            return api_response(0, __("site.These credentials do not match our records."), "");
         }
         $user = User::where("email", $request->email)->first();
         if ($user->role == "student" || $user->role == "super_admin") {
             if ($user->status == "active") {
                 $user->update(["auth_token" => $token]);
-                return api_response(1, "student successfully login", $user);
+                return api_response(1, __("site.student successfully login"), $user);
             } else {
-                return api_response(0, "Sorry Your Account is " . $user->status . " now");
+                $msg = "Sorry Your Account is " . $user->status . " now";
+                return api_response(0, __("site.".$msg));
             }
 
         } else {
-            return api_response(0, "Sorry Your Account Not Be Student", "");
+            return api_response(0, __("site.Sorry Your Account Not Be Student"), "");
         }
     }
 
@@ -86,7 +87,7 @@ class StudentController extends Controller
             ], $studentData);
 
             DB::commit();
-            return api_response(1, "student created successfully wait admins for approve");
+            return api_response(1, __("site.student created successfully wait admins for approve"));
         } catch (\Exception $exception) {
             DB::rollBack();
             return api_response(0, $exception);
@@ -97,7 +98,7 @@ class StudentController extends Controller
     public function profile()
     {
         $user = User::query()->where("id", auth("api")->id())->with("student_details")->first();
-        return api_response(1, "profile student get successfully", $user);
+        return api_response(1, __("site.profile student get successfully"), $user);
     }
 
     // student logout
@@ -105,7 +106,7 @@ class StudentController extends Controller
     {
         $user = auth("api")->user();
         $user->update(["auth_token" => null]);
-        return api_response(1, "student signOut successfully");
+        return api_response(1, __("site.student signOut successfully"));
     }
 
     public function getPosts(){
@@ -122,7 +123,7 @@ class StudentController extends Controller
             "user_id" => auth("api")->id(),
             "reply" => $request->reply,
         ]);
-        return api_response(1,"Replied Successfully","");
+        return api_response(1,__("site.Replied Successfully"),"");
     }
 
     public function getTrainings(){
@@ -153,7 +154,7 @@ class StudentController extends Controller
         if ($training->paid == "no"){
              $applyTraining->update(["status" => "inProgress"]);
         }
-        return api_response(1,"Applied Training Successfully",TrainingApplication::find($applyTraining->id));
+        return api_response(1,__("site.Applied Training Successfully"),TrainingApplication::find($applyTraining->id));
     }
     public function myTrainings(){
         $mytraining_ids = TrainingApplication::IgnoreCancel()->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
@@ -183,9 +184,9 @@ class StudentController extends Controller
                     }
                 }
             }
-            return api_response(1,"Your Application Applied Please Wait Admins Confirmation");
+            return api_response(1,__("site.Your Application Applied Please Wait Admins Confirmation"));
         }else{
-            return api_response(1,"sorry this training you haven't applied before");
+            return api_response(1,__("site.sorry this training you haven't applied before"));
 
         }
     }
@@ -196,9 +197,9 @@ class StudentController extends Controller
         $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
         if (!is_null($applyTraining)){
             $applyTraining->delete();
-            return api_response(1,"Training canceled successfully");
+            return api_response(1,__("site.Training canceled successfully"));
         }else{
-            return api_response(0,"Invalid Training id");
+            return api_response(0,__("site.Invalid Training id"));
         }
     }
 
@@ -209,7 +210,7 @@ class StudentController extends Controller
         $job = Job::find($request->job_id);
         $jobApplication = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
         if ($job->status == "enough"){
-            return api_response(0,"Sorry this Job Enough You can choose anther");
+            return api_response(0,__("site.Sorry this Job Enough You can choose anther"));
         }
         if (!is_null($jobApplication)){
             if ($jobApplication->status == "canceled"){
@@ -221,9 +222,10 @@ class StudentController extends Controller
                 "job_id" => $request->job_id,
                 "user_id" => auth("api")->id(),
             ]);
-            return api_response(1,"Applied Job Successfully");
+            return api_response(1,__("site.Applied Job Successfully"));
         }else{
-            return api_response(0,"Sorry This Job ".$job->status." Please try later");
+            $msg = "Sorry This Job ".$job->status." Please try later";
+            return api_response(0,__("site.".$msg));
         }
 
     }
@@ -243,10 +245,10 @@ class StudentController extends Controller
         ]);
         $applyJob = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
         if (is_null($applyJob)){
-            return api_response(0,"Sorry inValid Job");
+            return api_response(0,__("site.Sorry inValid Job"));
         }else{
             $applyJob->delete();
-            return api_response(1,"Job Canceled Successfully");
+            return api_response(1,__("site.Job Canceled Successfully"));
         }
     }
     public function getJobDetails(Request $request){

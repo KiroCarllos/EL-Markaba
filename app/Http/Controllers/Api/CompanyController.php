@@ -23,19 +23,20 @@ class CompanyController extends Controller
         ]);
         $credentials = ["email" => $request->email, "password" => $request->password];
         if (!$token = auth("api")->attempt($credentials)) {
-            return api_response(0, "These credentials do not match our records.", "");
+            return api_response(0, __("site.These credentials do not match our records."), "");
         }
         $user = User::where("email", $request->email)->first();
         if ($user->role == "company" || $user->role == "super_admin") {
             if ($user->status == "active") {
                 $user->update(["auth_token" => $token]);
-                return api_response(1, "company successfully login", $user);
+                return api_response(1, __("site.company successfully login"), $user);
             } else {
-                return api_response(0, "Sorry Your Account is " . $user->status . " now");
+                $msg = "Sorry Your Account is " . $user->status . " now";
+                return api_response(0, __("site.".$msg));
             }
 
         } else {
-            return api_response(0, "Sorry Your Account Not Be Company", "");
+            return api_response(0, __("site.Sorry Your Account Not Be Company"), "");
         }
     }
 
@@ -87,7 +88,7 @@ class CompanyController extends Controller
                 $company->update(["tax_card_image" => uploadImage($request->tax_card_image, "uploads/companies/" . $user->id . "/tax_card/" . generateBcryptHash($user->id) . "/tax_card")]);
             }
             DB::commit();
-            return api_response(1, "company created successfully wait admins for approve");
+            return api_response(1, __("site.company created successfully wait admins for approve"));
         } catch (\Exception $exception) {
             DB::rollBack();
             return api_response(0, $exception);
@@ -99,7 +100,7 @@ class CompanyController extends Controller
     public function profile()
     {
         $user = User::query()->where("id", auth("api")->id())->with("company_details")->first();
-        return api_response(1, "profile company get successfully", $user);
+        return api_response(1, __("site.profile company get successfully"), $user);
     }
 
     // company logout
@@ -107,7 +108,7 @@ class CompanyController extends Controller
     {
         $user = auth("api")->user();
         $user->update(["auth_token" => null]);
-        return api_response(1, "company signOut successfully");
+        return api_response(1, __("site.company signOut successfully"));
     }
 
     public function getMyJobs()
@@ -194,11 +195,12 @@ class CompanyController extends Controller
         ]);
         $job = Job::whereId($request->job_id)->whereUserId(auth("api")->id())->first();
         if (is_null($job)){
-            return  api_response(0,"sorry job is inValid");
+            return  api_response(0,__("site.sorry job is inValid"));
         }
         $job->status =$request->status;
         $job->save();
-        return api_response(1, "your job ".$request->status ." successfully");
+        $msg = "your job ".$request->status ." successfully";
+        return api_response(1, __("site.".$msg));
     }
 
 }//end of controller
