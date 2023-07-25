@@ -105,6 +105,9 @@ return[
     "Sorry This Job enough Please try later" => 'Sorry This Job Enough Please try later',
     "Sorry inValid Job" => 'Sorry inValid Job',
     "Job Canceled Successfully" => 'Job Canceled Successfully',
+    "student deleted successfully" => 'Student Deleted Successfully',
+    "company deleted successfully" => 'Company Deleted Successfully',
+
 
 
 

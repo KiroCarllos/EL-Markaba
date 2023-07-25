@@ -209,6 +209,8 @@ return [
     "Sorry This Job enough Please try later" => 'عذرًا، هذه الوظيفة مكتفية بعدد كافٍ من المتقدمين، يرجى المحاولة لاحقًا',
     "Sorry inValid Job" => 'عذرًا، وظيفة غير صالحة',
     "Job Canceled Successfully" => 'تم إلغاء الوظيفة بنجاح',
+    "student deleted successfully" => 'تم حذف الطالب بنجاح',
+    "company deleted successfully" => 'تم حذف الشركة بنجاح',
 
 
 ];

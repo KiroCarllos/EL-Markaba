@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
@@ -10,7 +11,8 @@ use function asset;
 
 class User extends Authenticatable  implements JWTSubject
 {
-    use LaratrustUserTrait,Notifiable;
+    use SoftDeletes,LaratrustUserTrait,Notifiable;
+
     protected $connection = "mysql";
     protected $fillable = [
         'name',"status","role","mobile", 'email', 'password', 'image','auth_token'

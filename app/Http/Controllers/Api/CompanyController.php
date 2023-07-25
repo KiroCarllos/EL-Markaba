@@ -110,7 +110,12 @@ class CompanyController extends Controller
         $user->update(["auth_token" => null]);
         return api_response(1, __("site.company signOut successfully"));
     }
-
+    public function deleteAccount()
+    {
+        $user = auth("api")->user();
+        $user->delete();
+        return api_response(1, __("site.company deleted successfully"));
+    }
     public function getMyJobs()
     {
         $jobs = Job::where('user_id', auth("api")->id())

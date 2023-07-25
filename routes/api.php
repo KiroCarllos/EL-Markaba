@@ -57,6 +57,7 @@ Route::group(['prefix' => "company",'namespace' => 'Api',"middleware" =>["change
 Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
     Route::post('profile', 'CompanyController@profile');
     Route::post('logout', 'CompanyController@logout');
+    Route::post('deleteAccount', 'CompanyController@deleteAccount');
     Route::post('resetPassword', 'GeneralController@resetPassword');
 
 
@@ -82,6 +83,7 @@ Route::group(['prefix' => "student",'namespace' => 'Api',"middleware" => ["chang
 Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
     Route::post('profile', 'StudentController@profile');
     Route::post('logout', 'StudentController@logout');
+    Route::post('deleteAccount', 'StudentController@deleteAccount');
     Route::post('resetPassword', 'GeneralController@resetPassword');
 
     // POSTS

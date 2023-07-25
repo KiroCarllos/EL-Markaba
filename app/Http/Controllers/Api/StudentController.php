@@ -108,7 +108,12 @@ class StudentController extends Controller
         $user->update(["auth_token" => null]);
         return api_response(1, __("site.student signOut successfully"));
     }
-
+    public function deleteAccount()
+    {
+        $user = auth("api")->user();
+        $user->delete();
+        return api_response(1, __("site.student deleted successfully"));
+    }
     public function getPosts(){
         $posts = Post::active()->withCount("replies")->latest()->paginate(6);
         return api_response(1,"",$posts);
