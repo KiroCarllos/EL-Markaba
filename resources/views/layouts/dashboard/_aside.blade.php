@@ -54,6 +54,7 @@
                     <li>
                         <a href="{{ route('dashboard.sliders.index') }}"><i class="fa fa-picture-o"></i> @lang("site.sliders")</a>
                     </li>
+
                     @endif
 {{--                    <li>--}}
 {{--                        <a href="../charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a>--}}
@@ -64,7 +65,22 @@
 {{--                    <li>--}}
 {{--                        <a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a>--}}
 {{--                    </li>--}}
+
+
+
+
+
                 </ul>
+            </li>
+            <li>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out"></i>{{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </li>
         </ul>
 
