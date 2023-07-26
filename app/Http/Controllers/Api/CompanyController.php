@@ -117,6 +117,7 @@ class CompanyController extends Controller
         ]);
         $user = auth("api")->user();
         if (Hash::check($request->password,$user->password)){
+            $user->update(["email"=>"#".$user->email,"mobile"=>"#".$user->mobile]);
             $user->delete();
             return api_response(1, __("site.company deleted successfully"));
         }
