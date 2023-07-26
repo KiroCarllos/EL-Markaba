@@ -19,7 +19,7 @@ class Post extends Model
         "image",
     ];
     public $timestamps = false;
-    protected $appends = ["created_ago"];
+    protected $appends = ["created_ago","title","description"];
     public function getCreatedAgoAttribute(){
         return Carbon::parse($this->created_at)->diffForHumans();
     }
@@ -34,5 +34,14 @@ class Post extends Model
     }
     public function getImageAttribute($image){
         return asset($image);
+    }
+
+    public function getTitleAttribute(){
+        $title = app()->getLocale() == "ar" ? $this->title_ar : $this->title_en;
+        return $title;
+    }
+    public function getDescriptionAttribute(){
+        $description = app()->getLocale() == "ar" ? $this->description_ar : $this->description_en;
+        return $description;
     }
 }

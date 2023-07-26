@@ -19,6 +19,7 @@ class Training extends Model
         "image",
     ];
     public $timestamps = false;
+    protected $appends = ["title","description"];
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
     }
@@ -33,5 +34,13 @@ class Training extends Model
     }
     public function getImageAttribute($image){
         return asset($image);
+    }
+    public function getTitleAttribute(){
+        $title = app()->getLocale() == "ar" ? $this->title_ar : $this->title_en;
+        return $title;
+    }
+    public function getDescriptionAttribute(){
+        $description = app()->getLocale() == "ar" ? $this->description_ar : $this->description_en;
+        return $description;
     }
 }

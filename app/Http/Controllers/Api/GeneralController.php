@@ -18,20 +18,37 @@ use Illuminate\Validation\Rule;
 class GeneralController extends Controller
 {
    public function getUniversities(){
-       $universities= University::select("id","name_".app()->getLocale())->get();
+       $universities= University::select("id","name_en","name_ar")->get();
+       foreach ($universities as $university){
+           $name = app()->getLocale() == "ar" ?$university->name_ar:$university->name_en;
+           $university->setAttribute("name",$name);
+           $university->makeHidden(["name_en","name_ar"]);
+       }
        return api_response(1,"",$universities);
    }
     public function getFacultyByUniversity(Request $request){
        $request->validate([
            "university_id" => ["required","numeric",Rule::exists("universities","id")]
        ]);
-        return api_response(1,"",Faculty::query()->select("id","name_".app()->getLocale())->where("university_id",$request->university_id)->get());
+       $faculties = Faculty::query()->select("id","name_en","name_ar")->where("university_id",$request->university_id)->get();
+        foreach ($faculties as $faculty){
+            $name = app()->getLocale() == "ar" ?$faculty->name_ar:$faculty->name_en;
+            $faculty->setAttribute("name",$name);
+            $faculty->makeHidden(["name_en","name_ar"]);
+        }
+        return api_response(1,"",$faculties);
     }
     public function getMajorByFaculty(Request $request){
         $request->validate([
             "faculty_id" => ["required","numeric",Rule::exists("faculties","id")]
         ]);
-        return api_response(1,"",Major::query()->select("id","name_".app()->getLocale())->where("faculty_id",$request->faculty_id)->get());
+        $majors = Major::query()->select("id","name_".app()->getLocale())->where("faculty_id",$request->faculty_id)->get();
+        foreach ($majors as $obj){
+            $name = app()->getLocale() == "ar" ?$obj->name_ar:$obj->name_en;
+            $obj->setAttribute("name",$name);
+            $obj->makeHidden(["name_en","name_ar"]);
+        }
+        return api_response(1,"",$majors);
     }
     public function getSlider(Request $request){
         $request->validate([
