@@ -110,11 +110,18 @@ class CompanyController extends Controller
         $user->update(["auth_token" => null]);
         return api_response(1, __("site.company signOut successfully"));
     }
-    public function deleteAccount()
+    public function deleteAccount(Request $request)
     {
+        $request->validate([
+            "password" => ["required","confirmed"]
+        ]);
         $user = auth("api")->user();
-        $user->delete();
-        return api_response(1, __("site.company deleted successfully"));
+        if (Hash::check($request->password,$user->password)){
+            $user->delete();
+            return api_response(1, __("site.company deleted successfully"));
+        }
+        return api_response(0, __("site.Sorry Wrong Password"));
+
     }
     public function getMyJobs()
     {

@@ -108,6 +108,7 @@ return[
     "student deleted successfully" => 'Student Deleted Successfully',
     "company deleted successfully" => 'Company Deleted Successfully',
     "Invalid or expired token" => 'Invalid or expired token',
+    "Sorry Wrong Password" => 'Sorry Wrong Password',
 
 
 
