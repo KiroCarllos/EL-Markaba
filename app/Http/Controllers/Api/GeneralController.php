@@ -38,18 +38,7 @@ class GeneralController extends Controller
         }
         return api_response(1,"",$faculties);
     }
-    public function getMajorByFaculty(Request $request){
-        $request->validate([
-            "faculty_id" => ["required","numeric",Rule::exists("faculties","id")]
-        ]);
-        $majors = Major::query()->select("id","name_".app()->getLocale())->where("faculty_id",$request->faculty_id)->get();
-        foreach ($majors as $obj){
-            $name = app()->getLocale() == "ar" ?$obj->name_ar:$obj->name_en;
-            $obj->setAttribute("name",$name);
-            $obj->makeHidden(["name_en","name_ar"]);
-        }
-        return api_response(1,"",$majors);
-    }
+
     public function getSlider(Request $request){
         $request->validate([
             "role" => ["required","in:super_admin,admin,student,job_company,company"]

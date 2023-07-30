@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\CompanyDetail;
+use App\Models\Faculty;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\Major;
@@ -51,18 +52,20 @@ class StudentController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => ["required", "string","max:191"],
             'mobile' => 'required|string|size:11|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
+            'email' => 'required|max:191|email|unique:users',
+            'password' => 'required|max:191|confirmed',
             'image' => 'required|mimes:jpeg,png,jpg|max:2048',
             'gender' => 'required|in:male,female',
+            'education' => 'required|in:high,medium,low,else',
             'national_id' => 'required|string|size:14',
-            'major_id' => ["required", Rule::exists("majors", "id")],
-            'graduated_at' => ['required', 'date_format:Y'],
-            "prior_experiences" => ["required", "array"],
-            "courses" => ["required", "array"],
-            "address" => ["required", "string"],
+            'major' => ["required", "string","max:191"],
+            'faculty_id' => ["required", "numeric",Rule::exists("faculties","id")],
+            'graduated_at' => ['nullable', 'date_format:Y'],
+            "prior_experiences" => ["nullable", "array"],
+            "courses" => ["nullable", "array"],
+            "address" => ["nullable", "string"],
         ]);
         $userData = $request->only(["name", "mobile", "email"]);
         $userData["password"] = Hash::make($request->password);
@@ -81,11 +84,17 @@ class StudentController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
             $user->attachRole('student');
-            $studentData = $request->only(["gender", "national_id", "major_id", "graduated_at", "prior_experiences", "courses", "address"]);
+            if ($request->education == "else"){
+                $request->validate([
+                    "else_education" => ["required","string","max:191"]
+                ]);
+            }else{
+
+            }
+            $studentData = $request->only(["gender","education","else_education", "national_id", "faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
             $studentData = StudentDetail::query()->updateOrCreate([
                 "user_id" => $user->id
             ], $studentData);
-
             DB::commit();
             return api_response(1, __("site.student created successfully wait admins for approve"));
         } catch (\Exception $exception) {
