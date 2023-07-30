@@ -60,7 +60,7 @@ class StudentController extends Controller
             'gender' => 'required|in:male,female',
             'education' => 'required|in:high,medium,low,else',
             'national_id' => 'required|string|size:14',
-            'major' => ["required", "string","max:191"],
+            'major' => ["nullable", "string","max:191"],
             'faculty_id' => ["nullable", "numeric",Rule::exists("faculties","id")],
             'graduated_at' => ['nullable', 'date_format:Y'],
             "prior_experiences" => ["nullable", "array"],
