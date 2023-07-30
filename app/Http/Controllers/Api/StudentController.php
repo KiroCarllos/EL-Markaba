@@ -60,12 +60,9 @@ class StudentController extends Controller
             'gender' => 'required|in:male,female',
             'education' => 'required|in:high,medium,low,else',
             'national_id' => 'required|string|size:14',
-            'major' => ["nullable", "string","max:191"],
-            'faculty_id' => ["nullable", "numeric",Rule::exists("faculties","id")],
-            'graduated_at' => ['nullable', 'date_format:Y'],
             "prior_experiences" => ["nullable", "array"],
             "courses" => ["nullable", "array"],
-            "address" => ["nullable", "string"],
+            "address" => ["required", "string"],
         ]);
         $userData = $request->only(["name", "mobile", "email"]);
         $userData["password"] = Hash::make($request->password);
@@ -89,7 +86,11 @@ class StudentController extends Controller
                     "else_education" => ["required","string","max:191"]
                 ]);
             }else{
-
+                $request->validate([
+                    'major' => ["required", "string","max:191"],
+                    'faculty_id' => ["required", "numeric",Rule::exists("faculties","id")],
+                    'graduated_at' => ['required', 'date_format:Y'],
+                ]);
             }
             $studentData = $request->only(["gender","education","else_education", "national_id", "faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
             $studentData = StudentDetail::query()->updateOrCreate([
