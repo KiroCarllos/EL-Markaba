@@ -7,23 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 class StudentDetail extends Model
 {
     protected $fillable = [
-      "user_id",
-      "gender",
-      "major",
-      "faculty_id",
-      "gender",
-      "national_id",
-      "education",
-      "graduated_at",
-      "else_education",
-      "address",
-      "courses",
-      "prior_experiences",
+        "user_id",
+        "gender",
+        "major",
+        "faculty_id",
+        "gender",
+        "national_id",
+        "education",
+        "graduated_at",
+        "else_education",
+        "address",
+        "courses",
+        "prior_experiences",
     ];
     protected $casts = [
         "courses" => "json",
         "prior_experiences" => "json",
     ];
+    protected $appends = ["faculty_name"];
+    public function getFacultyNameAttribute(){
+        return Faculty::where("id",$this->faculty_id)->pluck( "name_".app()->getLocale())->first();
+    }
 
     public function user(){
         return $this->belongsTo(User::class,"user_id",'id');
