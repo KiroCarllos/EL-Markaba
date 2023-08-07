@@ -36,6 +36,7 @@ class PostController extends Controller
             'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
         ]);
         $postData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
+        $postData["created_at"] = Carbon::now('Africa/Cairo')->toDateTimeString();
         try{
             DB::beginTransaction();
             $post = Post::query()->firstOrCreate($postData);
