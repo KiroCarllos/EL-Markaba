@@ -14,32 +14,48 @@ class Training extends Model
         "title_ar",
         "description_en",
         "description_ar",
+        "created_at",
+        "updated_at",
         "paid",
         "user_id",
         "image",
     ];
     public $timestamps = false;
-    protected $appends = ["title","description"];
-    public function user(){
-        return $this->belongsTo(User::class,"user_id","id");
+    protected $appends = ["title", "description"];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
     }
-    public function applications(){
-        return $this->hasMany(TrainingApplication::class,"training_id","id");
+
+    public function applications()
+    {
+        return $this->hasMany(TrainingApplication::class, "training_id", "id");
     }
-    public function scopeActive($q){
-        return $q->where("status","active");
+
+    public function scopeActive($q)
+    {
+        return $q->where("status", "active");
     }
-    public function scopeActiveMyTraining($q){
-        return $q->whereIn("status",["pending","inProgress","active"]);
+
+    public function scopeActiveMyTraining($q)
+    {
+        return $q->whereIn("status", ["pending", "inProgress", "active"]);
     }
-    public function getImageAttribute($image){
+
+    public function getImageAttribute($image)
+    {
         return asset($image);
     }
-    public function getTitleAttribute(){
+
+    public function getTitleAttribute()
+    {
         $title = app()->getLocale() == "ar" ? $this->title_ar : $this->title_en;
         return $title;
     }
-    public function getDescriptionAttribute(){
+
+    public function getDescriptionAttribute()
+    {
         $description = app()->getLocale() == "ar" ? $this->description_ar : $this->description_en;
         return $description;
     }
