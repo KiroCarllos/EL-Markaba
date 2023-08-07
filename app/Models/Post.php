@@ -22,7 +22,7 @@ class Post extends Model
     ];
     protected $appends = ["created_ago","title","description"];
     public function getCreatedAgoAttribute(){
-        return 0;
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'Africa/Cairo')->diffForHumans();
     }
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
