@@ -22,7 +22,7 @@ class Post extends Model
     ];
     protected $appends = ["created_ago","title","description"];
     public function getCreatedAgoAttribute(){
-        return $this->created_at;
+        return 0;
     }
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
