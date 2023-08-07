@@ -21,12 +21,9 @@ class Post extends Model
         "image",
     ];
     protected $appends = ["created_ago","title","description"];
-    public $timestamps = false;
+    public $timestamps = true;
     public function getCreatedAgoAttribute(){
-        $dateString = trim($this->created_at);
-        $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $dateString, 'Africa/Cairo')->diffForHumans();
-
-        return $carbonDate;
+        return Carbon::parse($this->created_at)->diffForHumans();
     }
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
