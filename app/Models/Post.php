@@ -21,9 +21,14 @@ class Post extends Model
         "image",
     ];
     protected $appends = ["created_ago","title","description"];
-    public $timestamps = true;
+    public $timestamps = false;
     public function getCreatedAgoAttribute(){
-        return $this->created_at;
+        Carbon::setLocale('en');
+        // Trim the date string and create Carbon instance
+        $dateString = trim($this->created_at);
+        $dateString = Carbon::parse($dateString)->toDateTimeString();
+        $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $dateString, 'Africa/Cairo')->diffForHumans();
+        return $carbonDate;
     }
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
