@@ -23,7 +23,7 @@ class Post extends Model
     protected $appends = ["created_ago","title","description"];
     public $timestamps = true;
     public function getCreatedAgoAttribute(){
-        return Carbon::parse($this->created_at)->diffForHumans();
+        return $this->created_at;
     }
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
