@@ -37,6 +37,7 @@ class PostController extends Controller
         ]);
         $postData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
         $postData["created_at"] = Carbon::now('Africa/Cairo')->toDateTimeString();
+        $postData["updated_at"] = Carbon::now('Africa/Cairo')->toDateTimeString();
         $postData["user_id"] = auth()->id();
         try{
             DB::beginTransaction();

@@ -16,6 +16,8 @@ class Post extends Model
         "description_en",
         "description_ar",
         "user_id",
+        "created_at",
+        "updated_at",
         "image",
     ];
     protected $appends = ["created_ago","title","description"];
