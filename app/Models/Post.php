@@ -23,7 +23,7 @@ class Post extends Model
     protected $appends = ["created_ago","title","description"];
     public $timestamps = false;
     public function getCreatedAgoAttribute(){
-        Carbon::setLocale('en');
+        Carbon::setLocale(app()->getLocale());
         // Trim the date string and create Carbon instance
         $dateString = trim($this->created_at);
         $dateString = Carbon::parse($dateString)->toDateTimeString();
