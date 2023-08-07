@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Major;
+use App\Http\Controllers\Api\GeneralController;
+use App\Models\University;
 use App\Models\User;
 use App\Models\StudentDetail;
 use Illuminate\Http\Request;
@@ -87,16 +88,15 @@ class StudentDetailController extends Controller
         }
     }//end of store
 
-    public
-    function edit($id)
+    public function edit($id)
     {
         $userStudentDetail = User::whereId($id)->with("student_details")->first();
-        return view('dashboard.user_student_details.edit', compact('userStudentDetail'));
+        $universities = $this->getUniversities();
+        $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty->university_id);
+        return view('dashboard.user_student_details.edit', compact('userStudentDetail',"universities","faculties"));
+    } //end of user
 
-    }//end of user
-
-    public
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'email' => ['required', Rule::unique('users',"email")->ignore($request->user_id)],
@@ -104,14 +104,13 @@ class StudentDetailController extends Controller
             'mobile' => ['required',"size:11", Rule::unique('users','mobile')->ignore($request->user_id)],
             'password' => 'nullable',
             'national_id' => 'required|string|size:14',
-            'graduated_at' => ['required', 'date_format:Y'],
+            'graduated_at' => ['nullable', 'date_format:Y'],
             'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
             'gender' => 'required|in:male,female',
-            "prior_experiences" => ["required", "array"],
-            "courses" => ["required", "array"],
-            "address" => ["required", "string"],
-            'major_id' => ["required", Rule::exists('majors',"id")->whereIn('id', Major::pluck('id')->toArray())->whereNotIn('id', ['not_from_above'])],
-            'else_major' => 'required_if:major_id,not_from_above',
+            "prior_experiences" => ["nullable", "array"],
+            "courses" => ["nullable", "array"],
+            "address" => ["nullable", "string"],
+            'major' => ["required", "string"],
         ]);
         $userData = $request->only(["name","mobile","email","status"]);
         if ($request->has("password") && !is_null($request->password)){

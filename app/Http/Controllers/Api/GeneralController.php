@@ -18,12 +18,7 @@ use Illuminate\Validation\Rule;
 class GeneralController extends Controller
 {
    public function getUniversities(){
-       $universities= University::select("id","name_en","name_ar")->get();
-       foreach ($universities as $university){
-           $name = app()->getLocale() == "ar" ?$university->name_ar:$university->name_en;
-           $university->setAttribute("name",$name);
-           $university->makeHidden(["name_en","name_ar"]);
-       }
+       $universities= $this->getUniversities();
        return api_response(1,"",$universities);
    }
     public function getFacultyByUniversity(Request $request){

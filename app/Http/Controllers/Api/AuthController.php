@@ -20,8 +20,6 @@ class AuthController extends Controller
         return api_response(1, __("site.successfully login"), $user);
     }
 
-
-
     public function profile(Request $request){
         dd($request->all());
     }
