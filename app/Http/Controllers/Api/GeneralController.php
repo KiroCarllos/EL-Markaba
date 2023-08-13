@@ -18,7 +18,7 @@ use Illuminate\Validation\Rule;
 class GeneralController extends Controller
 {
    public function getUniversities(){
-       $universities= $this->getUniversities();
+       $universities= $this->getAllUniversities();
        return api_response(1,"",$universities);
    }
     public function getFacultyByUniversity(Request $request){
