@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Models\Major;
 use App\Models\ResetPassword;
+use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\University;
 use App\Models\User;
@@ -42,7 +43,9 @@ class GeneralController extends Controller
         return api_response(1,"",$sliders);
     }
 
-
+    public function getSetting(){
+       return api_response(1,"",Setting::first());
+    }
 
     // Forget Password
     public function sendMailForReset(Request $request){
