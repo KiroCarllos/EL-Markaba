@@ -91,7 +91,7 @@ class StudentDetailController extends Controller
     public function edit($id)
     {
         $userStudentDetail = User::whereId($id)->with("student_details")->first();
-        $universities = $this->getUniversities();
+        $universities = $this->getAllUniversities();
         $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty->university_id);
         return view('dashboard.user_student_details.edit', compact('userStudentDetail',"universities","faculties"));
     } //end of user
