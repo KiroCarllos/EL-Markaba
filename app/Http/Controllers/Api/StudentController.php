@@ -62,6 +62,7 @@ class StudentController extends Controller
             'national_id' => 'required|string|size:14',
             "prior_experiences" => ["nullable", "array"],
             "courses" => ["nullable", "array"],
+            "device_token" => ["nullable","string"],
             "address" => ["required", "string"],
         ]);
         $userData = $request->only(["name", "mobile", "email"]);
@@ -96,6 +97,10 @@ class StudentController extends Controller
             $studentData = StudentDetail::query()->updateOrCreate([
                 "user_id" => $user->id
             ], $studentData);
+
+
+            $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d","c1lsSlYgQDiAZVDTBwD2W2:APA91bHXFurrWA-iZIiyRO3xcRFoDsipBv1_St1ds7-k3agcelUzfL02wsCFJDlFfvSTWpiT_oiBMLmujQ8QQJZfKQWxaxhwVT_fvOdJzO56l2lTxmfZyGGAZgb2Llp8AW0mAVxruT8-"];
+            send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount");
             DB::commit();
             return api_response(1, __("site.student created successfully wait admins for approve"));
         } catch (\Exception $exception) {
@@ -176,6 +181,10 @@ class StudentController extends Controller
         if ($training->paid == "no"){
              $applyTraining->update(["status" => "inProgress"]);
         }
+
+        $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d","c1lsSlYgQDiAZVDTBwD2W2:APA91bHXFurrWA-iZIiyRO3xcRFoDsipBv1_St1ds7-k3agcelUzfL02wsCFJDlFfvSTWpiT_oiBMLmujQ8QQJZfKQWxaxhwVT_fvOdJzO56l2lTxmfZyGGAZgb2Llp8AW0mAVxruT8-"];
+        send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining");
+
         return api_response(1,__("site.Applied Training Successfully"),TrainingApplication::find($applyTraining->id));
     }
     public function myTrainings(){

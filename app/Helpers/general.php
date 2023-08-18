@@ -75,3 +75,55 @@ function deleteOldFiles($path){
         // Directory does not exist
     }
 }
+
+
+if (!function_exists('send_fcm')) {
+
+    function send_fcm($tokens, $title, $message, $type = null, $data = [])
+    {
+        if (!empty($tokens)) {
+            ob_start();
+            $notification = [
+                'data' => [
+                    'type' => $type,
+                    'title' => $title,
+                    'body' => $message,
+                    'data' => $data
+                ],
+                'notification' => [
+                    'title' => $title,
+                    'type' => $type,
+                    'body' => $message,
+                    'sound' => 'default',
+                    'data' => $data
+                ],
+                "content_available" => true,
+                "apns-priority" => "5",
+                'registration_ids' => $tokens,
+                'priority' => 'high',
+                'sound' => 'default',
+                'badge' => 1,
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
+            ];
+            $headers = [
+                'Authorization' => 'key=AAAAmm0zoMA:APA91bHJeMQiLObppn7UWBl2dx30MSx5GZi-pJz3RsmB6WEXyR29-h6wbLC37TiCvyK7HMrLtKme8YmHmtgpiFw03ViYZG7_wpqtMSrZ0oCbgIarcPl6KwTABXlIUk5RzjbyH_J7k0FL',
+                'Content-Type' => 'application/json'
+            ];
+            $url = "https://fcm.googleapis.com/";
+            $client = new \GuzzleHttp\Client([
+                'base_uri' => $url,
+            ]);
+
+            ////// IOS /////
+            $response = $client->post('fcm/send', [
+                'debug' => fopen('php://stderr', 'w'),
+                'body' => json_encode($notification),
+                'headers' => $headers
+            ]);
+            ob_end_clean();
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

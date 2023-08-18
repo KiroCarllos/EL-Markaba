@@ -14,6 +14,9 @@ return[
     'N_F'=>'FAST MEASUREMENT',
 
 
+    'your_account_added_please_wait_activation' => 'You have created your account successfully please ,wait our activation',
+    'you_has_apply_training_and_now_pending' => 'Your request has been successfully received and is now under review',
+    'markz_el_markaba' => 'El Markaba',
 
 
 

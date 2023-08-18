@@ -24,6 +24,10 @@ return [
     'company' => 'شركه',
     'paid' => 'مدفوع',
     'yes' => 'نعم',
+    'your_account_added_please_wait_activation' => 'لقد تم انشاء حسابك بنجاح برجاء انتظار التفعيل',
+    'you_has_apply_training_and_now_pending' => 'لقد تم استلام طلبك بنجاح وهو الان قيد المراجعه',
+    'markz_el_markaba' => 'مركز المركبة للارشاء الوظيفي',
+
     'no' => 'لا',
 
     'student' => 'طالب',
