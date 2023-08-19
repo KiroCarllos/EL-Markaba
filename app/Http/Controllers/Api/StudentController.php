@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-
+use JWTAuth;
 class StudentController extends Controller
 {
     // student login
@@ -33,6 +33,8 @@ class StudentController extends Controller
         if (!$token = auth("api")->attempt($credentials)) {
             return api_response(0, __("site.These credentials do not match our records."), "");
         }
+        $token = JWTAuth::getToken();
+
         dd($token);
         $user = User::where("email", $request->email)->first();
         if ($user->role == "student" || $user->role == "super_admin") {

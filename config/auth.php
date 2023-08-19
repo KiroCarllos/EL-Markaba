@@ -42,9 +42,7 @@ return [
         ],
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'users',
-            'hash' => false,
-            'expire' => 1200,
+            'provider' => 'users'
         ],
     ],
 
