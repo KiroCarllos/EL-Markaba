@@ -32,7 +32,7 @@ class StudentController extends Controller
         if (!is_null($user)){
             if (Hash::check($request->password,$user->password)){
                 if (!$token = auth("api")->login($user)) {
-                    return responseApi(0, __("api.These credentials do not match our records."));
+                    return api_response(0, __("api.These credentials do not match our records."));
                 }
                 if ($user->role == "student" || $user->role == "super_admin") {
                     if ($user->status == "active") {
