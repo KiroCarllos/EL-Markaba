@@ -108,9 +108,10 @@ class StudentController extends Controller
                 "user_id" => $user->id
             ], $studentData);
 
-
-            $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d","c1lsSlYgQDiAZVDTBwD2W2:APA91bHXFurrWA-iZIiyRO3xcRFoDsipBv1_St1ds7-k3agcelUzfL02wsCFJDlFfvSTWpiT_oiBMLmujQ8QQJZfKQWxaxhwVT_fvOdJzO56l2lTxmfZyGGAZgb2Llp8AW0mAVxruT8-"];
-            send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount");
+            if ($request->has("device_token")&& !is_null($request->device_token)){
+                $recipients = $request->only($request->device_token);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount");
+            }
             DB::commit();
             return api_response(1, __("site.student created successfully wait admins for approve"));
         } catch (\Exception $exception) {
@@ -191,10 +192,10 @@ class StudentController extends Controller
         if ($training->paid == "no"){
              $applyTraining->update(["status" => "inProgress"]);
         }
-
-        $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d","c1lsSlYgQDiAZVDTBwD2W2:APA91bHXFurrWA-iZIiyRO3xcRFoDsipBv1_St1ds7-k3agcelUzfL02wsCFJDlFfvSTWpiT_oiBMLmujQ8QQJZfKQWxaxhwVT_fvOdJzO56l2lTxmfZyGGAZgb2Llp8AW0mAVxruT8-"];
-        send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining");
-
+        if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
+            $recipients = [auth("api")->user()->device_token];
+            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining");
+        }
         return api_response(1,__("site.Applied Training Successfully"),TrainingApplication::find($applyTraining->id));
     }
     public function myTrainings(){
@@ -221,9 +222,11 @@ class StudentController extends Controller
                 if ($request->has("receipt_image") && is_file($request->receipt_image)){
                     deleteOldFiles("uploads/student/" . auth("api")->id() . "/training/".$request->training_id."/receipt_image");
                     if ($request->receipt_image) {
-                        $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d","c1lsSlYgQDiAZVDTBwD2W2:APA91bHXFurrWA-iZIiyRO3xcRFoDsipBv1_St1ds7-k3agcelUzfL02wsCFJDlFfvSTWpiT_oiBMLmujQ8QQJZfKQWxaxhwVT_fvOdJzO56l2lTxmfZyGGAZgb2Llp8AW0mAVxruT8-"];
-                        send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining");
 
+                        if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
+                            $recipients = [auth("api")->user()->device_token];
+                            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining");
+                        }
                         $training_application->update(["status" => "inProgress","receipt_image" => uploadImage($request->receipt_image, "uploads/student/training/" . auth("api")->id() . "/".$request->training_id."/receipt_image")]);
                     }
                 }
@@ -242,8 +245,10 @@ class StudentController extends Controller
         $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
         if (!is_null($applyTraining)){
             $applyTraining->delete();
-            $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d","c1lsSlYgQDiAZVDTBwD2W2:APA91bHXFurrWA-iZIiyRO3xcRFoDsipBv1_St1ds7-k3agcelUzfL02wsCFJDlFfvSTWpiT_oiBMLmujQ8QQJZfKQWxaxhwVT_fvOdJzO56l2lTxmfZyGGAZgb2Llp8AW0mAVxruT8-"];
-            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining");
+            if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
+                $recipients = [auth("api")->user()->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining");
+            }
             return api_response(1,__("site.Training canceled successfully"));
         }else{
             return api_response(0,__("site.Invalid Training id"));

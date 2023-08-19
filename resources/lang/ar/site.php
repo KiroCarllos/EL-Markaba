@@ -29,6 +29,7 @@ return [
     'you_has_delete_training_successfully' => 'لقد تم حذف التدريب بنجاح',
     'markz_el_markaba' => 'مركز المركبة للارشاء الوظيفي',
     'you_has_add_training_successfully' => 'لقد تم اضافه تدريب جديد',
+    'you_has_add_post_successfully' => 'لقد تم اضافه منشور جديد',
 
     'no' => 'لا',
 

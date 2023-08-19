@@ -18,6 +18,7 @@ return[
     'you_has_apply_training_and_now_pending' => 'Your request has been successfully received and is now under review',
     'markz_el_markaba' => 'El Markaba',
     'you_has_delete_training_successfully' => 'The training has been successfully deleted',
+    'you_has_add_post_successfully' => 'New Post has been successfully created',
 
     'you_has_add_training_successfully' => 'New training has been added',
 
