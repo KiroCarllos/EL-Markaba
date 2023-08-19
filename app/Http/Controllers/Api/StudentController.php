@@ -27,6 +27,7 @@ class StudentController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'device_token' => 'nullable',
         ]);
         $user = User::where("email",$request->email)->first();
         if (!is_null($user)){
@@ -36,7 +37,7 @@ class StudentController extends Controller
                 }
                 if ($user->role == "student" || $user->role == "super_admin") {
                     if ($user->status == "active") {
-                        $user->update(["auth_token" => $token]);
+                        $user->update(["auth_token" => $token,"device_token"=>$request->device_token]);
                         return api_response(1, __("site.student successfully login"), $user);
                     } else {
                         $msg = "Sorry Your Account is " . $user->status . " now";
@@ -73,7 +74,7 @@ class StudentController extends Controller
             "device_token" => ["nullable","string"],
             "address" => ["required", "string"],
         ]);
-        $userData = $request->only(["name", "mobile", "email"]);
+        $userData = $request->only(["name", "mobile", "email","device_token"]);
         $userData["password"] = Hash::make($request->password);
         try {
             DB::beginTransaction();
@@ -83,6 +84,7 @@ class StudentController extends Controller
                 "name" => $userData["name"],
                 "email" => $userData["email"],
                 "password" => $userData["password"],
+                "device_token" => $userData["device_token"],
                 "role" => "student",
             ]);
             deleteOldFiles("uploads/student/" . $user->id . "/profile");
