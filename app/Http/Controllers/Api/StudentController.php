@@ -28,7 +28,7 @@ class StudentController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        $user = User::where("")->where("email",$request->email)->first();
+        $user = User::where("email",$request->email)->first();
         if (!is_null($user)){
             if (Hash::check($request->password,$user->password)){
                 if (!$token = auth("api")->login($user)) {
