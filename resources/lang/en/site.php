@@ -17,7 +17,9 @@ return[
     'your_account_added_please_wait_activation' => 'You have created your account successfully please ,wait our activation',
     'you_has_apply_training_and_now_pending' => 'Your request has been successfully received and is now under review',
     'markz_el_markaba' => 'El Markaba',
+    'you_has_delete_training_successfully' => 'The training has been successfully deleted',
 
+    'you_has_add_training_successfully' => 'New training has been added',
 
 
 

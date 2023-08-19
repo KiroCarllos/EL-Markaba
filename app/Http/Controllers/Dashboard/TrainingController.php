@@ -49,6 +49,9 @@ class TrainingController extends Controller
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
+            $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d","c1lsSlYgQDiAZVDTBwD2W2:APA91bHXFurrWA-iZIiyRO3xcRFoDsipBv1_St1ds7-k3agcelUzfL02wsCFJDlFfvSTWpiT_oiBMLmujQ8QQJZfKQWxaxhwVT_fvOdJzO56l2lTxmfZyGGAZgb2Llp8AW0mAVxruT8-"];
+            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_add_training_successfully"),"trainings");
+
             return redirect()->route('dashboard.trainings.index');
         }catch (\Exception $exception){
             DB::rollBack();

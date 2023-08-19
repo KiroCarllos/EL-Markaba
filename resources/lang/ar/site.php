@@ -26,7 +26,9 @@ return [
     'yes' => 'نعم',
     'your_account_added_please_wait_activation' => 'لقد تم انشاء حسابك بنجاح برجاء انتظار التفعيل',
     'you_has_apply_training_and_now_pending' => 'لقد تم استلام طلبك بنجاح وهو الان قيد المراجعه',
+    'you_has_delete_training_successfully' => 'لقد تم حذف التدريب بنجاح',
     'markz_el_markaba' => 'مركز المركبة للارشاء الوظيفي',
+    'you_has_add_training_successfully' => 'لقد تم اضافه تدريب جديد',
 
     'no' => 'لا',
 
