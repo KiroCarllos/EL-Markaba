@@ -18,7 +18,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use JWTAuth;
 class StudentController extends Controller
 {
     // student login
@@ -32,21 +31,31 @@ class StudentController extends Controller
         if (!$token = auth("api")->attempt($credentials)) {
             return api_response(0, __("site.These credentials do not match our records."), "");
         }
-        JWTAuth::checkOrFail($token);
-        dd($token);
-        $user = User::where("email", $request->email)->first();
-        if ($user->role == "student" || $user->role == "super_admin") {
-            if ($user->status == "active") {
-                $user->update(["auth_token" => $token]);
-                return api_response(1, __("site.student successfully login"), $user);
-            } else {
-                $msg = "Sorry Your Account is " . $user->status . " now";
-                return api_response(0, __("site.".$msg));
+        try {
+            if (!$token = auth("api")->attempt($credentials)) {
+                return api_response(0, __("site.These credentials do not match our records."), "");
             }
+            $user = User::where("email", $request->email)->first();
+            if ($user->role == "student" || $user->role == "super_admin") {
+                if ($user->status == "active") {
+                    $user->update(["auth_token" => $token]);
+                    return api_response(1, __("site.student successfully login"), $user);
+                } else {
+                    $msg = "Sorry Your Account is " . $user->status . " now";
+                    return api_response(0, __("site.".$msg));
+                }
 
-        } else {
-            return api_response(0, __("site.Sorry Your Account Not Be Student"), "");
+            } else {
+                return api_response(0, __("site.Sorry Your Account Not Be Student"), "");
+            }
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            // Log or handle the exception
+            return api_response(0, "Token has expired.", "");
+        } catch (\Exception $e) {
+            // Log or handle other exceptions
+            return api_response(0, "An error occurred.", "");
         }
+
     }
 
     // student register
