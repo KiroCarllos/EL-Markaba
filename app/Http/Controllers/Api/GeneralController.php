@@ -39,7 +39,7 @@ class GeneralController extends Controller
         $request->validate([
             "role" => ["required","in:super_admin,admin,student,job_company,company"]
         ]);
-        $sliders = Slider::active()->whereJsonContains("role",$request->role)->pluck("image")->toArray();
+        $sliders = Slider::active()->whereJsonContains("role",$request->role)->latest()->pluck("image")->toArray();
         return api_response(1,"",$sliders);
     }
 
