@@ -45,13 +45,17 @@ class GeneralController extends Controller
     public function about(){
         $data["details_ar"] = "مركز المركبة هو مركز للارشاد الوظيفي وريادة الاعمال بتاسيس ورعاية نيافة الحبر الجليل الانبا بافلي اسقف المنتزه و الشباب بالاسكندرية لخدمة شباب وشابات الاسكندرية ومساعدتهم لدخول سوق العمل و القبول بافضل الشركات و تحديد مجالات العمل المناسبة لهم بعد عملية التقييم الشخصي و التدريب حسب الاحتياجات الشخصية كما يهتم المركز بتقديم الاستشارات لرواد الاعمال الشباب.";
         $data["details_en"] = "Markz El Markaba is a center for career guidance and entrepreneurship, established and sponsored by His Grace Bishop Pavli, Bishop of Montazah and Youth in Alexandria, to serve the youth of Alexandria and help them enter the labor market, accept the best companies, and determine the appropriate fields of work for them after the process of personal evaluation and training according to personal needs. The center also cares Providing advice to young entrepreneurs.";
-        $data["urls"][0]["type"] = "whatsApp";
+        $data["urls"][0]["type_en"] = "whatsApp";
+        $data["urls"][0]["type_ar"] = "الواتساب";
         $data["urls"][0]["value"] = "whatsApp";
-        $data["urls"][1]["type"] = "Facebook";
+        $data["urls"][1]["type_en"] = "Facebook";
+        $data["urls"][1]["type_ar"] = "الفيسبوك";
         $data["urls"][1]["value"] = "https://www.facebook.com/CareerGuidanceCenter2018/";
-        $data["urls"][2]["type"] = "Email";
+        $data["urls"][2]["type_en"] = "Email";
+        $data["urls"][2]["type_ar"] = "الايميل";
         $data["urls"][2]["value"] = "elmarkaba.careerguidance@gmail.com";
-        $data["urls"][3]["type"] = "Mobile";
+        $data["urls"][3]["type_en"] = "Mobile";
+        $data["urls"][3]["type_ar"] = "الموبيل";
         $data["urls"][3]["value"] = "01288834652";
 
        return api_response(1,"",$data);
