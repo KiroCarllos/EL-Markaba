@@ -53,16 +53,69 @@
 {{--</html>--}}
 
 
+{{--    <!DOCTYPE html>--}}
+{{--<html dir="rtl" lang="ar">--}}
+{{--<head>--}}
+{{--    <meta charset="UTF-8">--}}
+{{--    <meta name="viewport" content="width=device-width, initial-scale=1.0">--}}
+{{--    <title>شروط وأحكام مركز التوجيه المهني وريادة الأعمال</title>--}}
+{{--    <style>--}}
+{{--        body {--}}
+{{--            font-family: Arial, sans-serif;--}}
+{{--            line-height: 1.6;--}}
+{{--            margin: 0;--}}
+{{--            padding: 0;--}}
+{{--            direction: rtl;--}}
+{{--        }--}}
+{{--        header {--}}
+{{--            background-color: #f0f0f0;--}}
+{{--            padding: 20px;--}}
+{{--            text-align: center;--}}
+{{--        }--}}
+{{--        #logo {--}}
+{{--            max-width: 150px;--}}
+{{--            height: auto;--}}
+{{--        }--}}
+{{--        main {--}}
+{{--            padding: 20px;--}}
+{{--        }--}}
+{{--    </style>--}}
+{{--</head>--}}
+{{--<body>--}}
+{{--<header>--}}
+{{--    <img src="{{ asset("logo.PNG")}}" alt="شعار المركبة" id="logo">--}}
+{{--    <h1>مركبة - شروط وأحكام</h1>--}}
+{{--</header>--}}
+{{--<main>--}}
+{{--    <h1>الشروط والأحكام</h1>--}}
+{{--    <p>مرحبًا بك في تطبيق مركز التوجيه المهني وريادة الأعمال. هذه الشروط والأحكام (الـ "شروط") تحكم استخدامك للتطبيق. من خلال استخدام التطبيق، فإنك توافق على الالتزام بهذه الشروط.</p>--}}
+
+{{--    <!-- ... إكمال النص باللغة العربية -->--}}
+
+{{--    <h2>تواصل معنا</h2>--}}
+{{--    <p>إذا كان لديك أي أسئلة أو استفسارات حول هذه الشروط والأحكام أو خدمات التطبيق، يُرجى التواصل معنا على:</p>--}}
+{{--    <p>البريد الإلكتروني: elmarkaba.careerguidance@gmail.com</p>--}}
+{{--    <p>الهاتف: +20 01288834652</p>--}}
+{{--    <h2>آخر تحديث</h2>--}}
+{{--    <p>تم تحديث هذه الشروط في 26-7-2023.</p>--}}
+{{--</main>--}}
+{{--</body>--}}
+{{--</html>--}}
+
+
     <!DOCTYPE html>
-<html>
+<html dir="rtl" lang="ar">
 <head>
-    <title>Career Guidance and Entrepreneurship Center Terms and Conditions</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شروط وأحكام مركز المركبة</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
+            direction: rtl;
         }
         header {
             background-color: #f0f0f0;
@@ -76,54 +129,65 @@
         main {
             padding: 20px;
         }
+        footer {
+                 background-color: #f0f0f0;
+                 padding: 10px;
+                 text-align: center;
+                 position: absolute;
+                 bottom: 0;
+                 width: 100%;
+                 font-size: 18px;
+                 font-weight: bold;
+             }
     </style>
 </head>
 <body>
 <header>
-    <img src="{{ asset("logo.PNG")}}" alt="El Markaba Logo" id="logo">
-    <h1>El Markaba - Terms and Conditions</h1>
+    <img src="{{ asset("logo.PNG")}}" alt="شعار المركبة" id="logo">
+    <h1>مركبة - شروط وأحكام</h1>
 </header>
 <main>
-<h1>Terms and Conditions</h1>
-<p>Welcome to the Career Guidance and Entrepreneurship Center app. These terms and conditions (the "Terms") govern your use of the app. By using the app, you agree to be bound by these Terms.</p>
+    <h1>الشروط والأحكام</h1>
+    <p>مرحبًا بك في تطبيق مركز المركبة . هذه الشروط والأحكام (الـ "شروط") تحكم استخدامك للتطبيق. من خلال استخدام التطبيق، فإنك توافق على الالتزام بهذه الشروط.</p>
 
-<h2>About the App</h2>
-<p>The Career Guidance and Entrepreneurship Center app is a free service that offers courses for students and job seekers. The app also provides a platform for companies to post job openings and for students to apply for jobs.</p>
-<p>The app does not require any personal or sensitive data from users. The only data that is collected is the user's name, email address, and phone number. This data is used to provide the user with the services offered by the app.</p>
+    <h2>حول التطبيق</h2>
+    <p>تطبيق مركز المركبة هو خدمة مجانية تقدم دورات للطلاب والباحثين عن وظائف. كما يوفر التطبيق منصة للشركات لنشر فرص العمل وللطلاب للتقديم للوظائف.</p>
+    <p>التطبيق لا يحتاج إلى أي بيانات شخصية أو حساسة من المستخدمين. البيانات الوحيدة المجمعة هي اسم المستخدم وعنوان البريد الإلكتروني ورقم الهاتف. تُستخدم هذه البيانات لتقديم الخدمات المقدمة من قبل التطبيق.</p>
 
-<h2>Intellectual Property Rights</h2>
-<p>All content on the Career Guidance and Entrepreneurship Center app, including but not limited to text, images, videos, and audio files, is protected by copyright. You may not use any of this content without the express permission of the Career Guidance and Entrepreneurship Center.</p>
-<p>The Career Guidance and Entrepreneurship Center app also has a trademark on its name and logo. You may not use these marks without the express permission of the Career Guidance and Entrepreneurship Center.</p>
-<p>By using the App, you agree to the following terms:</p>
-<ul>
-    <li>You must be a student or a company representative to use the App's services.</li>
-    <li>You must provide accurate and up-to-date information while using the App.</li>
-    <li>You are responsible for maintaining the confidentiality of your account credentials.</li>
-    <li>You agree not to use the App for any unlawful or unauthorized purposes.</li>
-    <li>You agree not to violate the rights of other users or companies.</li>
-</ul>
-<h2>User Data</h2>
-<p>The Career Guidance and Entrepreneurship Center app collects the following data from users:
-    * Name
-    * Email address
-    * Phone number
+    <h2>حقوق الملكية الفكرية</h2>
+    <p>جميع المحتوى على تطبيق مركز المركبة، بما في ذلك ولكن لا تقتصر على النصوص والصور ومقاطع الفيديو وملفات الصوت، محمية بحقوق النشر. قد لا تستخدم أيًا من هذا المحتوى دون إذن صريح من مركز المركبة.</p>
+    <p>تطبيق مركز المركبة لديه أيضًا علامة تجارية على اسمه وشعاره. قد لا تستخدم هذه العلامات بدون إذن صريح من مركز المركبة ومن يخالف هذه التعليمات يعرض نفسه للمسائله القانونيه.</p>
+    <p>باستخدام التطبيق، فإنك توافق على الشروط التالية:</p>
+    <ul>
+        <li>يجب أن تكون طالبًا أو ممثل شركة لاستخدام خدمات التطبيق.</li>
+        <li>يجب أن تقدم معلومات دقيقة وحديثة أثناء استخدام التطبيق.</li>
+        <li>أنت مسؤول عن الحفاظ على سرية بيانات حسابك.</li>
+        <li>توافق على عدم استخدام التطبيق لأي أغراض غير قانونية أو غير مصرح بها.</li>
+        <li>توافق على عدم انتهاك حقوق المستخدمين الآخرين أو الشركات.</li>
+    </ul>
+    <h2>بيانات المستخدم</h2>
+    <p>يقوم تطبيق مركز المركبة بجمع البيانات التالية من المستخدمين:
+        * الاسم
+        * عنوان البريد الإلكتروني
+        * رقم الهاتف
 
-    This data is used to provide the user with the services offered by the app. The data is also used to improve the app and to provide users with relevant marketing materials.</p>
-<p>The Career Guidance and Entrepreneurship Center app will not sell or share your data with third parties without your consent.</p>
-<h2>Intellectual Property</h2>
-<p>The Career Guidance and Entrepreneurship Center App and all its content, including but not limited to logos, trademarks, text, graphics, and images, are the intellectual property of the App and its affiliates. You may not use, reproduce, or distribute any part of the App's content without prior written permission.</p>
+        تُستخدم هذه البيانات لتقديم الخدمات المقدمة من قبل التطبيق. تُستخدم البيانات أيضًا لتحسين التطبيق وتقديم مواد تسويقية ذات صلة للمستخدمين.</p>
+    <p>تطبيق مركز المركبة لن يبيع أو يشارك بياناتك مع أطراف ثالثة بدون موافقتك.</p>
+    <h2>الملكية الفكرية</h2>
+    <p>تطبيق مركز التوجيه المهني وريادة الأعمال وكل محتواه، بما في ذلك ولكن لا يقتصر على الشعارات والعلامات التجارية والنصوص والرسومات والصور، هي ملكية فكرية للتطبيق وشركائه. قد لا تستخدم، وتستنسخ، وتوزع أي جزء من محتوى التطبيق بدون إذن مسبق من التطبيق.</p>
 
-<h2>Liability</h2>
-<p>The App strives to provide accurate and reliable information, but we do not guarantee the completeness or accuracy of the content. The App shall not be liable for any direct or indirect damages arising from the use or inability to use the services provided by the App.</p>
+    <h2>المسؤولية</h2>
+    <p>يسعى التطبيق لتقديم معلومات دقيقة وموثوقة، ولكننا لا نضمن اكتمال أو دقة المحتوى. التطبيق لا يتحمل مسؤولية أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام أو عدم القدرة على استخدام الخدمات المقدمة من قبل التطبيق.</p>
 
-
-<h2>Contact Us</h2>
-<p>If you have any questions or concerns regarding these Terms and Conditions or the App's services, please contact us at:</p>
-<p>Email: elmarkaba.careerguidance@gmail.com</p>
-<p>Phone: +20 01288834652</p>
-<h2>Last Updated</h2>
-<p>These Terms were last updated on 26-7-2023.</p>
+    <h2>تواصل معنا</h2>
+    <p>إذا كان لديك أي أسئلة أو استفسارات حول هذه الشروط والأحكام أو خدمات التطبيق، يُرجى التواصل معنا على:</p>
+    <p>البريد الإلكتروني: elmarkaba.careerguidance@gmail.com</p>
+    <p>الهاتف: +20 01288834652</p>
+    <h2>آخر تحديث</h2>
+    <p>تم تحديث هذه الشروط في 26-7-2023.</p>
 </main>
+<footer>
+    &copy; مركز المركبة للإرشاد الوظيفى وريادة الأعمال 2023 - جميع الحقوق محفوظة
+</footer>
 </body>
 </html>
-

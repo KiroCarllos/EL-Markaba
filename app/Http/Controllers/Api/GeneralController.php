@@ -57,8 +57,6 @@ class GeneralController extends Controller
         $data["urls"][3]["type_en"] = "Mobile";
         $data["urls"][3]["type_ar"] = "الموبيل";
         $data["urls"][3]["value"] = "tel:+201288834652";
-
-
        return api_response(1,"",$data);
     }
 
