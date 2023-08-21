@@ -53,10 +53,11 @@ class GeneralController extends Controller
         $data["urls"][1]["value"] = "https://www.facebook.com/CareerGuidanceCenter2018/";
         $data["urls"][2]["type_en"] = "Email";
         $data["urls"][2]["type_ar"] = "الايميل";
-        $data["urls"][2]["value"] = "elmarkaba.careerguidance@gmail.com";
+        $data["urls"][2]["value"] = "mailto:elmarkaba.careerguidance@gmail.com";
         $data["urls"][3]["type_en"] = "Mobile";
         $data["urls"][3]["type_ar"] = "الموبيل";
-        $data["urls"][3]["value"] = "01288834652";
+        $data["urls"][3]["value"] = "tel:+01288834652";
+
 
        return api_response(1,"",$data);
     }
