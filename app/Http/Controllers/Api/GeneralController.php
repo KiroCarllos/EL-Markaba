@@ -47,7 +47,7 @@ class GeneralController extends Controller
         $data["details_en"] = "Markz El Markaba is a center for career guidance and entrepreneurship, established and sponsored by His Grace Bishop Pavli, Bishop of Montazah and Youth in Alexandria, to serve the youth of Alexandria and help them enter the labor market, accept the best companies, and determine the appropriate fields of work for them after the process of personal evaluation and training according to personal needs. The center also cares Providing advice to young entrepreneurs.";
         $data["urls"][0]["type_en"] = "whatsApp";
         $data["urls"][0]["type_ar"] = "الواتساب";
-        $data["urls"][0]["value"] = "whatsApp";
+        $data["urls"][0]["value"] = "https://api.whatsapp.com/send?phone=+201288834652";
         $data["urls"][1]["type_en"] = "Facebook";
         $data["urls"][1]["type_ar"] = "الفيسبوك";
         $data["urls"][1]["value"] = "https://www.facebook.com/CareerGuidanceCenter2018/";
@@ -56,7 +56,7 @@ class GeneralController extends Controller
         $data["urls"][2]["value"] = "mailto:elmarkaba.careerguidance@gmail.com";
         $data["urls"][3]["type_en"] = "Mobile";
         $data["urls"][3]["type_ar"] = "الموبيل";
-        $data["urls"][3]["value"] = "tel:+01288834652";
+        $data["urls"][3]["value"] = "tel:+201288834652";
 
 
        return api_response(1,"",$data);
