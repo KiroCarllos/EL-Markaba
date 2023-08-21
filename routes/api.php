@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Api',"middleware"=>["changeLanguage"]], function (
     Route::post('getUniversities', 'GeneralController@getUniversities')->name("getUniversities");
     Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity')->name("getFacultyByUniversity");
     Route::post('getSlider', 'GeneralController@getSlider');
+    Route::post('about', 'GeneralController@about');
     Route::post('getSetting', 'GeneralController@getSetting');
 
 

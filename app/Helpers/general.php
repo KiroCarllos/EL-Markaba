@@ -100,6 +100,7 @@ if (!function_exists('send_fcm')) {
                 "content_available" => true,
                 "apns-priority" => "5",
                 'registration_ids' => $tokens,
+//                "to" => "/topics/app",
                 'priority' => 'high',
                 'sound' => 'default',
                 'badge' => 1,

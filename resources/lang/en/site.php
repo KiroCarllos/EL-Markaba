@@ -19,7 +19,6 @@ return[
     'markz_el_markaba' => 'El Markaba',
     'you_has_delete_training_successfully' => 'The training has been successfully deleted',
     'you_has_add_post_successfully' => 'New Post has been successfully created',
-
     'you_has_add_training_successfully' => 'New training has been added',
 
 

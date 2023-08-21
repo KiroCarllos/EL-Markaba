@@ -42,6 +42,15 @@ class GeneralController extends Controller
         $sliders = Slider::active()->whereJsonContains("role",$request->role)->latest()->pluck("image")->toArray();
         return api_response(1,"",$sliders);
     }
+    public function about(){
+        $data["about"]["details_ar"] = "مركز المركبة هو مركز للارشاد الوظيفي وريادة الاعمال بتاسيس ورعاية نيافة الحبر الجليل الانبا بافلي اسقف المنتزه و الشباب بالاسكندرية لخدمة شباب وشابات الاسكندرية ومساعدتهم لدخول سوق العمل و القبول بافضل الشركات و تحديد مجالات العمل المناسبة لهم بعد عملية التقييم الشخصي و التدريب حسب الاحتياجات الشخصية كما يهتم المركز بتقديم الاستشارات لرواد الاعمال الشباب.";
+        $data["about"]["details_en"] = "مركز المركبة هو مركز للارشاد الوظيفي وريادة الاعمال بتاسيس ورعاية نيافة الحبر الجليل الانبا بافلي اسقف المنتزه و الشباب بالاسكندرية لخدمة شباب وشابات الاسكندرية ومساعدتهم لدخول سوق العمل و القبول بافضل الشركات و تحديد مجالات العمل المناسبة لهم بعد عملية التقييم الشخصي و التدريب حسب الاحتياجات الشخصية كما يهتم المركز بتقديم الاستشارات لرواد الاعمال الشباب.";
+        $data["about"]["urls"]["whatsApp"] = "";
+        $data["about"]["urls"]["Facebook"] = "https://www.facebook.com/CareerGuidanceCenter2018/";
+        $data["about"]["urls"]["Email"] = "elmarkaba.careerguidance@gmail.com";
+        $data["about"]["urls"]["Mobile"] = "01288834652";
+       return api_response(1,"",$data);
+    }
 
     public function getSetting(){
        return api_response(1,"",Setting::first());
