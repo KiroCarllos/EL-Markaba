@@ -19,6 +19,7 @@ return[
     'markz_el_markaba' => 'El Markaba',
     'you_has_delete_training_successfully' => 'The training has been successfully deleted',
     'you_has_add_post_successfully' => 'New Post has been successfully created',
+    'your_account_activated_can_make_login_now' => 'Your Account Has Been Activated You Can Make Login Now',
     'you_has_add_training_successfully' => 'New training has been added',
 
 

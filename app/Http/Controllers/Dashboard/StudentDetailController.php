@@ -136,6 +136,10 @@ class StudentDetailController extends Controller
                 }
             }
             $studentDetails->update($studentData);
+            if ($request->has("status") && $request->status == "active"){
+                $recipients = [$user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
+            }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
             return redirect()->route('dashboard.student_details.index');

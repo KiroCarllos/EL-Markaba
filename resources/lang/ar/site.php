@@ -30,6 +30,7 @@ return [
     'markz_el_markaba' => 'مركز المركبة للارشاء الوظيفي',
     'you_has_add_training_successfully' => 'لقد تم اضافه تدريب جديد',
     'you_has_add_post_successfully' => 'لقد تم اضافه منشور جديد',
+    'your_account_activated_can_make_login_now' => 'لقد تم تفعيل حسابك، يمكنك تسجيل الدخول الآن',
 
     'no' => 'لا',
 
