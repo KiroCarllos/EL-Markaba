@@ -86,9 +86,8 @@ class UserController extends Controller
         if ($request->image) {
             $user->update(["image" => uploadImage($request->image, "uploads/admins/" . $user->id . "/profile")]);
         }
-//        $user->attachRole('super_admin');
-        $user->attachRole('admin');
-        $user->syncPermissions($request->permissions);
+        $user->attachRole('super_admin');
+//        $user->syncPermissions($request->permissions);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.users.index');
 
