@@ -140,7 +140,11 @@ class StudentDetailController extends Controller
                 $recipients = [$user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
             }
-            DB::commit();
+            if ($request->has("notify") && !is_null($request->notify)) {
+                $recipients = [$user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
+            }
+                DB::commit();
             session()->flash('success', __('site.updated_successfully'));
             return redirect()->route('dashboard.student_details.index');
         } catch (\Exception $exception) {

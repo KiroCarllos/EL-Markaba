@@ -31,9 +31,11 @@ return [
     'you_has_add_training_successfully' => 'لقد تم اضافه تدريب جديد',
     'you_has_add_post_successfully' => 'لقد تم اضافه منشور جديد',
     'your_account_activated_can_make_login_now' => 'لقد تم تفعيل حسابك، يمكنك تسجيل الدخول الآن',
+    'notify' => 'اشعار',
 
     'no' => 'لا',
     'students' => 'الطلاب',
+    'fill notify if need to send notification only' => 'ارسل اشعار اذا كنت تريد الارسال',
 
     'student' => 'طالب',
     'sliders' => 'سلايدر الاعلانات',
