@@ -71,6 +71,7 @@
                             <input type="text" name="national_id" maxlength="14" minlength="14" class="form-control"
                                    value="{{ $userStudentDetail->student_details->national_id }}">
                         </div>
+                        @if(!is_null($userStudentDetail->student_details->faculty))
                         <div class="form-group">
                             <label>@lang('site.university')</label>
                             <select id="university_select" class="form-control">
@@ -112,12 +113,20 @@
                                 @endisset
                             </select>
                         </div>
-
                         <div id="major" class="form-group">
                             <label>@lang('site.major')</label>
                             <input id="major" type="text" name="major" class="form-control"
                                    value="{{ $userStudentDetail->student_details->major }}">
                         </div>
+                        @else
+                            <div id="major" class="form-group">
+                                <label>@lang('site.major')</label>
+                                <input id="major" type="text" name="else_education" class="form-control"
+                                       value="{{ $userStudentDetail->student_details->else_education }}">
+                            </div>
+
+                        @endif
+
                         <div class="form-group">
                             <label>@lang('site.graduated_at')</label>
                             <input type="text" name="graduated_at" class="form-control"

@@ -46,6 +46,7 @@ class StudentDetailController extends Controller
             "address" => ["required", "string"],
             'major_id' => ["required", Rule::exists('majors',"id")->whereIn('id', Major::pluck('id')->toArray())->whereNotIn('id', ['not_from_above'])],
             'else_major' => 'required_if:major_id,not_from_above',
+            'else_education' => 'nullable',
 
         ]);
         $userData = $request->only(["name", "mobile", "email"]);
@@ -66,7 +67,7 @@ class StudentDetailController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
             $user->attachRole('student');
-            $studentData = $request->only(["gender", "national_id", "graduated_at", "prior_experiences", "courses", "address"]);
+            $studentData = $request->only(["gender", "national_id", "graduated_at", "prior_experiences", "else_education","courses", "address"]);
             if($request->has("major_id")){
                 $major_id = (int) $request->major_id;
                 if (is_int($major_id)){
