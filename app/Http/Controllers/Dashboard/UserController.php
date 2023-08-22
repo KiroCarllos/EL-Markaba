@@ -70,15 +70,15 @@ class UserController extends Controller
 
         $request_data = $request->except(['name','password', 'password_confirmation', 'permissions', 'image']);
         $request_data['password'] = bcrypt($request->password);
-        if ($request->image) {
-            Image::make($request->image)
-                ->resize(300, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })
-                ->save(public_path('uploads/user_images/' . $request->image->hashName()));
-            $request_data['image'] = $request->image->hashName();
-
-        }//end of if
+//        if ($request->image) {
+//            Image::make($request->image)
+//                ->resize(300, null, function ($constraint) {
+//                    $constraint->aspectRatio();
+//                })
+//                ->save(public_path('uploads/user_images/' . $request->image->hashName()));
+//            $request_data['image'] = $request->image->hashName();
+//
+//        }//end of if
 
         $user = User::create($request_data);
         deleteOldFiles("uploads/admins/" . $user->id . "/profile");
