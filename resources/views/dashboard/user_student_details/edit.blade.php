@@ -78,8 +78,10 @@
                                 @isset($universities)
                                     @if(is_null($userStudentDetail->student_details->faculty))
                                         <option></option>
-                                        <option
-                                             value="{{$university->id  }}">{{ $university->name }}</option>
+                                        @foreach($universities as $university)
+                                            <option
+                                              value="{{$university->id  }}">{{ $university->name }}</option>
+                                        @endforeach
                                     @else
                                     @foreach($universities as $university)
                                         <option
@@ -97,8 +99,10 @@
                                 @isset($faculties)
                                     @if(is_null($userStudentDetail->student_details->faculty))
                                         <option></option>
-                                        <option
-                                             value="{{$faculty->id  }}">{{ $faculty->name }}</option>
+                                        @foreach($faculties as $faculty)
+                                            <option
+                                                 value="{{$faculty->id  }}">{{ $faculty->name }}</option>
+                                        @endforeach
                                     @else
                                     @foreach($faculties as $faculty)
                                         <option
