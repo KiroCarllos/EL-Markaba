@@ -95,7 +95,7 @@ class StudentDetailController extends Controller
 
             $faculties=[];
         }else{
-            $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty->university_id);
+            $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty);
         }
         $universities = $this->getAllUniversities();
 
