@@ -99,6 +99,11 @@
                             <img src="{{ asset($jobCompany->company_details->tax_card_image ??'default.png') }}"  style="width: 100px" class="img-thumbnail image_tax_card-preview" alt="">
                         </div>
                         <div class="form-group">
+                            <label>@lang('site.notify')</label>
+                            <input type="text" name="notify"
+                                   placeholder="@lang("site.fill notify if need to send notification only")" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')</button>
                         </div>
                     </form><!-- end of form -->

@@ -135,6 +135,10 @@ class CompanyController extends Controller
                 deleteOldFiles("uploads/companies/".$user->id."/tax_card");
                 $company->update(["tax_card_image" => uploadImage($request->tax_card_image,"uploads/companies/".$user->id."/tax_card/".generateBcryptHash($user->id)."/tax_card")]);
             }
+            if ($request->has("notify") && !is_null($request->notify)) {
+                $recipients = [$user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
+            }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
             return redirect()->route('dashboard.companies.index');
