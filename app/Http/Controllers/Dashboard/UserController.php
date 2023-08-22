@@ -84,7 +84,7 @@ class UserController extends Controller
         $user = User::create($request_data);
 
         $user->attachRole('super_admin');
-        $user->syncPermissions($request->permissions);
+//        $user->syncPermissions($request->permissions);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.users.index');
 
