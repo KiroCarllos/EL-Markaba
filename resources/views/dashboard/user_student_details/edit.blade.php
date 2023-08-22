@@ -76,10 +76,16 @@
                             <select id="university_select" class="form-control">
                                 <option></option>
                                 @isset($universities)
+                                    @if(is_null($userStudentDetail->student_details->faculty))
+                                        <option></option>
+                                        <option
+                                             value="{{$university->id  }}">{{ $university->name }}</option>
+                                    @else
                                     @foreach($universities as $university)
                                         <option
                                             {{ $university->id == $userStudentDetail->student_details->faculty->university_id ?"Selected":"" }} value="{{$university->id  }}">{{ $university->name }}</option>
                                     @endforeach
+                                    @endif
                                 @endisset
                             </select>
                         </div>
