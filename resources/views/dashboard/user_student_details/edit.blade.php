@@ -95,10 +95,16 @@
                                 <option></option>
 
                                 @isset($faculties)
+                                    @if(is_null($userStudentDetail->student_details->faculty))
+                                        <option></option>
+                                        <option
+                                             value="{{$faculty->id  }}">{{ $faculty->name }}</option>
+                                    @else
                                     @foreach($faculties as $faculty)
                                         <option
                                             {{ $faculty->id == $userStudentDetail->student_details->faculty->id ?"Selected":"" }} value="{{$faculty->id  }}">{{ $faculty->name }}</option>
                                     @endforeach
+                                    @endif
                                 @endisset
                             </select>
                         </div>
