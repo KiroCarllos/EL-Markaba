@@ -33,6 +33,7 @@ return [
     'your_account_activated_can_make_login_now' => 'لقد تم تفعيل حسابك، يمكنك تسجيل الدخول الآن',
 
     'no' => 'لا',
+    'students' => 'الطلاب',
 
     'student' => 'طالب',
     'sliders' => 'سلايدر الاعلانات',
