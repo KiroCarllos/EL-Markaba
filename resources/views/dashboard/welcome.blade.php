@@ -55,7 +55,7 @@
                             <p>@lang('site.posts')</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-paper"></i>
+                            <i class="fa fa-file"></i>
                         </div>
                         <a href="{{ route("dashboard.posts.index") }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
