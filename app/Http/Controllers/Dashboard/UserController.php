@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -82,7 +81,11 @@ class UserController extends Controller
         }//end of if
 
         $user = User::create($request_data);
+        deleteOldFiles("uploads/admins/" . $user->id . "/profile");
 
+        if ($request->image) {
+            $user->update(["image" => uploadImage($request->image, "uploads/admins/" . $user->id . "/profile")]);
+        }
         $user->attachRole('super_admin');
 //        $user->syncPermissions($request->permissions);
         session()->flash('success', __('site.added_successfully'));
