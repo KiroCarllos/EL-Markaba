@@ -126,7 +126,6 @@ class StudentDetailController extends Controller
         if ($request->has("password") && !is_null($request->password)){
             $userData["password"] = Hash::make($request->password);
         }
-        $status = $request->status;
         try {
             DB::beginTransaction();
             $user = User::query()->whereId($id)->first();
@@ -140,12 +139,10 @@ class StudentDetailController extends Controller
             $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
 
             $studentDetails->update($studentData);
-            if ( $user->status == "pending" && $status = "active"){
-                dd($user->status,$status,$request->all());
+            if ( $user->status == "pending" && $request->status == "active"){
                 $recipients = [$user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
             }
-//            dd($request->all(),$request->status);
 
             if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$user->device_token];
