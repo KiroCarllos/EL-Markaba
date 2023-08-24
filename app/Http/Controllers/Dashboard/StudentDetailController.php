@@ -121,6 +121,7 @@ class StudentDetailController extends Controller
             'major' => ["nullable", "string"],
             'else_education' => ["nullable", "string"],
         ]);
+
         $userData = $request->only(["name","mobile","email","status"]);
         if ($request->has("password") && !is_null($request->password)){
             $userData["password"] = Hash::make($request->password);
