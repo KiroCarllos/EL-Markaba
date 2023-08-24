@@ -142,7 +142,7 @@ class StudentDetailController extends Controller
             $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
             $studentDetails->update($studentData);
             if ($request->has("notify") && !is_null($request->notify)) {
-                $recipients = ["$user->device_token"];
+                $recipients = [$user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
             }
                 DB::commit();

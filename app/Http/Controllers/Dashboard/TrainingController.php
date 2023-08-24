@@ -127,6 +127,23 @@ class TrainingController extends Controller
         try{
             DB::beginTransaction();
             $trainingApplication = TrainingApplication::query()->whereId($id)->first();
+            if ($trainingApplication->status != "pending" && $request->status == "confirmed"){
+                $recipients = [$trainingApplication->user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining");
+            }
+            if ($trainingApplication->status != "inProgress" && $request->status == "confirmed"){
+                $recipients = [$trainingApplication->user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining");
+            }
+            if ($trainingApplication->status != "enough" && $request->status == "enough"){
+                $recipients = [$trainingApplication->user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_has_been_enough_numbers"),"myTraining");
+            }
+            if ($trainingApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
+                $recipients = [$trainingApplication->user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_application_have_some_notes"),"myTraining");
+            }
+
             $trainingApplication->update($trainingData);
             if ($request->has("receipt_image") && !is_null($request->receipt_image)){
                 deleteOldFiles("uploads/trainings/application/".$id."/receipt_image");

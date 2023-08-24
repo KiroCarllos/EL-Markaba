@@ -99,7 +99,9 @@ return [
     'notConfirmed' => 'لم تم التاكيد',
     'canceled' => 'ملغي',
 
-
+    'your_training_has_been_confirmed' => 'لقد تم تأكيد طلب تدريبك بنجاح',
+    'sorry_your_training_has_been_enough_numbers' => 'نأسف لقد تم اكتمال العدد في التدريب',
+    'sorry_your_training_application_have_some_notes' => 'نأسف الطلب المقدم لم يتم قبوله سيتم التواصل معك قريبا ',
 
 
 
