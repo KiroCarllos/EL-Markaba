@@ -128,23 +128,21 @@ class TrainingController extends Controller
         try{
             DB::beginTransaction();
             $trainingApplication = TrainingApplication::query()->whereId($id)->first();
-            if ($trainingApplication->status != "pending" && $request->status == "confirmed"){
+            if ($trainingApplication->status != "confirmed" && $request->status == "confirmed"){
+
+            }else if ($trainingApplication->status != "pending" && $request->status == "confirmed"){
                 $recipients = [$trainingApplication->user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining");
-            }
-            if ($trainingApplication->status != "inProgress" && $request->status == "confirmed"){
+            } else if ($trainingApplication->status != "inProgress" && $request->status == "confirmed"){
                 $recipients = [$trainingApplication->user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining");
-            }
-            if ($trainingApplication->status != "enough" && $request->status == "enough"){
+            } else if ($trainingApplication->status != "enough" && $request->status == "enough"){
                 $recipients = [$trainingApplication->user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_has_been_enough_numbers"),"myTraining");
-            }
-            if ($trainingApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
+            }else  if ($trainingApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
                 $recipients = [$trainingApplication->user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_application_have_some_notes"),"myTraining");
-            }
-            if ($request->has("notify") && !is_null($request->notify)) {
+            }else  if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$trainingApplication->user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
             }
