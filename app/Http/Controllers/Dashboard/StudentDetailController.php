@@ -129,23 +129,20 @@ class StudentDetailController extends Controller
         try {
             DB::beginTransaction();
             $user = User::query()->whereId($id)->first();
+            if (($user->status != "active" && $request->status == "active" )){
+                $recipients = [$user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
+            }
             $user->update($userData);
             if ($request->has("image") && !is_null($request->image)){
                 deleteOldFiles("uploads/student/" . $user->id . "/profile");
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
             $studentDetails = StudentDetail::whereUserId($id)->first();
-
             $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
-
             $studentDetails->update($studentData);
-            if ( ($user->status == "pending" && $request->status == "active" )|| ($user->status == "inProgress" && $request->status == "active") || ($user->status == "blocked" && $request->status == "active") || ($user->status == "deleted" && $request->status == "active")){
-                $recipients = [$user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
-            }
-
             if ($request->has("notify") && !is_null($request->notify)) {
-                $recipients = [$user->device_token];
+                $recipients = ["$user->device_token"];
                 send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
             }
                 DB::commit();
