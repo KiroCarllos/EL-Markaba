@@ -121,7 +121,7 @@ class StudentDetailController extends Controller
             'major' => ["nullable", "string"],
             'else_education' => ["nullable", "string"],
         ]);
-        dd($request->all(),$request->status);
+
         $userData = $request->only(["name","mobile","email","status"]);
         if ($request->has("password") && !is_null($request->password)){
             $userData["password"] = Hash::make($request->password);
@@ -139,6 +139,7 @@ class StudentDetailController extends Controller
             $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
 
             $studentDetails->update($studentData);
+            dd($request->all(),$request->status);
             if ( $user->status == "pending" && $request->status = "active"){
                 dd($user->status,$request->status);
                 $recipients = [$user->device_token];
