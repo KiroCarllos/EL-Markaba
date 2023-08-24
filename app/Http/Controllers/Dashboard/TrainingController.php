@@ -121,6 +121,7 @@ class TrainingController extends Controller
     {
         $request->validate([
             'status' => 'required',
+            'notify' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
         ]);
         $trainingData = $request->only(["status"]);
@@ -143,7 +144,10 @@ class TrainingController extends Controller
                 $recipients = [$trainingApplication->user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_application_have_some_notes"),"myTraining");
             }
-
+            if ($request->has("notify") && !is_null($request->notify)) {
+                $recipients = [$trainingApplication->user->device_token];
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
+            }
             $trainingApplication->update($trainingData);
             if ($request->has("receipt_image") && !is_null($request->receipt_image)){
                 deleteOldFiles("uploads/trainings/application/".$id."/receipt_image");
