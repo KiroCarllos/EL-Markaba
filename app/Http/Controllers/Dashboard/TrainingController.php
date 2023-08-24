@@ -26,10 +26,7 @@ class TrainingController extends Controller
         return view('dashboard.trainings.create');
 
     }//end of create
-    public function applications($id){
-        $applications = TrainingApplication::where("training_id",$id)->where("status","!=","canceled")->get();
-        return view('dashboard.trainings.applications.index', compact('applications'));
-    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -110,7 +107,10 @@ class TrainingController extends Controller
 
 
 
-
+    public function applications($id){
+        $applications = TrainingApplication::where("training_id",$id)->where("status","!=","canceled")->whereHas("user")->get();
+        return view('dashboard.trainings.applications.index', compact('applications'));
+    }
     public  function editApplication($id)
     {
         $application = TrainingApplication::findOrFail($id);
