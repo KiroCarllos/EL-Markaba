@@ -118,7 +118,8 @@ class StudentDetailController extends Controller
             "prior_experiences" => ["nullable", "array"],
             "courses" => ["nullable", "array"],
             "address" => ["nullable", "string"],
-            'major' => ["required", "string"],
+            'major' => ["nullable", "string"],
+            'else_education' => ["nullable", "string"],
         ]);
         $userData = $request->only(["name","mobile","email","status"]);
         if ($request->has("password") && !is_null($request->password)){
@@ -134,7 +135,7 @@ class StudentDetailController extends Controller
             }
             $studentDetails = StudentDetail::whereUserId($id)->first();
 
-            $studentData = $request->only(["gender", "faculty_id","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
+            $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
 
             $studentDetails->update($studentData);
             if ($request->has("status") && $user->status != "active" && $request->status = "active"){
