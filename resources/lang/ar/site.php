@@ -92,14 +92,13 @@ return [
     'password' => 'كلمه المرور',
     'password_confirmation' => 'تاكيد كلمه المرور',
 
+    'student_mobile' => 'تليفون الطالب',
+    'student_name' => 'اسم الطالب',
 
     'confirmed' => 'تم التاكيد',
     'notConfirmed' => 'لم تم التاكيد',
     'canceled' => 'ملغي',
-    'pending' => 'قيد مراجعه',
-    'enough' => 'تم اكتمال العدد',
-    'inProgress' => 'تحت المراجعه',
-    '' => '',
+
 
 
 

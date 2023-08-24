@@ -51,6 +51,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>@lang('site.student_name')</th>
+                                    <th>@lang('site.student_mobile')</th>
                                     <th>@lang('site.training')</th>
                                     <th>@lang('site.paid_or_not')</th>
                                     <th>@lang('site.receipt_image')</th>
@@ -62,6 +64,10 @@
                                 @foreach ($applications as $index=>$application)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                        <td>{{  $application->user->name }}</td>
+                                        <td>{{  $application->user->mobile }}</td>
+
+
                                         <td>{{ app()->getLocale() == "ar" ? $application->training->title_ar : $application->training->title_en }}</td>
                                         <td>{{  $application->training->paid }}</td>
                                         @if(!is_null($application->receipt_image))
