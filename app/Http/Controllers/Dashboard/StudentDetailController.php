@@ -139,8 +139,7 @@ class StudentDetailController extends Controller
             $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
 
             $studentDetails->update($studentData);
-            if ( $user->status !== "active" && $request->status == "active"){
-                dd($user->status,$request->status);
+            if ( ($user->status == "pending" && $request->status == "active" )|| ($user->status == "inProgress" && $request->status == "active") || ($user->status == "blocked" && $request->status == "active") || ($user->status == "deleted" && $request->status == "active")){
                 $recipients = [$user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
             }
