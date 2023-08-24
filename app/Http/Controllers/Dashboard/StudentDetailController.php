@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\GeneralController;
+use App\Models\Notification;
 use App\Models\University;
 use App\Models\User;
 use App\Models\StudentDetail;
@@ -131,7 +132,16 @@ class StudentDetailController extends Controller
             $user = User::query()->whereId($id)->first();
             if (($user->status != "active" && $request->status == "active" )){
                 $recipients = [$user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_has_add_post_successfully"),
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts",$user);
             }
             $user->update($userData);
             if ($request->has("image") && !is_null($request->image)){
@@ -143,7 +153,16 @@ class StudentDetailController extends Controller
             $studentDetails->update($studentData);
             if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => $request->notify,
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$user);
             }
                 DB::commit();
             session()->flash('success', __('site.updated_successfully'));

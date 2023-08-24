@@ -29,6 +29,7 @@ return[
     'your_training_has_been_confirmed' => 'Your Training Has Been Confirmed',
     'sorry_your_training_has_been_enough_numbers' => 'Sorry, the training has been completed',
     'sorry_your_training_application_have_some_notes' => 'We regret that the submitted request was not accepted. We will contact you soon',
+    'Please Wait Admins Confirmation' => 'Please Wait Admins Confirmation',
 
     'your_account_added_please_wait_activation' => 'You have created your account successfully please ,wait our activation',
     'you_has_apply_training_and_now_pending' => 'Your request has been successfully received and is now under review',

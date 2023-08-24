@@ -7,6 +7,7 @@ use App\Models\CompanyDetail;
 use App\Models\Faculty;
 use App\Models\Job;
 use App\Models\JobApplication;
+use App\Models\Notification;
 use App\Models\Post;
 use App\Models\PostReply;
 use App\Models\Training;
@@ -110,7 +111,16 @@ class StudentController extends Controller
 
             if ($request->has("device_token")&& !is_null($request->device_token)){
                 $recipients = $request->only($request->device_token);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount");
+                Notification::create([
+                    "type" => "newAccount",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.your_account_added_please_wait_activation"),
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount",$user);
             }
             DB::commit();
             return api_response(1, __("site.student created successfully wait admins for approve"));
@@ -194,7 +204,16 @@ class StudentController extends Controller
         }
         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
             $recipients = [auth("api")->user()->device_token];
-            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining");
+            Notification::create([
+                "type" => "pendingTraining",
+                "title" => __("site.markz_el_markaba"),
+                "body" => __("site.you_has_apply_training_and_now_pending"),
+                "read" => "0",
+                "model_id" => $training->id,
+                "model_json" => $training,
+                "user_id" => auth("api")->id(),
+            ]);
+            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
         }
         return api_response(1,__("site.Applied Training Successfully"),TrainingApplication::find($applyTraining->id));
     }
@@ -217,15 +236,24 @@ class StudentController extends Controller
         if (in_array($request->training_id,$mytraining_ids)){
             $training_application = TrainingApplication::whereUserId(auth("api")->id())->where("training_id",$request->training_id)->first();
             if ($training_application->status == "inProgress" && !is_null($training_application->receipt_image)){
-                return api_response(1,"Please Wait Admins Confirmation");
+                return api_response(1,__("site.Please Wait Admins Confirmation"));
             }else if ($training_application->status !== "confirmed"){
+                $training = Training::find($request->training_id);
                 if ($request->has("receipt_image") && is_file($request->receipt_image)){
                     deleteOldFiles("uploads/student/" . auth("api")->id() . "/training/".$request->training_id."/receipt_image");
                     if ($request->receipt_image) {
-
                         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
                             $recipients = [auth("api")->user()->device_token];
-                            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining");
+                            Notification::create([
+                                "type" => "pendingTraining",
+                                "title" => __("site.markz_el_markaba"),
+                                "body" => __("site.you_has_apply_training_and_now_pending"),
+                                "read" => "0",
+                                "model_id" => $request->training_id,
+                                "model_json" => $training,
+                                "user_id" => auth("api")->id(),
+                            ]);
+                            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
                         }
                         $training_application->update(["status" => "inProgress","receipt_image" => uploadImage($request->receipt_image, "uploads/student/training/" . auth("api")->id() . "/".$request->training_id."/receipt_image")]);
                     }
@@ -244,11 +272,21 @@ class StudentController extends Controller
         ]);
         $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
         if (!is_null($applyTraining)){
-            $applyTraining->delete();
+
             if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
                 $recipients = [auth("api")->user()->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining");
+                Notification::create([
+                    "type" => "myTraining",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_has_delete_training_successfully"),
+                    "read" => "0",
+                    "model_id" => $request->training_id,
+                    "model_json" => Training::find($request->training_id),
+                    "user_id" => auth("api")->id(),
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining",Training::find($request->training_id));
             }
+            $applyTraining->delete();
             return api_response(1,__("site.Training canceled successfully"));
         }else{
             return api_response(0,__("site.Invalid Training id"));

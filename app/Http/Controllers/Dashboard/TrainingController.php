@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Training;
 use App\Models\TrainingApplication;
 use App\Models\User;
@@ -52,9 +53,19 @@ class TrainingController extends Controller
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
 
-            $recipients = User::whereNotNull("device_token")->pluck("device_token")->toArray();
-            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_add_training_successfully"),"trainings");
-
+            $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
+            foreach ($recipients as $recipient){
+                Notification::create([
+                    "type" => "newAccount",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_has_add_post_successfully"),
+                    "read" => "0",
+                    "model_id" => $training->id,
+                    "model_json" => $training,
+                    "user_id" => $recipient->id,
+                ]);
+                send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_training_successfully"),"trainings",$training);
+            }
             return redirect()->route('dashboard.trainings.index');
         }catch (\Exception $exception){
             DB::rollBack();
@@ -128,23 +139,69 @@ class TrainingController extends Controller
         try{
             DB::beginTransaction();
             $trainingApplication = TrainingApplication::query()->whereId($id)->first();
+            $training = Training::query()->whereId($trainingApplication->training_id)->first();
             if ($trainingApplication->status == "confirmed" && $request->status == "confirmed"){
 
             }else if ($trainingApplication->status != "pending" && $request->status == "confirmed"){
                 $recipients = [$trainingApplication->user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining");
+                Notification::create([
+                    "type" => "myTraining",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.your_training_has_been_confirmed"),
+                    "read" => "0",
+                    "model_id" => $training->id,
+                    "model_json" => $training,
+                    "user_id" => $trainingApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining",$training);
             } else if ($trainingApplication->status != "inProgress" && $request->status == "confirmed"){
                 $recipients = [$trainingApplication->user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining");
+                Notification::create([
+                    "type" => "myTraining",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.your_training_has_been_confirmed"),
+                    "read" => "0",
+                    "model_id" => $training->id,
+                    "model_json" => $training,
+                    "user_id" => $trainingApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining",$training);
             } else if ($trainingApplication->status != "enough" && $request->status == "enough"){
                 $recipients = [$trainingApplication->user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_has_been_enough_numbers"),"myTraining");
+                Notification::create([
+                    "type" => "myTraining",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.sorry_your_training_has_been_enough_numbers"),
+                    "read" => "0",
+                    "model_id" => $training->id,
+                    "model_json" => $training,
+                    "user_id" => $trainingApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_has_been_enough_numbers"),"myTraining",$training);
             }else  if ($trainingApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
                 $recipients = [$trainingApplication->user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_application_have_some_notes"),"myTraining");
+                Notification::create([
+                    "type" => "myTraining",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.sorry_your_training_application_have_some_notes"),
+                    "read" => "0",
+                    "model_id" => $training->id,
+                    "model_json" => $training,
+                    "user_id" => $trainingApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_application_have_some_notes"),"myTraining",$training);
             }else  if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$trainingApplication->user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => $request->notify,
+                    "read" => "0",
+                    "model_id" => $training->id,
+                    "model_json" => $training,
+                    "user_id" => $trainingApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$training);
             }
             $trainingApplication->update($trainingData);
             if ($request->has("receipt_image") && !is_null($request->receipt_image)){

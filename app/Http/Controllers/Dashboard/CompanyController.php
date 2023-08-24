@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyDetail;
+use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -137,7 +138,16 @@ class CompanyController extends Controller
             }
             if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$user->device_token];
-                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts");
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => $request->notify,
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$user);
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));

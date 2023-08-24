@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
@@ -50,9 +51,19 @@ class PostController extends Controller
             session()->flash('success', __('site.updated_successfully'));
 
 
-            $recipients = User::whereNotNull("device_token")->pluck("device_token")->toArray();
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_add_post_successfully"),"posts");
-
+            $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
+            foreach ($recipients as $recipient){
+                Notification::create([
+                    "type" => "newAccount",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_has_add_post_successfully"),
+                    "read" => "0",
+                    "model_id" => $post->id,
+                    "model_json" => $post,
+                    "user_id" => $recipient->id,
+                ]);
+                send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_post_successfully"),"posts",$post);
+            }
             return redirect()->route('dashboard.posts.index');
         }catch (\Exception $exception){
             DB::rollBack();
