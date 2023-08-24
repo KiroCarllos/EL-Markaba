@@ -18,7 +18,9 @@ class StudentDetailController extends Controller
 {
     public function index(Request $request)
     {
-        $user_student_details = User::Student()->latest()->paginate(20);
+        $user_student_details = User::Student()->whereHas("student_details")->latest()->paginate(50);
+        $user_ids =User::pluck("id")->toArray();
+        $user_dtails = StudentDetail::whereNotIn("user_id",$user_ids)->delete();
         return view('dashboard.user_student_details.index', compact('user_student_details'));
     }//end of index
 
@@ -93,7 +95,6 @@ class StudentDetailController extends Controller
     {
         $userStudentDetail = User::whereId($id)->with("student_details")->first();
         if (is_null($userStudentDetail->student_details->faculty)){
-
             $faculties=[];
         }else{
             $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty->university_id);
