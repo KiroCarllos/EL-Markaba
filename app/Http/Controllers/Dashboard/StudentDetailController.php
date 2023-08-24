@@ -139,7 +139,7 @@ class StudentDetailController extends Controller
             $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
 
             $studentDetails->update($studentData);
-            if ( $user->status != "active" && $request->status == "active"){
+            if ( $user->status !== "active" && $request->status == "active"){
                 $recipients = [$user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
             }
