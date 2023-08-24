@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('site.faculty')</label>
-                            <select id="faculty_select" class="form-control">
+                            <select id="faculty_select" name="faculty_id" class="form-control">
                                 <option></option>
 
                                 @isset($faculties)

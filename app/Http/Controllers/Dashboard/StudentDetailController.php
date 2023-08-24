@@ -134,17 +134,10 @@ class StudentDetailController extends Controller
             }
             $studentDetails = StudentDetail::whereUserId($id)->first();
 
-            $studentData = $request->only(["gender", "national_id", "graduated_at", "prior_experiences", "courses", "address"]);
-            if($request->has("major_id")){
-                $major_id = (int) $request->major_id;
-                if (is_int($major_id)){
-                    $studentData["major_id"] = (int) $request->major_id;
-                }else{
-                    $studentData["major_id"] = (int) $request->else_major;
-                }
-            }
+            $studentData = $request->only(["gender", "faculty_id","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
+
             $studentDetails->update($studentData);
-            if ($request->has("status") && $request->status == "active"){
+            if ($request->has("status") && $user->status != "active" && $request->status = "active"){
                 $recipients = [$user->device_token];
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts");
             }
