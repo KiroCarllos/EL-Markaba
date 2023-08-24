@@ -25,6 +25,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::resource('sliders', 'SliderController');
 
             Route::resource('trainings', 'TrainingController');
+            Route::get('trainings/applications/{id}', 'TrainingController@applications')->name("trainings.applications");
+            Route::get('trainings/applications/{id}/edit', 'TrainingController@editApplication')->name("trainings.applications.edit");
+            Route::put('trainings/applications/{id}/update', 'TrainingController@updateApplication')->name("trainings.applications.update");
+            Route::delete('trainings/applications/{id}/destroy', 'TrainingController@deleteApplication')->name("trainings.applications.destroy");
 
         });//end of dashboard routes
     });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Training;
+use App\Models\TrainingApplication;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,7 +26,10 @@ class TrainingController extends Controller
         return view('dashboard.trainings.create');
 
     }//end of create
-
+    public function applications($id){
+        $applications = TrainingApplication::where("training_id",$id)->where("status","!=","canceled")->get();
+        return view('dashboard.trainings.applications.index', compact('applications'));
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -95,12 +99,53 @@ class TrainingController extends Controller
             dd($exception);
         }
     }//end of update
+
     public  function destroy($id)
     {
         $training = Training::find($id);
         $training->update(["status" => "deleted"]);
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.trainings.index');
+    }//end of destroy
+
+
+
+
+    public  function editApplication($id)
+    {
+        $application = TrainingApplication::findOrFail($id);
+        return view('dashboard.trainings.applications.edit', compact('application'));
+    }//end of destroy
+
+    public function updateApplication(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $trainingData = $request->only(["status"]);
+        try{
+            DB::beginTransaction();
+            $trainingApplication = TrainingApplication::query()->whereId($id)->first();
+            $trainingApplication->update($trainingData);
+            if ($request->has("receipt_image") && !is_null($request->receipt_image)){
+                deleteOldFiles("uploads/trainings/application/".$id."/receipt_image");
+                $trainingApplication->update(["receipt_image" => uploadImage($request->receipt_image,"uploads/trainings/application/".$id."/receipt_image/".generateBcryptHash($id)."/receipt_image")]);
+            }
+            DB::commit();
+            session()->flash('success', __('site.updated_successfully'));
+            return redirect()->route('dashboard.trainings.applications',$trainingApplication->training_id);
+        }catch (\Exception $exception){
+            DB::rollBack();
+            dd($exception);
+        }
+    }//end of update
+    public  function deleteApplication($id)
+    {
+        $training = TrainingApplication::findOrFail($id);
+        $training->update(["status" => "canceled"]);
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route('dashboard.trainings.applications',$training->training_id);
     }//end of destroy
 
 

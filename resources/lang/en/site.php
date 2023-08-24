@@ -12,7 +12,17 @@ return[
     'create_payment_links' =>  'Payment Link ',
     'details' =>  'Details',
     'N_F'=>'FAST MEASUREMENT',
-
+    'receipt_image'=>'Receipt Image',
+    'application_status'=>'Application Status',
+    'paid_or_not'=>'Paid Or Not',
+    'training'=>'Training',
+    'not_found'=>'Not Found',
+    'confirmed' => 'confirmed',
+    'notConfirmed' => 'notConfirmed',
+    'canceled' => 'canceled',
+    'pending' => 'pending',
+    'enough' => 'enough',
+    'inProgress' => 'inProgress',
 
     'your_account_added_please_wait_activation' => 'You have created your account successfully please ,wait our activation',
     'you_has_apply_training_and_now_pending' => 'Your request has been successfully received and is now under review',
@@ -23,6 +33,7 @@ return[
     'you_has_add_training_successfully' => 'New training has been added',
     'fill notify if need to send notification only' => 'fill notify if need to send notification only',
     'notify' => 'Notification',
+    'applications' => 'Applications',
 
 
 

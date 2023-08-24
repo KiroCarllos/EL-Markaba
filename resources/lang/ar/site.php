@@ -81,12 +81,29 @@ return [
     'print' => 'طبع',
 
     'confirm_delete' => 'تاكيد الحذف',
-
-
+    'applications' => 'الابلكيشنز',
+    'receipt_image'=>'صورة الايصال',
+    'application_status'=>'حاله الطلب',
+    'paid_or_not'=>'التدريب مدفوع ولا لا ؟',
+    'training'=>'التدريب',
+    'not_found'=>'لا يوجد',
     'login' => 'تسجيل الدخول',
     'remember_me' => 'تذكرني',
     'password' => 'كلمه المرور',
     'password_confirmation' => 'تاكيد كلمه المرور',
+
+
+    'confirmed' => 'تم التاكيد',
+    'notConfirmed' => 'لم تم التاكيد',
+    'canceled' => 'ملغي',
+    'pending' => 'قيد مراجعه',
+    'enough' => 'تم اكتمال العدد',
+    'inProgress' => 'تحت المراجعه',
+    '' => '',
+
+
+
+
 
     'added_successfully' => 'تم اضافه البيانات بنجاح',
     'updated_successfully' => 'تم تعديل البيانات بنجاح',
