@@ -128,7 +128,7 @@ class TrainingController extends Controller
         try{
             DB::beginTransaction();
             $trainingApplication = TrainingApplication::query()->whereId($id)->first();
-            if ($trainingApplication->status != "confirmed" && $request->status == "confirmed"){
+            if ($trainingApplication->status == "confirmed" && $request->status == "confirmed"){
 
             }else if ($trainingApplication->status != "pending" && $request->status == "confirmed"){
                 $recipients = [$trainingApplication->user->device_token];
