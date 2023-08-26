@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
@@ -21,7 +22,7 @@ class Job extends Model
         "expected_salary_from",
         "expected_salary_to",
     ];
-    protected $appends = ["image","title","description", "application_status", "applied"];
+    protected $appends = ["image","title","description", "application_status", "applied","created_ago"];
     protected $casts = [
         "user_id" => "integer"
     ];
@@ -63,5 +64,14 @@ class Job extends Model
         }else{
             return false;
         }
+    }
+
+    public function getCreatedAgoAttribute(){
+        Carbon::setLocale(app()->getLocale());
+        // Trim the date string and create Carbon instance
+        $dateString = trim($this->created_at);
+        $dateString = Carbon::parse($dateString)->toDateTimeString();
+        $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $dateString, 'Africa/Cairo')->diffForHumans();
+        return $carbonDate;
     }
 }
