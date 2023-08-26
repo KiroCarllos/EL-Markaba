@@ -66,7 +66,7 @@ class StudentController extends Controller
             'mobile' => 'required|string|size:11|unique:users',
             'email' => 'required|max:191|email|unique:users',
             'password' => 'required|max:191|confirmed',
-            'image' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|mimes:jpeg,png,jpg|max:4096',
             'gender' => 'required|in:male,female',
             'education' => 'required|in:high,medium,low,else',
             'national_id' => 'required|string|size:14',
@@ -237,7 +237,7 @@ class StudentController extends Controller
     public function confirmAppliedTraining(Request $request){
         $request->validate([
             "training_id" => ["required",Rule::exists("trainings","id")],
-            "receipt_image" => 'required|mimes:jpeg,png,jpg|max:2048',
+            "receipt_image" => 'required|mimes:jpeg,png,jpg|max:4096',
         ]);
         $mytraining_ids = TrainingApplication::where("user_id",auth("api")->id())->pluck("training_id")->toArray();
         if (in_array($request->training_id,$mytraining_ids)){

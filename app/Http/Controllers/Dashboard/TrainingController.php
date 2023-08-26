@@ -37,7 +37,7 @@ class TrainingController extends Controller
             'description_ar' => 'required|string',
             'status' => 'required|in:active,disActive',
             'paid' => 'required|in:yes,no',
-            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $trainingData = $request->only(["title_en","paid","title_ar","description_en","description_ar","status"]);
         $trainingData["created_at"] =  Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
@@ -87,7 +87,7 @@ class TrainingController extends Controller
             'description_ar' => 'required|string',
             'paid' => 'required|in:yes,no',
             'status' => 'required|in:active,disActive',
-            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $trainingData = $request->only(["title_en","paid","title_ar","description_en","description_ar","status"]);
 
@@ -133,7 +133,7 @@ class TrainingController extends Controller
         $request->validate([
             'status' => 'required',
             'notify' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $trainingData = $request->only(["status"]);
         try{

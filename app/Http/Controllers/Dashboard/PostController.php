@@ -34,7 +34,7 @@ class PostController extends Controller
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
             'status' => 'required|in:active,disActive',
-            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $postData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
         $postData["created_at"] =  Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
@@ -84,7 +84,7 @@ class PostController extends Controller
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
             'status' => 'required|in:active,disActive',
-            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $postData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
 

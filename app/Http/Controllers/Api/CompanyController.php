@@ -53,9 +53,9 @@ class CompanyController extends Controller
             'bio' => 'required|string',
             'created_date' => 'required|date',
             'address' => 'required|string',
-            'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:4096',
         ]);
         $userData = $request->only(["name", "mobile", "email"]);
         $userData["password"] = Hash::make($request->password);
