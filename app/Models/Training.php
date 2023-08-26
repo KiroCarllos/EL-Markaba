@@ -71,7 +71,7 @@ class Training extends Model
     }
     public function getAppliedAttribute()
     {
-        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("user_id")->toArray();
+        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
         if(in_array($this->id,$mytraining_ids)){
             return  true;
         }else{
