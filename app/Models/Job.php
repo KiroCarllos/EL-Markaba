@@ -26,6 +26,9 @@ class Job extends Model
     protected $casts = [
         "user_id" => "integer"
     ];
+    public function applications(){
+        return $this->hasMany(JobApplication::class,"job_id","id");
+    }
     public function scopeActive($q){
         return $q->whereIn("status",["pending","inProgress","active"]);
     }

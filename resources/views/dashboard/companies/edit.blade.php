@@ -82,21 +82,21 @@
                             <input type="file" name="logo" class="form-control image">
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset($jobCompany->image ??'default.png') }}"  style="width: 100px" class="img-thumbnail image-preview" alt="">
+                            <img src="{{ asset($jobCompany->image ??'default.png') }}"  style="width: 400px" class="img-thumbnail image-preview" alt="">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.image_commercial_record')</label>
                             <input type="file" name="commercial_record_image" class="form-control image_commercial_record">
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset($jobCompany->company_details->commercial_record_image ??'default.png') }}"  style="width: 100px" class="img-thumbnail image_commercial_record-preview" alt="">
+                            <img src="{{ asset($jobCompany->company_details->commercial_record_image ??'default.png') }}"  style="width: 400px" class="img-thumbnail image_commercial_record-preview" alt="">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.image_tax_card')</label>
                             <input type="file" name="tax_card_image" class="form-control image_tax_card">
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset($jobCompany->company_details->tax_card_image ??'default.png') }}"  style="width: 100px" class="img-thumbnail image_tax_card-preview" alt="">
+                            <img src="{{ asset($jobCompany->company_details->tax_card_image ??'default.png') }}"  style="width: 400px" class="img-thumbnail image_tax_card-preview" alt="">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.notify')</label>

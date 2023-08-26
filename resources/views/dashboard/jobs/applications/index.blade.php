@@ -6,12 +6,13 @@
 
         <section class="content-header">
 
-            <h1>@lang('site.jobs')</h1>
+            <h1>@lang('site.trainings')</h1>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')
                     </a></li>
-                <li class="active">@lang('site.jobs')</li>
+                <li class="{{ route("dashboard.jobs.index") }}">@lang('site.jobs')</li>
+                <li class="active">@lang('site.applications')</li>
             </ol>
         </section>
 
@@ -21,10 +22,10 @@
 
                 <div class="box-header with-border">
 
-                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.jobs')
-                        <small>{{ $jobs->total() }}</small></h3>
+                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.applications')
+                        <small>{{ $applications->count() }}</small></h3>
 
-                    <form action="{{ route('dashboard.jobs.index') }}" method="get">
+                    <form action="{{ route('dashboard.companies.index') }}" method="get">
 
                         <div class="row">
 
@@ -36,13 +37,6 @@
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i
                                         class="fa fa-search"></i> @lang('site.search')</button>
-                                @if (auth()->user()->hasRole('super_admin') )
-                                    <a href="{{ route('dashboard.jobs.create') }}" class="btn btn-primary"><i
-                                            class="fa fa-plus"></i> @lang('site.add')</a>
-                                @else
-                                    <a href="#" class="btn btn-primary disabled"><i
-                                            class="fa fa-plus"></i> @lang('site.add')</a>
-                                @endif
                             </div>
 
                         </div>
@@ -51,55 +45,41 @@
                 </div><!-- end of box header -->
 
                 <div class="box-body">
-                    @isset($jobs)
-                        @if ($jobs->count() > 0)
-
+                    @isset($applications)
+                        @if ($applications->count() > 0)
                             <table class="table table-hover">
-
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>@lang('site.image')</th>
-                                    <th>@lang('site.job_title')</th>
-                                    <th>@lang('site.status_job')</th>
-                                    <th>@lang('site.job_type')</th>
-                                    <th>@lang('site.job_applications_count')</th>
+                                    <th>@lang('site.student_name')</th>
+                                    <th>@lang('site.student_mobile')</th>
+                                    <th>@lang('site.application_status')</th>
                                     <th>@lang('site.action')</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
-
-                                @foreach ($jobs as $index=>$job)
+                                @foreach ($applications as $index=>$application)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                        <td>{{  $application->user->name }}</td>
+                                        <td>{{  $application->user->mobile }}</td>
+                                        <td>{{  $application->status }}</td>
 
-                                        <td><img src="{{ $job->company->image }}" style="width: 100px;"
-                                                 class="img-thumbnail" alt=""></td>
-                                        <td>{{ $job->title }}</td>
-                                        <td>{{ $job->status }}</td>
-                                        <td>{{ $job->work_type }}</td>
-                                        <td>{{ $job->applications->count() }}</td>
                                         <td>
+
                                             @if (auth()->user()->hasRole('super_admin') )
-                                                <a href="{{ route('dashboard.jobs.applications', $job->id) }}"
-                                                   class="btn btn-info btn-sm"><i
-                                                        class="fa fa-file"></i> @lang('site.applications')</a>
-                                            @else
-                                                <a href="#" class="btn btn-info btn-sm disabled"><i
-                                                        class="fa fa-edit"></i> @lang('site.applications')</a>
-                                            @endif
-                                            @if (auth()->user()->hasRole('super_admin') )
-                                                <a href="{{ route('dashboard.jobs.edit', $job->id) }}"
+                                                <a href="{{ route('dashboard.jobs.applications.edit', $application->id) }}"
                                                    class="btn btn-success btn-sm"><i
                                                         class="fa fa-edit"></i> @lang('site.edit')</a>
                                             @else
                                                 <a href="#" class="btn btn-success btn-sm disabled"><i
                                                         class="fa fa-edit"></i> @lang('site.edit')</a>
                                             @endif
+
                                             @if (auth()->user()->hasRole('super_admin') )
-                                                <form action="{{ route('dashboard.jobs.destroy', $job->id) }}"
-                                                      method="post" style="display: inline-block">
+                                                <form
+                                                    action="{{ route('dashboard.jobs.applications.destroy', $application->id) }}"
+                                                    method="post" style="display: inline-block">
                                                     {{ csrf_field() }}
                                                     {{ method_field('delete') }}
                                                     <button type="submit" class="btn btn-danger delete btn-sm"><i
@@ -117,12 +97,14 @@
 
                             </table><!-- end of table -->
 
-                            {{ $jobs->appends(request()->query())->links() }}
 
                         @else
+
                             <h2>@lang('site.no_data_found')</h2>
+
                         @endif
                     @endisset
+
                 </div><!-- end of box body -->
 
 

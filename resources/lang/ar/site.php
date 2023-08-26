@@ -104,7 +104,9 @@ return [
     'sorry_your_training_application_have_some_notes' => 'نأسف الطلب المقدم لم يتم قبوله سيتم التواصل معك قريبا ',
     'Please Wait Admins Confirmation' => 'يرجى انتظار تأكيد المشرفين',
 
-
+    'your_job_has_been_confirmed' => 'لقد تم تأكيد طلب وظيفتك بنجاح',
+    'sorry_your_job_has_been_enough_numbers' => 'نأسف لقد تم اكتمال العدد في الوظيفه',
+    'sorry_your_job_application_have_some_notes' => 'نأسف طلب الوظيفة المقدم لم يتم قبوله سيتم التواصل معك قريبا ',
 
 
     'added_successfully' => 'تم اضافه البيانات بنجاح',

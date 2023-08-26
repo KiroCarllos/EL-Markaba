@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
+use App\Models\JobApplication;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class JobController extends Controller
@@ -95,6 +98,95 @@ class JobController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.jobs.index');
 
+    }//end of destroy
+
+
+
+
+
+
+    public function applications($id){
+        $applications = JobApplication::where("job_id",$id)->where("status","!=","canceled")->whereHas("user")->get();
+        return view('dashboard.jobs.applications.index', compact('applications'));
+    }
+    public  function editApplication($id)
+    {
+        $application = JobApplication::findOrFail($id);
+
+        return view('dashboard.jobs.applications.edit', compact('application'));
+    }//end of destroy
+
+    public function updateApplication(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required',
+            'notify' => 'nullable',
+        ]);
+        $jobData = $request->only(["status"]);
+        try{
+            DB::beginTransaction();
+            $jobApplication = JobApplication::query()->whereId($id)->first();
+            $job = Job::query()->whereId($jobApplication->job_id)->first();
+            if ($jobApplication->status == "confirmed" && $request->status == "confirmed"){
+
+            }else if ($jobApplication->status != "pending" && $request->status == "confirmed"){
+                $recipients = [$jobApplication->user->device_token];
+                Notification::create([
+                    "type" => "myJob",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.your_job_has_been_confirmed"),
+                    "read" => "0",
+                    "model_id" => $job->id,
+                    "model_json" => $job,
+                    "user_id" => $jobApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_job_has_been_confirmed"),"myJob",$job);
+            } else  if ($jobApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
+                $recipients = [$jobApplication->user->device_token];
+                Notification::create([
+                    "type" => "myJob",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.sorry_your_job_application_have_some_notes"),
+                    "read" => "0",
+                    "model_id" => $job->id,
+                    "model_json" => $job,
+                    "user_id" => $jobApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_job_application_have_some_notes"),"myJob",$job);
+            }else if ($request->has("notify") && !is_null($request->notify)) {
+                $recipients = [$jobApplication->user->device_token];
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => $request->notify,
+                    "read" => "0",
+                    "model_id" => $job->id,
+                    "model_json" => $job,
+                    "user_id" => $jobApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$job);
+            }
+            $jobApplication->update($jobData);
+
+            if ($request->has("receipt_image") && !is_null($request->receipt_image)){
+                deleteOldFiles("uploads/jobs/application/".$id."/receipt_image");
+                $jobApplication->update(["receipt_image" => uploadImage($request->receipt_image,"uploads/jobs/application/".$id."/receipt_image/".generateBcryptHash($id)."/receipt_image")]);
+            }
+
+            DB::commit();
+            session()->flash('success', __('site.updated_successfully'));
+            return redirect()->route('dashboard.jobs.applications',$jobApplication->job_id);
+        }catch (\Exception $exception){
+            DB::rollBack();
+            dd($exception);
+        }
+    }//end of update
+    public  function deleteApplication($id)
+    {
+        $job = JobApplication::findOrFail($id);
+        $job->update(["status" => "canceled"]);
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route('dashboard.jobs.applications',$job->job_id);
     }//end of destroy
 
 }//end of controller

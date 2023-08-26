@@ -78,7 +78,7 @@
                                                         class="fa fa-file"></i> @lang('site.applications')</a>
                                             @else
                                                 <a href="#" class="btn btn-info btn-sm disabled"><i
-                                                        class="fa fa-edit"></i> @lang('site.edit')</a>
+                                                        class="fa fa-edit"></i> @lang('site.applications')</a>
                                             @endif
                                             @if (auth()->user()->hasRole('super_admin') )
                                                 <a href="{{ route('dashboard.trainings.edit', $training->id) }}"

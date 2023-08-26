@@ -97,7 +97,7 @@
                                     <input type="file" name="tax_card_image" class="form-control image_tax_card">
                                 </div>
                                 <div class="form-group">
-                                    <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 100px"
+                                    <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 400px"
                                          class="img-thumbnail image_tax_card-preview" alt="">
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 100px"
+                                    <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 400px"
                                          class="img-thumbnail image_commercial_record-preview" alt="">
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                                     <input type="file" name="logo" class="form-control image_company">
                                 </div>
                                 <div class="form-group">
-                                    <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 100px"
+                                    <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 400px"
                                          class="img-thumbnail image_company-preview" alt="">
                                 </div>
                             </div>
