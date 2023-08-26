@@ -21,7 +21,7 @@ class Training extends Model
         "image",
     ];
     public $timestamps = false;
-    protected $appends = ["title", "description"];
+    protected $appends = ["title", "description", "application_status", "applied"];
 
     public function user()
     {
@@ -59,4 +59,24 @@ class Training extends Model
         $description = app()->getLocale() == "ar" ? $this->description_ar : $this->description_en;
         return $description;
     }
+
+    public function getApplicationStatusAttribute()
+    {
+        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->pluck("user_id")->toArray();
+        if(in_array(auth("api")->id(),$mytraining_ids)){
+            return  TrainingApplication::where("training_id",$this->id)->pluck("status")->first();
+        }else{
+            return null;
+        }
+    }
+    public function getAppliedAttribute()
+    {
+        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->pluck("user_id")->toArray();
+        if(in_array(auth("api")->id(),$mytraining_ids)){
+            return  true;
+        }else{
+            return false;
+        }
+    }
+
 }
