@@ -202,7 +202,7 @@ class StudentController extends Controller
         if ($training->paid == "no"){
              $applyTraining->update(["status" => "inProgress"]);
         }
-        if ($training->status == "canceled"){
+        if ($applyTraining->status == "canceled"){
              $applyTraining->update(["status" => "pending"]);
         }
         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
