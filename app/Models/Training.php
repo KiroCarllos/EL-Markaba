@@ -62,17 +62,17 @@ class Training extends Model
 
     public function getApplicationStatusAttribute()
     {
-        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->pluck("user_id")->toArray();
-        if(in_array(auth("api")->id(),$mytraining_ids)){
-            return  TrainingApplication::where("training_id",$this->id)->pluck("status")->first();
+        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
+        if(in_array($this->id,$mytraining_ids)){
+            return  TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("status")->first();
         }else{
             return null;
         }
     }
     public function getAppliedAttribute()
     {
-        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->pluck("user_id")->toArray();
-        if(in_array(auth("api")->id(),$mytraining_ids)){
+        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("user_id")->toArray();
+        if(in_array($this->id,$mytraining_ids)){
             return  true;
         }else{
             return false;
