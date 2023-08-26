@@ -204,9 +204,13 @@ class TrainingController extends Controller
                 send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$training);
             }
             $trainingApplication->update($trainingData);
+
             if ($request->has("receipt_image") && !is_null($request->receipt_image)){
                 deleteOldFiles("uploads/trainings/application/".$id."/receipt_image");
                 $trainingApplication->update(["receipt_image" => uploadImage($request->receipt_image,"uploads/trainings/application/".$id."/receipt_image/".generateBcryptHash($id)."/receipt_image")]);
+            }
+            if ($trainingApplication->status == "canceled"){
+                $trainingApplication->delete();
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
