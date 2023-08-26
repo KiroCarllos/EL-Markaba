@@ -223,7 +223,7 @@ class TrainingController extends Controller
     public  function deleteApplication($id)
     {
         $training = TrainingApplication::findOrFail($id);
-        $training->update(["status" => "canceled"]);
+        $training->delete();
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.trainings.applications',$training->training_id);
     }//end of destroy
