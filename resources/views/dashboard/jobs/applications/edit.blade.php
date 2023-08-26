@@ -6,11 +6,11 @@
 
         <section class="content-header">
 
-            <h1>@lang('site.trainings')</h1>
+            <h1>@lang('site.jobs')</h1>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
-                <li><a href="{{ route('dashboard.trainings.index') }}"> @lang('site.trainings')</a></li>
+                <li><a href="{{ route('dashboard.jobs.index') }}"> @lang('site.jobs')</a></li>
                 <li class="active">@lang('site.edit')</li>
             </ol>
         </section>
@@ -26,7 +26,7 @@
                 <div class="box-body">
 
                     @include('partials._errors')
-                    <form action="{{ route('dashboard.trainings.applications.update', $application->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.jobs.applications.update', $application->id) }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('put') }}
                         <div class="form-group">

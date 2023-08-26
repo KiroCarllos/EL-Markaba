@@ -174,10 +174,6 @@ class JobController extends Controller
             }
             $jobApplication->update($jobData);
 
-            if ($request->has("receipt_image") && !is_null($request->receipt_image)){
-                deleteOldFiles("uploads/jobs/application/".$id."/receipt_image");
-                $jobApplication->update(["receipt_image" => uploadImage($request->receipt_image,"uploads/jobs/application/".$id."/receipt_image/".generateBcryptHash($id)."/receipt_image")]);
-            }
 
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
