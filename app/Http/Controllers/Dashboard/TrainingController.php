@@ -204,9 +204,7 @@ class TrainingController extends Controller
                 send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$training);
             }
             $trainingApplication->update($trainingData);
-            if ($request->status == "canceled"){
-                $trainingApplication->delete();
-            }
+
             if ($request->has("receipt_image") && !is_null($request->receipt_image)){
                 deleteOldFiles("uploads/trainings/application/".$id."/receipt_image");
                 $trainingApplication->update(["receipt_image" => uploadImage($request->receipt_image,"uploads/trainings/application/".$id."/receipt_image/".generateBcryptHash($id)."/receipt_image")]);
@@ -223,7 +221,7 @@ class TrainingController extends Controller
     public  function deleteApplication($id)
     {
         $training = TrainingApplication::findOrFail($id);
-        $training->delete();
+        $training->update(["status" => "canceled"]);
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.trainings.applications',$training->training_id);
     }//end of destroy
