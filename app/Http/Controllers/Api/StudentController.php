@@ -179,10 +179,14 @@ class StudentController extends Controller
         foreach ($trainings as $training){
             $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
             // remove status
-            $status = in_array(auth("api")->id(),$mytraining_ids) ? TrainingApplication::where("training_id",$training->id)->pluck("status")->first(): null;
-            $training->setAttribute("application_status",$status);
-            // end remove
-            $training->setAttribute("applied",in_array(auth("api")->id(),$mytraining_ids));
+            if(in_array(auth("api")->id(),$mytraining_ids)){
+                $status =TrainingApplication::where("training_id",$training->id)->pluck("status")->first();
+                $training->setAttribute("application_status",$status);
+                $training->setAttribute("applied",true);
+            }else{
+                $training->setAttribute("application_status",null);
+                $training->setAttribute("applied",false);
+            }
         }
         return api_response(1,"",$trainings);
     }
