@@ -202,6 +202,9 @@ class StudentController extends Controller
         if ($training->paid == "no"){
              $applyTraining->update(["status" => "inProgress"]);
         }
+        if ($training->status == "canceled"){
+             $applyTraining->update(["status" => "pending"]);
+        }
         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
             $recipients = [auth("api")->user()->device_token];
             Notification::create([
