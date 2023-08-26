@@ -21,7 +21,7 @@ class Job extends Model
         "expected_salary_from",
         "expected_salary_to",
     ];
-    protected $appends = ["image","title","description"];
+    protected $appends = ["image","title","description", "application_status", "applied"];
     protected $casts = [
         "user_id" => "integer"
     ];
@@ -45,5 +45,23 @@ class Job extends Model
     public function getDescriptionAttribute(){
         $description = app()->getLocale() == "ar" ? $this->description_ar : $this->description_en;
         return $description;
+    }
+    public function getApplicationStatusAttribute()
+    {
+        $my_job_ids = JobApplication::where("job_id",$this->id)->where("user_id",auth("api")->id())->pluck("job_id")->toArray();
+        if(in_array($this->id,$my_job_ids)){
+            return  JobApplication::where("job_id",$this->id)->where("user_id",auth("api")->id())->pluck("status")->first();
+        }else{
+            return null;
+        }
+    }
+    public function getAppliedAttribute()
+    {
+        $my_job_ids = JobApplication::where("job_id",$this->id)->where("user_id",auth("api")->id())->pluck("job_id")->toArray();
+        if(in_array($this->id,$my_job_ids)){
+            return  true;
+        }else{
+            return false;
+        }
     }
 }
