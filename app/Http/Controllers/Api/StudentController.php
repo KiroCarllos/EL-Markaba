@@ -363,7 +363,7 @@ class StudentController extends Controller
 
 
     public function notifications(){
-        $notifications = Notification::where("user_id",auth("api")->id())->paginate(6);
+        $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(6);
         return api_response(1,"",$notifications);
     }
 }//end of controller
