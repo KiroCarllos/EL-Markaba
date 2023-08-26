@@ -112,8 +112,14 @@ class JobController extends Controller
     public  function editApplication($id)
     {
         $application = JobApplication::findOrFail($id);
-
-        return view('dashboard.jobs.applications.edit', compact('application'));
+        $userStudentDetail = User::whereId($application->user_id)->with("student_details")->first();
+        if (is_null($userStudentDetail->student_details->faculty)){
+            $faculties=[];
+        }else{
+            $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty->university_id);
+        }
+        $universities = $this->getAllUniversities();
+        return view('dashboard.jobs.applications.edit', compact('application','faculties','universities'));
     }//end of destroy
 
     public function updateApplication(Request $request, $id)
