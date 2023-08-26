@@ -17,12 +17,23 @@ class Notification extends Model
         "user_id",
         "model_json",
     ];
-    public $timestamps = false;
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->created_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+            $model->updated_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+
+        static::updating(function ($model) {
+            $model->updated_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+    }
     protected $casts = [
         "model_json" => "json"
     ];
     protected $appends = ["created_ago"];
     public function getCreatedAgoAttribute(){
+
         return Carbon::parse($this->created_at)->diffForHumans();
     }
     public function user(){
