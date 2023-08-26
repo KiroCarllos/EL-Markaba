@@ -37,8 +37,6 @@ class PostController extends Controller
             'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $postData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
-        $postData["created_at"] =  Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
-        $postData["updated_at"] = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
         $postData["user_id"] = auth()->id();
         try{
             DB::beginTransaction();

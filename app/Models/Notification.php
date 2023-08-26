@@ -20,12 +20,12 @@ class Notification extends Model
     protected static function booted()
     {
         static::creating(function ($model) {
-            $model->created_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
-            $model->updated_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+            $model->created_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
+            $model->updated_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
         });
 
         static::updating(function ($model) {
-            $model->updated_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+            $model->updated_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
         });
     }
     protected $casts = [

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,7 +21,17 @@ class Training extends Model
         "user_id",
         "image",
     ];
-    public $timestamps = false;
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->created_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
+            $model->updated_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+
+        static::updating(function ($model) {
+            $model->updated_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+    }
     protected $appends = ["title", "description", "application_status", "applied"];
 
     public function user()

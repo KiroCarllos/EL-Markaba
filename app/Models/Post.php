@@ -21,7 +21,19 @@ class Post extends Model
         "image",
     ];
     protected $appends = ["created_ago","title","description"];
-    public $timestamps = false;
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->created_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
+            $model->updated_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+
+        static::updating(function ($model) {
+            $model->updated_at = Carbon::now()->subHour()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+    }
+
     public function getCreatedAgoAttribute(){
         Carbon::setLocale(app()->getLocale());
         // Trim the date string and create Carbon instance

@@ -40,8 +40,6 @@ class TrainingController extends Controller
             'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $trainingData = $request->only(["title_en","paid","title_ar","description_en","description_ar","status"]);
-        $trainingData["created_at"] =  Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
-        $trainingData["updated_at"] = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
         $trainingData["user_id"] = auth()->id();
         try{
             DB::beginTransaction();
