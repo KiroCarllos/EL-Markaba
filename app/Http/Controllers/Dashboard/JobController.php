@@ -50,6 +50,7 @@ class JobController extends Controller
             'expected_salary_to' => 'required|numeric',
         ]);
         $request_data = $request->only(['title_ar','title_en','job_type','user_id', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+        $request_data["status"] = "pending";
         $job = Job::create($request_data);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.jobs.index');
