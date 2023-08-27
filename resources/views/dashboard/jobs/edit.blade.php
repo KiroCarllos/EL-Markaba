@@ -64,7 +64,13 @@
                                 <option {{ $job->work_type == "part_time" ? "selected" :"" }} value="part_time">@lang("site.part_time")</option>
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label>@lang('site.job_type')</label>
+                            <select name="work_type" id="work_type" class="form-control">
+                                <option {{ $job->job_type == "online" ? "selected" :"" }} value="online">@lang("site.online")</option>
+                                <option {{ $job->job_type == "from_company" ? "selected" :"" }} value="from_company">@lang("site.from_company")</option>
+                            </select>
+                        </div>
                         <div id="work_hours" class="form-group">
                             <label>@lang('site.work_hours')</label>
                             <input max="10" type="number" name="work_hours" class="form-control" value="{{ $job->work_hours }}">
