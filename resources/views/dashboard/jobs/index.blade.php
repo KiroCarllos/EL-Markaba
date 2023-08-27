@@ -60,6 +60,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>@lang('site.image')</th>
+                                    <th>@lang('site.company_name')</th>
                                     <th>@lang('site.job_title')</th>
                                     <th>@lang('site.status_job')</th>
                                     <th>@lang('site.job_type')</th>
@@ -76,6 +77,7 @@
 
                                         <td><img src="{{ $job->company->image }}" style="width: 100px;"
                                                  class="img-thumbnail" alt=""></td>
+                                        <td>{{ $job->company->name }}</td>
                                         <td>{{ $job->title }}</td>
                                         <td>{{ $job->status }}</td>
                                         <td>{{ $job->work_type }}</td>

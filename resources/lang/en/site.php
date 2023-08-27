@@ -34,6 +34,8 @@ return[
     'sorry_your_job_has_been_enough_numbers' => 'Sorry, the job has been completed',
     'sorry_your_job_application_have_some_notes' => 'We regret that the submitted request was not accepted. We will contact you soon',
     'Please Wait Admins Confirmation' => 'Please Wait Admins Confirmation',
+    'job_applications_count' => 'Applied Applications',
+    'company_name' => 'Company Name',
 
     'your_account_added_please_wait_activation' => 'You have created your account successfully please ,wait our activation',
     'you_has_apply_training_and_now_pending' => 'Your request has been successfully received and is now under review',

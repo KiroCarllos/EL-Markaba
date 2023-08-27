@@ -107,6 +107,8 @@ return [
     'your_job_has_been_confirmed' => 'لقد تم تأكيد طلب وظيفتك بنجاح',
     'sorry_your_job_has_been_enough_numbers' => 'نأسف لقد تم اكتمال العدد في الوظيفه',
     'sorry_your_job_application_have_some_notes' => 'نأسف طلب الوظيفة المقدم لم يتم قبوله سيتم التواصل معك قريبا ',
+    'job_applications_count' => 'عدد الطلبات',
+    'company_name' => 'اسم الشركة',
 
 
     'added_successfully' => 'تم اضافه البيانات بنجاح',
