@@ -110,6 +110,9 @@ return [
     'job_applications_count' => 'عدد الطلبات',
     'company_name' => 'اسم الشركة',
 
+    'work_type' => 'نوغ العمل',
+    'online' => 'اونلاين',
+    'from_company' => 'من الشركة',
 
     'added_successfully' => 'تم اضافه البيانات بنجاح',
     'updated_successfully' => 'تم تعديل البيانات بنجاح',

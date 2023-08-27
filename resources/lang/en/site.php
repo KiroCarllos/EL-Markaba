@@ -36,6 +36,9 @@ return[
     'Please Wait Admins Confirmation' => 'Please Wait Admins Confirmation',
     'job_applications_count' => 'Applied Applications',
     'company_name' => 'Company Name',
+    'work_type' => 'Work Type',
+    'online' => 'Online',
+    'from_company' => 'From Company',
 
     'your_account_added_please_wait_activation' => 'You have created your account successfully please ,wait our activation',
     'you_has_apply_training_and_now_pending' => 'Your request has been successfully received and is now under review',

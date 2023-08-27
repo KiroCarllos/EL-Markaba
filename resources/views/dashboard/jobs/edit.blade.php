@@ -65,7 +65,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>@lang('site.job_type')</label>
+                            <label>@lang('site.work_type')</label>
                             <select name="job_type" id="job_type" class="form-control">
                                 <option {{ $job->job_type == "online" ? "selected" :"" }} value="online">@lang("site.online")</option>
                                 <option {{ $job->job_type == "from_company" ? "selected" :"" }} value="from_company">@lang("site.from_company")</option>

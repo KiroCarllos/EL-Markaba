@@ -50,7 +50,7 @@
                             <input type="text" name="description_en" class="form-control" value="{{ old('description_en') }}">
                         </div>
                         <div class="form-group">
-                            <label>@lang('site.job_type')</label>
+                            <label>@lang('site.work_type')</label>
                             <select name="work_type" id="work_type" class="form-control">
                                 <option {{ old("work_type") == "full_time" ? "selected" :"" }} value="full_time">@lang("site.full_time")</option>
                                 <option {{ old("work_type") == "part_time" ? "selected" :"" }} value="part_time">@lang("site.part_time")</option>
