@@ -198,7 +198,7 @@ class CompanyController extends Controller
             }
             $job->update($request_data);
             DB::commit();
-            return api_response(1, __('site.updated_successfully'));
+            return api_response(1, __('site.updated_successfully'),$request_data);
         } catch (\Exception $exception) {
             DB::rollBack();
             dd($exception);
