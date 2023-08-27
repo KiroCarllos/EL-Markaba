@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\CompanyDetail;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -218,5 +219,11 @@ class CompanyController extends Controller
         $msg = "your job ".$request->status ." successfully";
         return api_response(1, __("site.".$msg));
     }
-
+    public function getJobApplications(Request $request){
+        $request->validate([
+            "job_id"=> ["required","numeric",Rule::exists("jobs","id")->where("user_id",auth("api")->id())],
+        ]);
+        $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed",'notConfirmed',"inProgress"])->with("user")->paginate(6);
+        return api_response(1,"",$jobApplications);
+    }
 }//end of controller
