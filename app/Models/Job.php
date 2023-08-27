@@ -14,6 +14,7 @@ class Job extends Model
         "status",
         "description_en",
         "description_ar",
+        "job_type",
         "work_type",
         "work_hours",
         "contact_email",
