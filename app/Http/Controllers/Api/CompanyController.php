@@ -173,7 +173,7 @@ class CompanyController extends Controller
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'work_type' => 'nullable|in:part_time,full_time',
-            'job_type' => 'required|in:from_company,online',
+            'job_type' => 'nullable|in:from_company,online',
 
             'work_hours' => 'nullable',
             'contact_email' => 'nullable|email',
