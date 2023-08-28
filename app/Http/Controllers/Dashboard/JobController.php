@@ -86,6 +86,22 @@ class JobController extends Controller
         $job = Job::findOrFail($id);
 
         $request_data = $request->only(['title_ar','job_type','title_en','user_id','status', 'description_en','description_ar', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+        if (($job->status == "pending"  && $request->status == "active") ||($job->status == "pending" && $request->status == "active") ){
+//            $recipients = [$application->user->device_token];
+            $recipients = ["ehOW5v2HQe24R-gXOtAYe1:APA91bGsa09PkCmPjIsXCb2TXEeL754sELEvDK70jP8U5P-8i3QyWaT1nFNL_dzjgL8KTvd3HuuctgfrtPH1I2Ul3kpwWqLFupuUCkL-qYT2iDbKMx-_B6YmPudOckDniV3qGCX1LS-L","emRGezSxRQSLazd0NESfzi:APA91bHagdojOO_T5eGZXkwzzN4kQpPnrmM7_K78UwKGl9LmZKggoKBbAAeb3BRKmBfe513tjN3eZuzxmoK48Md4wcy-NFbkFiHR6bivi9W7e7s8CwC872lW03LHDFqLrt510nRTjj_t"];
+            foreach ($recipients as $recipient){
+                Notification::create([
+                    "type" => "newJob",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.new_job_added"),
+                    "read" => "0",
+                    "model_id" => $job->id,
+                    "model_json" => $job,
+                    "user_id" => $job->id,
+                ]);
+                send_fcm([$recipient],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$job);
+            }
+        }
         $job->update($request_data);
         session()->flash('success', __('site.updated_successfully'));
         return redirect()->route('dashboard.jobs.index');
