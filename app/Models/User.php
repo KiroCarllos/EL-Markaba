@@ -15,9 +15,9 @@ class User extends Authenticatable  implements JWTSubject
 
     protected $connection = "mysql";
     protected $fillable = [
-        'name',"status","role","mobile", 'email', 'password', 'image','auth_token','device_token',"education"
+        'name',"status","role","mobile", 'email', 'password', 'image','auth_token','device_token'
     ];
-
+    protected $appends = ["education"];
     public function getEducationAttribute()
     {
         $studentDetail = StudentDetail::where("user_id",$this->id)->first();
