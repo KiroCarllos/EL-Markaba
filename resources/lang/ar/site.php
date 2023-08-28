@@ -116,6 +116,7 @@ return [
     'congratulations_your_application_has_been_accepted'=>'تهانينا، لقد تم قبول طلبك للوظيفة',
     'new_job_added'=>'لقد تم نشر وظيفه جديده بادر بالتقديم اذا كانت تناسبك',
 
+    'student_has_suggest_for_job'=>'تم ترشيج طالب لوظيفة خاصة لديك',
 
     'work_type' => 'نوغ العمل',
     'online' => 'اونلاين',
