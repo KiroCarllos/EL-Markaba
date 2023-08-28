@@ -24,6 +24,7 @@ return[
     'enough' => 'enough',
     'inProgress' => 'inProgress',
     'student_mobile' => 'student mobile',
+    'review_to_company' => 'Suggest to Company ?',
     'student_name' => 'student name',
 
     'your_training_has_been_confirmed' => 'Your Training Has Been Confirmed',

@@ -109,6 +109,7 @@ return [
     'sorry_your_job_application_have_some_notes' => 'نأسف طلب الوظيفة المقدم لم يتم قبوله سيتم التواصل معك قريبا ',
     'job_applications_count' => 'عدد الطلبات',
     'company_name' => 'اسم الشركة',
+    'review_to_company' => 'ترشيحه للشركه ؟',
 
     'work_type' => 'نوغ العمل',
     'online' => 'اونلاين',
