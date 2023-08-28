@@ -230,13 +230,13 @@ class CompanyController extends Controller
                 "user" => function ($query) {
                     $query->with("student_details");
                 }
-            ])->paginate(6);
+            ])->paginate(50);
         }elseif($job->status == "active"){
             $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed",'notConfirmed',"inProgress"])->with([
                 "user" => function ($query) {
                     $query->with("student_details");
                 }
-            ])->paginate(6);
+            ])->paginate(50);
         }else{
             $jobApplications =[];
         }
