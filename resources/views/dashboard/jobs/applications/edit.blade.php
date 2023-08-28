@@ -34,7 +34,7 @@
                             <select name="status" class="form-control">
                                 <option  disabled {{ $application->status == "confirmed" ? "selected" :"" }}>@lang("site.confirmed")</option>
                                 <option disabled  {{ $application->status == "notConfirmed" ? "selected" :"" }}>@lang("site.notConfirmed")</option>
-                                <option  disabled {{ $application->status == "canceled" ? "selected" :"" }}>@lang("site.canceled")</option>
+                                <option value="canceled" {{ $application->status == "canceled" ? "selected" :"" }}>@lang("site.canceled")</option>
                                 <option value="pending" {{ $application->status == "pending" ? "selected" :"" }}>@lang("site.pending")</option>
                                 <option value="inProgress" {{ $application->status == "inProgress" ? "selected" :"" }}>@lang("site.review_to_company")</option>
                             </select>

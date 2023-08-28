@@ -28,6 +28,7 @@ return[
     'you_application_under_review_from_company' => 'Your Application Under Review From Company',
 
     'student_name' => 'student name',
+    'we_really_sorry_your_application_has_been_rejected' => 'We Really Sorry, Your Application Has Been Rejected',
 
     'your_training_has_been_confirmed' => 'Your Training Has Been Confirmed',
     'sorry_your_training_has_been_enough_numbers' => 'Sorry, the training has been completed',

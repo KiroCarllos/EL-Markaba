@@ -238,4 +238,18 @@ class CompanyController extends Controller
         $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(10);
         return api_response(1,"",$notifications);
     }
+    // TODO APPLICATIONS CONFIRM NOT CONFIRM DELETE IN COMPANY
+//if (){
+//$recipients = [$jobApplication->user->device_token];
+//Notification::create([
+//"type" => "posts",
+//"title" => __("site.markz_el_markaba"),
+//"body" => __("site.we_really_sorry_your_application_has_been_rejected"),
+//"read" => "0",
+//"model_id" => $job->id,
+//"model_json" => $job,
+//"user_id" => $jobApplication->user->id,
+//]);
+//send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$job);
+//}
 }//end of controller

@@ -178,7 +178,19 @@ class JobController extends Controller
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_application_under_review_from_company"),"myJob",$job);
                 $jobApplication->update($jobData);
             }elseif ($jobApplication->status == "inProgress" && $request->status == "pending"){
-
+                $jobApplication->update($jobData);
+            }elseif (($jobApplication->status == "inProgress" && $request->status == "canceled") || $jobApplication->status == "pending" && $request->status == "canceled"){
+                $recipients = [$jobApplication->user->device_token];
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.we_really_sorry_your_application_has_been_rejected"),
+                    "read" => "0",
+                    "model_id" => $job->id,
+                    "model_json" => $job,
+                    "user_id" => $jobApplication->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$job);
                 $jobApplication->update($jobData);
             }else if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$jobApplication->user->device_token];

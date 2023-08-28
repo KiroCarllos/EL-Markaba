@@ -111,6 +111,7 @@ return [
     'company_name' => 'اسم الشركة',
     'review_to_company' => 'ترشيحه للشركه ؟',
     'you_application_under_review_from_company' => 'طلبك قيد المراجعة من قبل شركة التوظيف',
+    'we_really_sorry_your_application_has_been_rejected' => 'نأسف حقًا، لقد تم رفض طلب تقديم الوظيفه ',
 
     'work_type' => 'نوغ العمل',
     'online' => 'اونلاين',
