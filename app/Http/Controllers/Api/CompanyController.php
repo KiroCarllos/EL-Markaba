@@ -131,7 +131,7 @@ class CompanyController extends Controller
         $jobs = Job::where('user_id', auth("api")->id())
             ->active()
             ->latest()
-            ->paginate(6);
+            ->paginate(50);
         return api_response(1, "", $jobs);
     }
 
