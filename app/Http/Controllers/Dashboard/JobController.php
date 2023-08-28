@@ -17,7 +17,7 @@ class JobController extends Controller
     public function index(Request $request)
     {
 
-        $jobs = Job::Active()->whereHas("company")->latest()->paginate(20);
+        $jobs = Job::whereHas("company")->latest()->paginate(20);
 //        dd($jobs);
         return view('dashboard.jobs.index', compact('jobs'));
 
