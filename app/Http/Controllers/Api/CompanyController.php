@@ -246,6 +246,9 @@ class CompanyController extends Controller
         $myJobIds = Job::where("user_id",auth("api")->id())->pluck("id")->toArray();
         $application = JobApplication::find($request->application_id);
         if (in_array($application->job_id,$myJobIds)){
+            if ($application->status == "confirmed" || $application->status == "notConfirmed"){
+                return api_response(1,"");
+            }
             if ($request->status == "confirmed"){
                 $recipients = [$application->user->device_token];
                 Notification::create([
@@ -272,6 +275,8 @@ class CompanyController extends Controller
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$application);
             }
             $application->update(["status" => $request->status]);
+            return api_response(1,"");
+
         }
         return api_response(0,__("site.something_went_wrong"));
 
