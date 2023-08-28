@@ -185,7 +185,10 @@ class JobController extends Controller
 //            }
 
             if ($jobApplication->status == "pending" && $request->status == "inProgress"){
-                $recipients = [$jobApplication->user->device_token];
+                $recipients = [$jobApplication->user->device_token,$job->company->device_token];
+                foreach ($recipients as $index=>$recipient){
+                    dd($index);
+                }
                 Notification::create([
                         "type" => "myJob",
                     "title" => __("site.markz_el_markaba"),
@@ -206,7 +209,7 @@ class JobController extends Controller
                     "model_json" => $job,
                     "user_id" => $job->company->id,
                 ]);
-                dd([$job->company->device_token]);
+                dd([]);
                 send_fcm([$job->company->device_token],__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
 
 
