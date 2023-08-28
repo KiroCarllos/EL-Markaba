@@ -226,7 +226,11 @@ class CompanyController extends Controller
         ]);
         $job = Job::find($request->job_id);
         if ($job->status == "enough"){
-            $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed"])->with("user")->paginate(6);
+            $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed"])->with([
+                "user" => function ($query) {
+                    $query->with("student_details");
+                }
+            ])->paginate(6);
         }elseif($job->status == "active"){
             $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed",'notConfirmed',"inProgress"])->with("user")->paginate(6);
         }else{
