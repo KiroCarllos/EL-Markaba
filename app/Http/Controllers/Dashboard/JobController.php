@@ -132,7 +132,7 @@ class JobController extends Controller
     {
         $application = JobApplication::findOrFail($id);
         $userStudentDetail = User::whereId($application->user_id)->with("student_details")->first();
-        if ($userStudentDetail->student_details->education == "high"){
+        if (!is_null($userStudentDetail->student_details->education) && $userStudentDetail->student_details->education == "high"){
             if (is_null($userStudentDetail->student_details->faculty)){
                 $faculties=[];
             }else{
