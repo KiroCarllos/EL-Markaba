@@ -21,12 +21,18 @@ class User extends Authenticatable  implements JWTSubject
     public function getEducationAttribute()
     {
         $studentDetail = StudentDetail::where("user_id",$this->id)->first();
-        return $studentDetail->education == "high" ? $studentDetail->faculty_name: $studentDetail->else_education;
+        if (!is_null($studentDetail)){
+            return $studentDetail->education == "high" ? $studentDetail->faculty_name: $studentDetail->else_education;
+        }
+        return null;
     }
     public function getAgeAttribute()
     {
         $studentDetail = StudentDetail::where("user_id",$this->id)->first();
-        return calculateAgeFromNationalId($studentDetail->national_id);
+        if (!is_null($studentDetail)){
+            return calculateAgeFromNationalId($studentDetail->national_id);
+        }
+        return null;
     }
 
     /**
