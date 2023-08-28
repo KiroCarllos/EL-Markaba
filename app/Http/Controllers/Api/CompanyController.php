@@ -22,6 +22,8 @@ class CompanyController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'device_token' => 'nullable',
+
         ]);
         $credentials = ["email" => $request->email, "password" => $request->password];
         if (!$token = auth("api")->attempt($credentials)) {
@@ -30,7 +32,8 @@ class CompanyController extends Controller
         $user = User::where("email", $request->email)->first();
         if ($user->role == "company" || $user->role == "super_admin") {
             if ($user->status == "active") {
-                $user->update(["auth_token" => $token]);
+
+                $user->update(["auth_token" => $token,"device_token"=>$request->device_token]);
                 return api_response(1, __("site.company successfully login"), $user);
             } else {
                 $msg = "Sorry Your Account is " . $user->status . " now";
@@ -58,6 +61,8 @@ class CompanyController extends Controller
             'logo' => 'required|mimes:jpeg,png,jpg|max:4096',
             'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:4096',
             'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'device_token' => 'nullable',
+
         ]);
         $userData = $request->only(["name", "mobile", "email"]);
         $userData["password"] = Hash::make($request->password);
@@ -70,6 +75,7 @@ class CompanyController extends Controller
                 "email" => $userData["email"],
                 "password" => $userData["password"],
                 "role" => "company",
+                "device_token" => $request->device_token,
             ]);
             deleteOldFiles("uploads/companies/" . $user->id . "/logo");
             if ($request->logo) {

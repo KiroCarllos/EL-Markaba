@@ -199,7 +199,6 @@ class JobController extends Controller
                         ]);
                         send_fcm([$recipient],__("site.markz_el_markaba"),__("site.you_application_under_review_from_company"),"myJob",$job);
                     }elseif($index == 1){
-                        dd($job->company->device_token);
                         Notification::create([
                             "type" => "jobs",
                             "title" => __("site.markz_el_markaba"),
