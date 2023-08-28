@@ -34,11 +34,11 @@ class StudentDetail extends Model
     }
     public function getPriorExperiencesAttribute($priorExperiencesValue){
 
-        return $priorExperiencesValue;
+        return json_decode($priorExperiencesValue);
     }
     public function getCoursesAttribute($coursesvalue){
 
-        return $coursesvalue;
+        return json_decode($coursesvalue);
     }
     public function user(){
         return $this->belongsTo(User::class,"user_id",'id');
