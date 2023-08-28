@@ -196,7 +196,7 @@ class JobController extends Controller
                     "user_id" => $jobApplication->user->id,
                 ]);
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_application_under_review_from_company"),"myJob",$job);
-                dd([$job->company->device_token]);
+
                 // comapny
                 Notification::create([
                     "type" => "jobs",
@@ -207,8 +207,8 @@ class JobController extends Controller
                     "model_json" => $job,
                     "user_id" => $job->company->id,
                 ]);
-                send_fcm([$job->company->device_token],__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
-
+                $s = send_fcm([$job->company->device_token],__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
+                dd($s);
 
                 $jobApplication->update($jobData);
             }elseif ($jobApplication->status == "inProgress" && $request->status == "pending"){
