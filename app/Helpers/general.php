@@ -37,16 +37,29 @@ function uploadImage($image, $path)
 }
  function calculateAgeFromNationalId($nationalId)
 {
-    // Extract birthdate information from the national ID (this might vary depending on your case)
-    $year = substr($nationalId, 0, 4);
-    $month = substr($nationalId, 4, 2);
-    $day = substr($nationalId, 6, 2);
+    if (substr($nationalId, 0, 1) == 2){
+        $array = str_split($nationalId);
+        $dateOfBirth = "19".$array[1].$array[2]."-".$array[3].$array[4]."-".$array[5].$array[6];
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }elseif (substr($nationalId, 0, 4) == 3000){
+        $array = str_split($nationalId);
+        $dateOfBirth = "20".$array[1].$array[2]."-".$array[4].$array[5]."-".$array[6].$array[7];
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }elseif (substr($nationalId, 0, 3) == 300){
+        $array = str_split($nationalId);
+        $dateOfBirth = "20".$array[1].$array[2]."-".$array[3].$array[4]."-".$array[5].$array[6];
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }else{
+        $dateOfBirth = "2021-01-01";
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }
+}
+ function calculateAgeFromDateOfBirth($dateOfBirth)
+{
+    $birthdate = Carbon::parse($dateOfBirth);
+    $currentDate = Carbon::now();
 
-    // Create a Carbon instance for the birthdate
-    $birthdate = Carbon::create($year, $month, $day);
-
-    // Calculate age
-    $age = $birthdate->age;
+    $age = $birthdate->diffInYears($currentDate);
 
     return $age;
 }
