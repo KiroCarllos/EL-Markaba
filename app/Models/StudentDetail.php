@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Collection;
 class StudentDetail extends Model
 {
     protected $fillable = [
@@ -32,16 +32,16 @@ class StudentDetail extends Model
         $university_id = Faculty::where("id",$this->faculty_id)->pluck("university_id")->first();
         return University::where("id",$university_id)->pluck( "name_".app()->getLocale())->first();
     }
-    public function getPriorExperiencesAttribute($val){
-        $priorExperiences = array_filter($val, function($value) {
+    public function getPriorExperiencesAttribute($priorExperiencesValue){
+        $priorExperiences = Collection::make($priorExperiencesValue)->filter(function($value) {
             return $value !== null;
-        });
+        })->values()->all();
         return $priorExperiences;
     }
-    public function getCoursesAttribute($val){
-        $courses = array_filter($val, function($value) {
+    public function getCoursesAttribute($coursesvalue){
+        $courses = Collection::make($coursesvalue)->filter(function($value) {
             return $value !== null;
-        });
+        })->values()->all();
         return $courses;
     }
     public function user(){
