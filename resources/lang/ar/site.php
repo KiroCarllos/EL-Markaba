@@ -110,6 +110,7 @@ return [
     'job_applications_count' => 'عدد الطلبات',
     'company_name' => 'اسم الشركة',
     'review_to_company' => 'ترشيحه للشركه ؟',
+    'you_application_under_review_from_company' => 'طلبك قيد المراجعة من قبل شركة التوظيف',
 
     'work_type' => 'نوغ العمل',
     'online' => 'اونلاين',

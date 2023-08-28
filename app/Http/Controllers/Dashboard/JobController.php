@@ -136,32 +136,50 @@ class JobController extends Controller
             DB::beginTransaction();
             $jobApplication = JobApplication::query()->whereId($id)->first();
             $job = Job::query()->whereId($jobApplication->job_id)->first();
-            if ($jobApplication->status == "confirmed" && $request->status == "confirmed"){
+//            if ($jobApplication->status == "confirmed" && $request->status == "confirmed"){
+//
+//            }else if ($jobApplication->status != "pending" && $request->status == "confirmed"){
+//                $recipients = [$jobApplication->user->device_token];
+//                Notification::create([
+//                    "type" => "myJob",
+//                    "title" => __("site.markz_el_markaba"),
+//                    "body" => __("site.your_job_has_been_confirmed"),
+//                    "read" => "0",
+//                    "model_id" => $job->id,
+//                    "model_json" => $job,
+//                    "user_id" => $jobApplication->user->id,
+//                ]);
+//                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_job_has_been_confirmed"),"myJob",$job);
+//            } else  if ($jobApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
+//                $recipients = [$jobApplication->user->device_token];
+//                Notification::create([
+//                    "type" => "myJob",
+//                    "title" => __("site.markz_el_markaba"),
+//                    "body" => __("site.sorry_your_job_application_have_some_notes"),
+//                    "read" => "0",
+//                    "model_id" => $job->id,
+//                    "model_json" => $job,
+//                    "user_id" => $jobApplication->user->id,
+//                ]);
+//                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_job_application_have_some_notes"),"myJob",$job);
+//            }
 
-            }else if ($jobApplication->status != "pending" && $request->status == "confirmed"){
+            if ($jobApplication->status == "pending" && $request->status == "inProgress"){
                 $recipients = [$jobApplication->user->device_token];
                 Notification::create([
                     "type" => "myJob",
                     "title" => __("site.markz_el_markaba"),
-                    "body" => __("site.your_job_has_been_confirmed"),
+                    "body" => __("site.you_application_under_review_from_company"),
                     "read" => "0",
                     "model_id" => $job->id,
                     "model_json" => $job,
                     "user_id" => $jobApplication->user->id,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_job_has_been_confirmed"),"myJob",$job);
-            } else  if ($jobApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
-                $recipients = [$jobApplication->user->device_token];
-                Notification::create([
-                    "type" => "myJob",
-                    "title" => __("site.markz_el_markaba"),
-                    "body" => __("site.sorry_your_job_application_have_some_notes"),
-                    "read" => "0",
-                    "model_id" => $job->id,
-                    "model_json" => $job,
-                    "user_id" => $jobApplication->user->id,
-                ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_job_application_have_some_notes"),"myJob",$job);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_application_under_review_from_company"),"myJob",$job);
+                $jobApplication->update($jobData);
+            }elseif ($jobApplication->status == "inProgress" && $request->status == "pending"){
+
+                $jobApplication->update($jobData);
             }else if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$jobApplication->user->device_token];
                 Notification::create([
@@ -175,7 +193,6 @@ class JobController extends Controller
                 ]);
                 send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$job);
             }
-            $jobApplication->update($jobData);
 
 
             DB::commit();
