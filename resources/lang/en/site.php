@@ -15,6 +15,8 @@ return[
     'receipt_image'=>'Receipt Image',
     'application_status'=>'Application Status',
     'paid_or_not'=>'Paid Or Not',
+    'something_went_wrong'=>'Something Went Wrong',
+    'congratulations_your_application_has_been_accepted'=>'Congratulations, Your Application Has Been Accepted',
     'training'=>'Training',
     'not_found'=>'Not Found',
     'confirmed' => 'confirmed',

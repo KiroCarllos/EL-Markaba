@@ -238,18 +238,44 @@ class CompanyController extends Controller
         $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(10);
         return api_response(1,"",$notifications);
     }
-    // TODO APPLICATIONS CONFIRM NOT CONFIRM DELETE IN COMPANY
-//if (){
-//$recipients = [$jobApplication->user->device_token];
-//Notification::create([
-//"type" => "posts",
-//"title" => __("site.markz_el_markaba"),
-//"body" => __("site.we_really_sorry_your_application_has_been_rejected"),
-//"read" => "0",
-//"model_id" => $job->id,
-//"model_json" => $job,
-//"user_id" => $jobApplication->user->id,
-//]);
-//send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$job);
-//}
+    public function updateApplicationStatus(Request $request){
+        $request->validate([
+            "application_id"=> ["required","numeric",Rule::exists("job_applications","id")],
+            "status" => [ "required" ,"in:confirmed,notConfirmed"]
+        ]);
+        $myJobIds = Job::where("user_id",auth("api")->id())->pluck("id")->toArray();
+        $application = JobApplication::find($request->application_id);
+        if (in_array($application->job_id,$myJobIds)){
+            if ($request->status == "confirmed"){
+                $recipients = [$application->user->device_token];
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.congratulations_your_application_has_been_accepted"),
+                    "read" => "0",
+                    "model_id" => $application->id,
+                    "model_json" => $application,
+                    "user_id" => $application->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.congratulations_your_application_has_been_accepted"),"posts",$application);
+            }else{
+                $recipients = [$application->user->device_token];
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.we_really_sorry_your_application_has_been_rejected"),
+                    "read" => "0",
+                    "model_id" => $application->id,
+                    "model_json" => $application,
+                    "user_id" => $application->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$application);
+            }
+            $application->update(["status" => $request->status]);
+        }
+        return api_response(0,__("site.something_went_wrong"));
+
+    }
+
+
 }//end of controller

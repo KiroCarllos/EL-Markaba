@@ -71,6 +71,7 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","chan
     Route::post('getJobApplications', 'CompanyController@getJobApplications');
 
     Route::post('notifications', 'CompanyController@notifications');
+    Route::post('updateApplicationStatus', 'CompanyController@updateApplicationStatus');
 
 });
 // end company routes
