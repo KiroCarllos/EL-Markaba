@@ -224,7 +224,14 @@ class CompanyController extends Controller
         $request->validate([
             "job_id"=> ["required","numeric",Rule::exists("jobs","id")->where("user_id",auth("api")->id())],
         ]);
-        $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed",'notConfirmed',"inProgress"])->with("user")->paginate(6);
+        $job = Job::find($request->job_id);
+        if ($job->status == "enough"){
+            $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed"])->with("user")->paginate(6);
+        }elseif($job->status == "active"){
+            $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed",'notConfirmed',"inProgress"])->with("user")->paginate(6);
+        }else{
+            $jobApplications =[];
+        }
         return api_response(1,"",$jobApplications);
     }
     public function notifications(){
