@@ -21,7 +21,7 @@ class User extends Authenticatable  implements JWTSubject
     public function getEducationAttribute()
     {
         $studentDetail = StudentDetail::where("user_id",$this->id)->first();
-        return $studentDetail->education == "high" ? $studentDetail->faculty->name: $studentDetail->else_education;
+        return $studentDetail->education == "high" ? $studentDetail->faculty_name: $studentDetail->else_education;
     }
     /**
      * The attributes that should be hidden for arrays.
