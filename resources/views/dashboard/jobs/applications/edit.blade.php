@@ -32,10 +32,11 @@
                         <div class="form-group">
                             <label>@lang('site.application_status')</label>
                             <select name="status" class="form-control">
-                                <option value="confirmed" {{ $application->status == "confirmed" ? "selected" :"" }}>@lang("site.confirmed")</option>
-                                <option value="notConfirmed" {{ $application->status == "notConfirmed" ? "selected" :"" }}>@lang("site.notConfirmed")</option>
-                                <option value="canceled" {{ $application->status == "canceled" ? "selected" :"" }}>@lang("site.canceled")</option>
+                                <option  disabled {{ $application->status == "confirmed" ? "selected" :"" }}>@lang("site.confirmed")</option>
+                                <option disabled  {{ $application->status == "notConfirmed" ? "selected" :"" }}>@lang("site.notConfirmed")</option>
+                                <option  disabled {{ $application->status == "canceled" ? "selected" :"" }}>@lang("site.canceled")</option>
                                 <option value="pending" {{ $application->status == "pending" ? "selected" :"" }}>@lang("site.pending")</option>
+                                <option value="inProgress" {{ $application->status == "inProgress" ? "selected" :"" }}>@lang("site.inProgress")</option>
                             </select>
                         </div>
 
