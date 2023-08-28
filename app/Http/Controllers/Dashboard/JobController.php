@@ -197,7 +197,7 @@ class JobController extends Controller
                     "model_json" => $job,
                     "user_id" => $job->company->id,
                 ]);
-                $s = send_fcm($company,__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
+                send_fcm($company,__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
 
                 $recipients = [$jobApplication->user->device_token];
                 Notification::create([
