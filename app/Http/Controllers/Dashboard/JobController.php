@@ -196,6 +196,7 @@ class JobController extends Controller
                     "user_id" => $jobApplication->user->id,
                 ]);
                 send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_application_under_review_from_company"),"myJob",$job);
+                dd([$job->company->device_token]);
                 // comapny
                 Notification::create([
                     "type" => "jobs",
