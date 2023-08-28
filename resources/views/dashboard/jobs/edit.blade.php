@@ -37,7 +37,7 @@
                                 <option value="active" {{ $job->status == "active" ? "selected" :"" }}>@lang("site.active")</option>
                                 <option value="inProgress" {{ $job->status == "inProgress" ? "selected" :"" }}>@lang("site.inProgress")</option>
                                 <option value="pending" {{ $job->status == "pending" ? "selected" :"" }}>@lang("site.pending")</option>
-                                <option value="pending" {{ $job->status == "enough" ? "selected" :"" }}>@lang("site.enough")</option>
+{{--                                <option value="pending" {{ $job->status == "enough" ? "selected" :"" }}>@lang("site.enough")</option>--}}
                                 <option value="pending" {{ $job->status == "deleted" ? "selected" :"" }}>@lang("site.deleted")</option>
                             </select>
                         </div>
