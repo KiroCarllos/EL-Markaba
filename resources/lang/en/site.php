@@ -20,6 +20,8 @@ return[
     'training'=>'Training',
     'not_found'=>'Not Found',
     'confirmed' => 'confirmed',
+    'new_job_added'=>'A new job has been posted, please apply if it suits you',
+
     'notConfirmed' => 'notConfirmed',
     'canceled' => 'canceled',
     'pending' => 'pending',

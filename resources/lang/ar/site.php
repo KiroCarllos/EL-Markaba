@@ -114,6 +114,7 @@ return [
     'we_really_sorry_your_application_has_been_rejected' => 'نأسف حقًا، لقد تم رفض طلب تقديم الوظيفه ',
     'something_went_wrong'=>'ناسف حدث خطأ برجاء تواصل معنا',
     'congratulations_your_application_has_been_accepted'=>'تهانينا، لقد تم قبول طلبك للوظيفة',
+    'new_job_added'=>'لقد تم نشر وظيفه جديده بادر بالتقديم اذا كانت تناسبك',
 
 
     'work_type' => 'نوغ العمل',
