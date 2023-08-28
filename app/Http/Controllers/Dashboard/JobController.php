@@ -132,10 +132,14 @@ class JobController extends Controller
     {
         $application = JobApplication::findOrFail($id);
         $userStudentDetail = User::whereId($application->user_id)->with("student_details")->first();
-        if (is_null($userStudentDetail->student_details->faculty)){
-            $faculties=[];
+        if ($userStudentDetail->student_details->education == "high"){
+            if (is_null($userStudentDetail->student_details->faculty)){
+                $faculties=[];
+            }else{
+                $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty->university_id);
+            }
         }else{
-            $faculties = $this->getFacultyByUniversityById($userStudentDetail->student_details->faculty->university_id);
+            $faculties=[];
         }
         $universities = $this->getAllUniversities();
         return view('dashboard.jobs.applications.edit', compact('application','faculties','universities'));
