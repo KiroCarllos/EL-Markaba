@@ -33,12 +33,16 @@ class StudentDetail extends Model
         return University::where("id",$university_id)->pluck( "name_".app()->getLocale())->first();
     }
     public function getPriorExperiencesAttribute($priorExperiencesValue){
-
-        return json_decode($priorExperiencesValue);
+        $filteredArray = array_filter(json_decode($priorExperiencesValue), function($value) {
+            return $value !== null;
+        });
+        return $filteredArray;
     }
     public function getCoursesAttribute($coursesvalue){
-
-        return json_decode($coursesvalue);
+        $filteredArray = array_filter(json_decode($coursesvalue), function($value) {
+            return $value !== null;
+        });
+        return $filteredArray;
     }
     public function user(){
         return $this->belongsTo(User::class,"user_id",'id');
