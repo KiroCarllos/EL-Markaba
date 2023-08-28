@@ -73,7 +73,7 @@
                         </div>
                         <div id="work_hours" class="form-group">
                             <label>@lang('site.work_hours')</label>
-                            <input max="10" type="number" name="work_hours" class="form-control" value="{{ $job->work_hours }}">
+                            <input max="24" type="number" name="work_hours" class="form-control" value="{{ $job->work_hours }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.contact_email')</label>
