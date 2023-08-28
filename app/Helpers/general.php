@@ -35,7 +35,21 @@ function uploadImage($image, $path)
     $image = $image->move($path, $name);
     return $path . "/" . $name;
 }
+ function calculateAgeFromNationalId($nationalId)
+{
+    // Extract birthdate information from the national ID (this might vary depending on your case)
+    $year = substr($nationalId, 0, 4);
+    $month = substr($nationalId, 4, 2);
+    $day = substr($nationalId, 6, 2);
 
+    // Create a Carbon instance for the birthdate
+    $birthdate = Carbon::create($year, $month, $day);
+
+    // Calculate age
+    $age = $birthdate->age;
+
+    return $age;
+}
  function generateBcryptHash($userId)
 {
     // Define a secret key

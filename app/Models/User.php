@@ -17,12 +17,18 @@ class User extends Authenticatable  implements JWTSubject
     protected $fillable = [
         'name',"status","role","mobile", 'email', 'password', 'image','auth_token','device_token'
     ];
-    protected $appends = ["education"];
+    protected $appends = ["education","age"];
     public function getEducationAttribute()
     {
         $studentDetail = StudentDetail::where("user_id",$this->id)->first();
         return $studentDetail->education == "high" ? $studentDetail->faculty_name: $studentDetail->else_education;
     }
+    public function getAgeAttribute()
+    {
+        $studentDetail = StudentDetail::where("user_id",$this->id)->first();
+        return calculateAgeFromNationalId($studentDetail->national_id);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
