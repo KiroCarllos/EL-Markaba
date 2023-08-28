@@ -204,9 +204,9 @@ class JobController extends Controller
                     "read" => "0",
                     "model_id" => $job->id,
                     "model_json" => $job,
-                    "user_id" => $jobApplication->user->id,
+                    "user_id" => $job->company->id,
                 ]);
-                send_fcm([$job->user->device_token],__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
+                send_fcm([$job->company->device_token],__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
 
 
                 $jobApplication->update($jobData);
