@@ -31,7 +31,7 @@ class Job extends Model
         return $this->hasMany(JobApplication::class,"job_id","id");
     }
     public function scopeActive($q){
-        return $q->whereIn("status",["pending","inProgress","active"]);
+        return $q->whereIn("status",["pending","inProgress","active","enough"]);
     }
     public function scopeActiveJob($q){
         return $q->whereIn("status",["active"]);
