@@ -23,9 +23,9 @@ Route::get('/', function () {
 });
 Route::get('/sendFcm', function () {
 
-    $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
+    $recipients = User::where("role","student")->whereNotNull("device_token")->get();
+    dd($recipients);
     foreach ($recipients as $recipient){
-
         send_fcm([$recipient],"من جوجل بلاي تقدر تحديث","لقد تم تفعيل الوظايف لتطبيق الشركه والطالب");
     }
 });
