@@ -251,7 +251,7 @@ class CompanyController extends Controller
         return api_response(1,"",$jobApplications);
     }
     public function notifications(){
-        $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(4);
+        $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(12);
         return api_response(1,"",$notifications);
     }
     public function updateApplicationStatus(Request $request){
