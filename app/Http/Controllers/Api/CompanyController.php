@@ -64,7 +64,7 @@ class CompanyController extends Controller
             'device_token' => 'nullable',
 
         ]);
-        $userData = $request->only(["name", "mobile", "email"]);
+        $userData = $request->only(["name", "mobile", "email","device_token"]);
         $userData["password"] = Hash::make($request->password);
         try {
             DB::beginTransaction();
@@ -75,7 +75,7 @@ class CompanyController extends Controller
                 "email" => $userData["email"],
                 "password" => $userData["password"],
                 "role" => "company",
-                "device_token" => $request->device_token,
+                "device_token" => $userData["device_token"],
             ]);
             deleteOldFiles("uploads/companies/" . $user->id . "/logo");
             if ($request->logo) {
