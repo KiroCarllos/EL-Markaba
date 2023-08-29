@@ -99,7 +99,7 @@ class JobController extends Controller
                     "model_json" => $job,
                     "user_id" => $job->id,
                 ]);
-                send_fcm([$recipient],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$job);
+                send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$job);
             }
         }
         $job->update($request_data);
