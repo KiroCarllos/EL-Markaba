@@ -165,6 +165,8 @@ class CompanyController extends Controller
         try {
             DB::beginTransaction();
             $job = Job::query()->firstOrCreate($request_data);
+
+
             DB::commit();
             return api_response(1, __('site.added_successfully'));
         } catch (\Exception $exception) {
