@@ -127,9 +127,14 @@ if (!function_exists('send_fcm')) {
                 "content_available" => true,
                 "apns-priority" => "5",
                 'registration_ids' => $tokens,
+                "android_channel_id"=> "Low Calories Channel",
 //                "to" => "/topics/app",
                 'priority' => 'high',
+                "show_notification_android"=>"true",
                 'sound' => 'default',
+                "android"=> [
+                    "priority"=> "high"
+                ],
                 'badge' => 1,
                 'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
             ];
