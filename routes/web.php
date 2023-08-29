@@ -11,6 +11,8 @@
 |
 */
 
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
@@ -19,6 +21,16 @@ Route::get('/', function () {
 //    dd($s);
     return redirect()->route('dashboard.welcome');
 });
+Route::get('/sendFcm', function () {
+
+    $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
+    foreach ($recipients as $recipient){
+
+        send_fcm([$recipient],"من جوجل بلاي تقدر تحديث","لقد تم تفعيل الوظايف لتطبيق الشركه والطالب");
+    }
+});
+
+
 
 Auth::routes(['register' => false]);
 
