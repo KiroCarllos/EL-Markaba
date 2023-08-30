@@ -158,7 +158,7 @@ class StudentController extends Controller
         return api_response(0, __("site.Sorry Wrong Password"));
     }
     public function getPosts(){
-        $posts = Post::active()->withCount("replies")->latest()->paginate(50);
+        $posts = Post::active()->withCount("replies")->latest()->paginate(6);
         return api_response(1,"",$posts);
     }
     public function replyPost(Request $request){
