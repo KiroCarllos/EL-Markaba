@@ -175,7 +175,7 @@ class StudentController extends Controller
     }
 
     public function getTrainings(){
-        $trainings = Training::active()->withCount("applications")->latest()->paginate(50);
+        $trainings = Training::active()->withCount("applications")->latest()->paginate(6);
 //        foreach ($trainings as $training){
 //            $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
 //            // remove status
