@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,7 +16,7 @@ use Illuminate\Validation\Rule;
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::whereIn("status",["active","disActive"])->withCount("replies")->paginate(10);
+        $posts = Post::whereIn("status",["active","disActive"])->withCount("replies")->paginate(50);
         return view('dashboard.posts.index', compact('posts'));
     }
 
@@ -33,11 +34,9 @@ class PostController extends Controller
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
             'status' => 'required|in:active,disActive',
-            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $postData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
-        $postData["created_at"] =  Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
-        $postData["updated_at"] = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
         $postData["user_id"] = auth()->id();
         try{
             DB::beginTransaction();
@@ -48,6 +47,21 @@ class PostController extends Controller
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
+
+
+            $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
+            foreach ($recipients as $recipient){
+                Notification::create([
+                    "type" => "newAccount",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_has_add_post_successfully"),
+                    "read" => "0",
+                    "model_id" => $post->id,
+                    "model_json" => $post,
+                    "user_id" => $recipient->id,
+                ]);
+                send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_post_successfully"),"posts",$post);
+            }
             return redirect()->route('dashboard.posts.index');
         }catch (\Exception $exception){
             DB::rollBack();
@@ -68,7 +82,7 @@ class PostController extends Controller
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
             'status' => 'required|in:active,disActive',
-            'image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $postData = $request->only(["title_en","title_ar","description_en","description_ar","status"]);
 

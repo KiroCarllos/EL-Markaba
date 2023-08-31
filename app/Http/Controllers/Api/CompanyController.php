@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\CompanyDetail;
 use App\Models\Job;
+use App\Models\JobApplication;
+use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,6 +22,8 @@ class CompanyController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'device_token' => 'nullable',
+
         ]);
         $credentials = ["email" => $request->email, "password" => $request->password];
         if (!$token = auth("api")->attempt($credentials)) {
@@ -28,7 +32,8 @@ class CompanyController extends Controller
         $user = User::where("email", $request->email)->first();
         if ($user->role == "company" || $user->role == "super_admin") {
             if ($user->status == "active") {
-                $user->update(["auth_token" => $token]);
+
+                $user->update(["auth_token" => $token,"device_token"=>$request->device_token]);
                 return api_response(1, __("site.company successfully login"), $user);
             } else {
                 $msg = "Sorry Your Account is " . $user->status . " now";
@@ -53,11 +58,13 @@ class CompanyController extends Controller
             'bio' => 'required|string',
             'created_date' => 'required|date',
             'address' => 'required|string',
-            'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'device_token' => 'nullable',
+
         ]);
-        $userData = $request->only(["name", "mobile", "email"]);
+        $userData = $request->only(["name", "mobile", "email","device_token"]);
         $userData["password"] = Hash::make($request->password);
         try {
             DB::beginTransaction();
@@ -68,6 +75,7 @@ class CompanyController extends Controller
                 "email" => $userData["email"],
                 "password" => $userData["password"],
                 "role" => "company",
+                "device_token" => $userData["device_token"],
             ]);
             deleteOldFiles("uploads/companies/" . $user->id . "/logo");
             if ($request->logo) {
@@ -144,17 +152,21 @@ class CompanyController extends Controller
             'work_hours' => 'nullable',
             'contact_email' => 'required|email',
             'address' => 'required',
+            'job_type' => 'required|in:from_company,online',
+
             'location' => 'nullable',
             'expected_salary_from' => 'required|numeric',
             'expected_salary_to' => 'required|numeric',
         ]);
-        $request_data = $request->only(['title_en', 'description_en','description_ar','title_ar', 'work_type', 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
+        $request_data = $request->only(['title_en','job_type', 'description_en','description_ar','title_ar', 'work_type', 'contact_email', 'address', 'location', 'expected_salary_from', 'expected_salary_to']);
         $request_data["status"] = "pending";
         $request_data["user_id"] = auth("api")->id();
         $request_data["work_hours"] = $request->has("work_hours") && !is_null($request->work_hours) ? $request->work_hours : 8;
         try {
             DB::beginTransaction();
             $job = Job::query()->firstOrCreate($request_data);
+
+
             DB::commit();
             return api_response(1, __('site.added_successfully'));
         } catch (\Exception $exception) {
@@ -171,8 +183,9 @@ class CompanyController extends Controller
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'work_type' => 'nullable|in:part_time,full_time',
+            'job_type' => 'nullable|in:from_company,online',
+
             'work_hours' => 'nullable',
-            'status' => 'nullable',
             'contact_email' => 'nullable|email',
             'address' => 'nullable',
             'location' => 'nullable',
@@ -185,17 +198,17 @@ class CompanyController extends Controller
             if (is_null($job)){
                 return  api_response(0,"sorry job is inValid");
             }
-            $request_data = $request->only(['title_ar','title_en','status', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
+            $request_data = $request->only(['title_ar',"job_type",'title_en', 'description_ar','description_en', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
             if (count($request_data) == 0){
                 return api_response(0, "please fill data for update");
             }
-            $request_data["status"] =$request->status !== "enough" || $request->status !==  "deleted" ? $request->status : $job->status ;
+            $request_data["status"] =($request->has("status") && $request->status !== "enough") || ($request->has("status") &&$request->status !==  "deleted") ? $request->status : $job->status ;
             if ($job->status == "active"){
                 $request_data["status"] = "pending";
             }
             $job->update($request_data);
             DB::commit();
-            return api_response(1, __('site.updated_successfully'));
+            return api_response(1, __('site.updated_successfully'),$request_data);
         } catch (\Exception $exception) {
             DB::rollBack();
             dd($exception);
@@ -214,6 +227,84 @@ class CompanyController extends Controller
         $job->save();
         $msg = "your job ".$request->status ." successfully";
         return api_response(1, __("site.".$msg));
+    }
+    public function getJobApplications(Request $request){
+        $request->validate([
+            "job_id"=> ["required","numeric",Rule::exists("jobs","id")->where("user_id",auth("api")->id())],
+        ]);
+        $job = Job::find($request->job_id);
+        if ($job->status == "enough"){
+            $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed"])->with([
+                "user" => function ($query) {
+                    $query->with("student_details");
+                }
+            ])->paginate(50);
+        }elseif($job->status == "active"){
+            $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed",'notConfirmed',"inProgress"])->with([
+                "user" => function ($query) {
+                    $query->with("student_details");
+                }
+            ])->paginate(50);
+        }else{
+            $jobApplications =[];
+        }
+        return api_response(1,"",$jobApplications);
+    }
+    public function notifications(){
+        $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(50);
+        return api_response(1,"",$notifications);
+    }
+    public function updateApplicationStatus(Request $request){
+        $request->validate([
+            "application_id"=> ["required","numeric",Rule::exists("job_applications","id")],
+            "status" => [ "required" ,"in:confirmed,notConfirmed"]
+        ]);
+        $myJobIds = Job::where("user_id",auth("api")->id())->pluck("id")->toArray();
+        $application = JobApplication::find($request->application_id);
+        if (in_array($application->job_id,$myJobIds)){
+            if ($application->status == "confirmed" || $application->status == "notConfirmed"){
+                return api_response(1,"");
+            }
+            if ($request->status == "confirmed"){
+                $recipients = [$application->user->device_token];
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.congratulations_your_application_has_been_accepted"),
+                    "read" => "0",
+                    "model_id" => $application->id,
+                    "model_json" => $application,
+                    "user_id" => $application->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.congratulations_your_application_has_been_accepted"),"posts",$application);
+            }else{
+                $recipients = [$application->user->device_token];
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.we_really_sorry_your_application_has_been_rejected"),
+                    "read" => "0",
+                    "model_id" => $application->id,
+                    "model_json" => $application,
+                    "user_id" => $application->user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$application);
+            }
+            $application->update(["status" => $request->status]);
+            return api_response(1,"");
+
+        }
+        return api_response(0,__("site.something_went_wrong"));
+
+    }
+    public function updateNotification(Request $request){
+        $request->validate([
+            "notification_id" => ["required","numeric",Rule::exists("notifications","id")->where("user_id",auth("api")->id())],
+            "read" => ["required","in:0,1"]
+        ]);
+        $notification = Notification::find($request->notification_id);
+        $notification->update(["read" => $request->read]);
+        return api_response(1,__('site.updated_successfully'));
     }
 
 }//end of controller

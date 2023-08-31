@@ -24,7 +24,18 @@ return [
     'company' => 'شركه',
     'paid' => 'مدفوع',
     'yes' => 'نعم',
+    'your_account_added_please_wait_activation' => 'لقد تم انشاء حسابك بنجاح برجاء انتظار التفعيل',
+    'you_has_apply_training_and_now_pending' => 'لقد تم استلام طلبك بنجاح وهو الان قيد المراجعه',
+    'you_has_delete_training_successfully' => 'لقد تم حذف التدريب بنجاح',
+    'markz_el_markaba' => 'مركز المركبة للارشاء الوظيفي',
+    'you_has_add_training_successfully' => 'لقد تم اضافه تدريب جديد',
+    'you_has_add_post_successfully' => 'لقد تم اضافه منشور جديد',
+    'your_account_activated_can_make_login_now' => 'لقد تم تفعيل حسابك، يمكنك تسجيل الدخول الآن',
+    'notify' => 'اشعار',
+
     'no' => 'لا',
+    'students' => 'الطلاب',
+    'fill notify if need to send notification only' => 'ارسل اشعار اذا كنت تريد الارسال',
 
     'student' => 'طالب',
     'sliders' => 'سلايدر الاعلانات',
@@ -71,12 +82,46 @@ return [
     'print' => 'طبع',
 
     'confirm_delete' => 'تاكيد الحذف',
-
-
+    'applications' => 'الابلكيشنز',
+    'receipt_image'=>'صورة الايصال',
+    'application_status'=>'حاله الطلب',
+    'paid_or_not'=>'التدريب مدفوع ولا لا ؟',
+    'training'=>'التدريب',
+    'not_found'=>'لا يوجد',
     'login' => 'تسجيل الدخول',
     'remember_me' => 'تذكرني',
     'password' => 'كلمه المرور',
     'password_confirmation' => 'تاكيد كلمه المرور',
+
+    'student_mobile' => 'تليفون الطالب',
+    'student_name' => 'اسم الطالب',
+
+    'confirmed' => 'تم التاكيد',
+    'notConfirmed' => 'لم تم التاكيد',
+    'canceled' => 'ملغي',
+
+    'your_training_has_been_confirmed' => 'لقد تم تأكيد طلب تدريبك بنجاح',
+    'sorry_your_training_has_been_enough_numbers' => 'نأسف لقد تم اكتمال العدد في التدريب',
+    'sorry_your_training_application_have_some_notes' => 'نأسف الطلب المقدم لم يتم قبوله سيتم التواصل معك قريبا ',
+    'Please Wait Admins Confirmation' => 'يرجى انتظار تأكيد المشرفين',
+
+    'your_job_has_been_confirmed' => 'لقد تم تأكيد طلب وظيفتك بنجاح',
+    'sorry_your_job_has_been_enough_numbers' => 'نأسف لقد تم اكتمال العدد في الوظيفه',
+    'sorry_your_job_application_have_some_notes' => 'نأسف طلب الوظيفة المقدم لم يتم قبوله سيتم التواصل معك قريبا ',
+    'job_applications_count' => 'عدد الطلبات',
+    'company_name' => 'اسم الشركة',
+    'review_to_company' => 'ترشيحه للشركه ؟',
+    'you_application_under_review_from_company' => 'طلبك قيد المراجعة من قبل شركة التوظيف',
+    'we_really_sorry_your_application_has_been_rejected' => 'نأسف حقًا، لقد تم رفض طلب تقديم الوظيفه ',
+    'something_went_wrong'=>'ناسف حدث خطأ برجاء تواصل معنا',
+    'congratulations_your_application_has_been_accepted'=>'تهانينا، لقد تم قبول طلبك للوظيفة',
+    'new_job_added'=>'لقد تم نشر وظيفه جديده بادر بالتقديم اذا كانت تناسبك',
+
+    'student_has_suggest_for_job'=>'تم ترشيج طالب لوظيفة خاصة لديك',
+
+    'work_type' => 'نوغ العمل',
+    'online' => 'اونلاين',
+    'from_company' => 'من الشركة',
 
     'added_successfully' => 'تم اضافه البيانات بنجاح',
     'updated_successfully' => 'تم تعديل البيانات بنجاح',

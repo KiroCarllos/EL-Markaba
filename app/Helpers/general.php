@@ -35,7 +35,34 @@ function uploadImage($image, $path)
     $image = $image->move($path, $name);
     return $path . "/" . $name;
 }
+ function calculateAgeFromNationalId($nationalId)
+{
+    if (substr($nationalId, 0, 1) == 2){
+        $array = str_split($nationalId);
+        $dateOfBirth = "19".$array[1].$array[2]."-".$array[3].$array[4]."-".$array[5].$array[6];
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }elseif (substr($nationalId, 0, 4) == 3000){
+        $array = str_split($nationalId);
+        $dateOfBirth = "20".$array[1].$array[2]."-".$array[4].$array[5]."-".$array[6].$array[7];
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }elseif (substr($nationalId, 0, 3) == 300){
+        $array = str_split($nationalId);
+        $dateOfBirth = "20".$array[1].$array[2]."-".$array[3].$array[4]."-".$array[5].$array[6];
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }else{
+        $dateOfBirth = "2021-01-01";
+        return  calculateAgeFromDateOfBirth($dateOfBirth);
+    }
+}
+ function calculateAgeFromDateOfBirth($dateOfBirth)
+{
+    $birthdate = Carbon::parse($dateOfBirth);
+    $currentDate = Carbon::now();
 
+    $age = $birthdate->diffInYears($currentDate);
+
+    return $age;
+}
  function generateBcryptHash($userId)
 {
     // Define a secret key
@@ -73,5 +100,63 @@ function deleteOldFiles($path){
         // Directory deleted successfully
     } else {
         // Directory does not exist
+    }
+}
+
+
+if (!function_exists('send_fcm')) {
+
+    function send_fcm($tokens, $title, $message, $type = null, $data = [])
+    {
+        if (!empty($tokens)) {
+            ob_start();
+            $notification = [
+                'data' => [
+                    'type' => $type,
+                    'title' => $title,
+                    'body' => $message,
+                    'data' => $data
+                ],
+                'notification' => [
+                    'title' => $title,
+                    'type' => $type,
+                    'body' => $message,
+                    'sound' => 'default',
+                    'data' => $data
+                ],
+                "content_available" => true,
+                "apns-priority" => "5",
+                'registration_ids' => $tokens,
+                "android_channel_id"=> "Low Calories Channel",
+//                "to" => "/topics/app",
+                'priority' => 'high',
+                "show_notification_android"=>"true",
+                'sound' => 'default',
+                "android"=> [
+                    "priority"=> "high"
+                ],
+                'badge' => 1,
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
+            ];
+            $headers = [
+                'Authorization' => 'key=AAAAmm0zoMA:APA91bHJeMQiLObppn7UWBl2dx30MSx5GZi-pJz3RsmB6WEXyR29-h6wbLC37TiCvyK7HMrLtKme8YmHmtgpiFw03ViYZG7_wpqtMSrZ0oCbgIarcPl6KwTABXlIUk5RzjbyH_J7k0FL',
+                'Content-Type' => 'application/json'
+            ];
+            $url = "https://fcm.googleapis.com/";
+            $client = new \GuzzleHttp\Client([
+                'base_uri' => $url,
+            ]);
+
+            ////// IOS /////
+            $response = $client->post('fcm/send', [
+                'debug' => fopen('php://stderr', 'w'),
+                'body' => json_encode($notification),
+                'headers' => $headers
+            ]);
+            ob_end_clean();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

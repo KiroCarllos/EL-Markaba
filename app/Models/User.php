@@ -15,9 +15,25 @@ class User extends Authenticatable  implements JWTSubject
 
     protected $connection = "mysql";
     protected $fillable = [
-        'name',"status","role","mobile", 'email', 'password', 'image','auth_token'
+        'name',"status","role","mobile", 'email', 'password', 'image','auth_token','device_token'
     ];
-
+    protected $appends = ["education","age"];
+    public function getEducationAttribute()
+    {
+        $studentDetail = StudentDetail::where("user_id",$this->id)->first();
+        if (!is_null($studentDetail)){
+            return $studentDetail->education == "high" ? $studentDetail->faculty_name: $studentDetail->else_education;
+        }
+        return null;
+    }
+    public function getAgeAttribute()
+    {
+        $studentDetail = StudentDetail::where("user_id",$this->id)->first();
+        if (!is_null($studentDetail)){
+            return calculateAgeFromNationalId($studentDetail->national_id);
+        }
+        return null;
+    }
 
     /**
      * The attributes that should be hidden for arrays.

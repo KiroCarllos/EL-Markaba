@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -71,21 +70,24 @@ class UserController extends Controller
 
         $request_data = $request->except(['name','password', 'password_confirmation', 'permissions', 'image']);
         $request_data['password'] = bcrypt($request->password);
-        if ($request->image) {
-            Image::make($request->image)
-                ->resize(300, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })
-                ->save(public_path('uploads/user_images/' . $request->image->hashName()));
-            $request_data['image'] = $request->image->hashName();
-
-        }//end of if
+//        if ($request->image) {
+//            Image::make($request->image)
+//                ->resize(300, null, function ($constraint) {
+//                    $constraint->aspectRatio();
+//                })
+//                ->save(public_path('uploads/user_images/' . $request->image->hashName()));
+//            $request_data['image'] = $request->image->hashName();
+//
+//        }//end of if
 
         $user = User::create($request_data);
+        deleteOldFiles("uploads/admins/" . $user->id . "/profile");
 
-        $user->attachRole('admin');
-        $user->syncPermissions($request->permissions);
-
+        if ($request->image) {
+            $user->update(["image" => uploadImage($request->image, "uploads/admins/" . $user->id . "/profile")]);
+        }
+        $user->attachRole('super_admin');
+//        $user->syncPermissions($request->permissions);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.users.index');
 

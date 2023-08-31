@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
@@ -13,6 +14,7 @@ class Job extends Model
         "status",
         "description_en",
         "description_ar",
+        "job_type",
         "work_type",
         "work_hours",
         "contact_email",
@@ -21,12 +23,15 @@ class Job extends Model
         "expected_salary_from",
         "expected_salary_to",
     ];
-    protected $appends = ["image","title","description"];
+    protected $appends = ["image","title","description", "application_status", "applied","created_ago"];
     protected $casts = [
         "user_id" => "integer"
     ];
+    public function applications(){
+        return $this->hasMany(JobApplication::class,"job_id","id");
+    }
     public function scopeActive($q){
-        return $q->whereIn("status",["pending","inProgress","active"]);
+        return $q->whereIn("status",["pending","inProgress","active","enough"]);
     }
     public function scopeActiveJob($q){
         return $q->whereIn("status",["active"]);
@@ -45,5 +50,32 @@ class Job extends Model
     public function getDescriptionAttribute(){
         $description = app()->getLocale() == "ar" ? $this->description_ar : $this->description_en;
         return $description;
+    }
+    public function getApplicationStatusAttribute()
+    {
+        $my_job_ids = JobApplication::where("job_id",$this->id)->where("user_id",auth("api")->id())->pluck("job_id")->toArray();
+        if(in_array($this->id,$my_job_ids)){
+            return  JobApplication::where("job_id",$this->id)->where("user_id",auth("api")->id())->pluck("status")->first();
+        }else{
+            return null;
+        }
+    }
+    public function getAppliedAttribute()
+    {
+        $my_job_ids = JobApplication::where("job_id",$this->id)->where("user_id",auth("api")->id())->pluck("job_id")->toArray();
+        if(in_array($this->id,$my_job_ids)){
+            return  true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getCreatedAgoAttribute(){
+        Carbon::setLocale(app()->getLocale());
+        // Trim the date string and create Carbon instance
+        $dateString = trim($this->created_at);
+        $dateString = Carbon::parse($dateString)->toDateTimeString();
+        $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $dateString, 'Africa/Cairo')->diffForHumans();
+        return $carbonDate;
     }
 }

@@ -7,7 +7,7 @@ use App\Models\CompanyDetail;
 use App\Models\Faculty;
 use App\Models\Job;
 use App\Models\JobApplication;
-use App\Models\Major;
+use App\Models\Notification;
 use App\Models\Post;
 use App\Models\PostReply;
 use App\Models\Training;
@@ -28,24 +28,34 @@ class StudentController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'device_token' => 'nullable',
         ]);
-        $credentials = ["email" => $request->email, "password" => $request->password];
-        if (!$token = auth("api")->attempt($credentials)) {
+        $user = User::where("email",$request->email)->first();
+        if (!is_null($user)){
+            if (Hash::check($request->password,$user->password)){
+                if (!$token = auth("api")->login($user)) {
+                    return api_response(0, __("api.These credentials do not match our records."));
+                }
+                if ($user->role == "student" || $user->role == "super_admin") {
+                    if ($user->status == "active") {
+                        $user->update(["auth_token" => $token,"device_token"=>$request->device_token]);
+                        return api_response(1, __("site.student successfully login"), $user);
+                    } else {
+                        $msg = "Sorry Your Account is " . $user->status . " now";
+                        return api_response(0, __("site.".$msg));
+                    }
+
+                } else {
+                    return api_response(0, __("site.Sorry Your Account Not Be Student"), "");
+                }
+            }
             return api_response(0, __("site.These credentials do not match our records."), "");
         }
-        $user = User::where("email", $request->email)->first();
-        if ($user->role == "student" || $user->role == "super_admin") {
-            if ($user->status == "active") {
-                $user->update(["auth_token" => $token]);
-                return api_response(1, __("site.student successfully login"), $user);
-            } else {
-                $msg = "Sorry Your Account is " . $user->status . " now";
-                return api_response(0, __("site.".$msg));
-            }
+        return api_response(0, __("site.These credentials do not match our records."), "");
 
-        } else {
-            return api_response(0, __("site.Sorry Your Account Not Be Student"), "");
-        }
+
+
+
     }
 
     // student register
@@ -56,15 +66,16 @@ class StudentController extends Controller
             'mobile' => 'required|string|size:11|unique:users',
             'email' => 'required|max:191|email|unique:users',
             'password' => 'required|max:191|confirmed',
-            'image' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|mimes:jpeg,png,jpg|max:4096',
             'gender' => 'required|in:male,female',
             'education' => 'required|in:high,medium,low,else',
             'national_id' => 'required|string|size:14',
             "prior_experiences" => ["nullable", "array"],
             "courses" => ["nullable", "array"],
+            "device_token" => ["nullable","string"],
             "address" => ["required", "string"],
         ]);
-        $userData = $request->only(["name", "mobile", "email"]);
+        $userData = $request->only(["name", "mobile", "email","device_token"]);
         $userData["password"] = Hash::make($request->password);
         try {
             DB::beginTransaction();
@@ -74,6 +85,7 @@ class StudentController extends Controller
                 "name" => $userData["name"],
                 "email" => $userData["email"],
                 "password" => $userData["password"],
+                "device_token" => $userData["device_token"],
                 "role" => "student",
             ]);
             deleteOldFiles("uploads/student/" . $user->id . "/profile");
@@ -96,6 +108,20 @@ class StudentController extends Controller
             $studentData = StudentDetail::query()->updateOrCreate([
                 "user_id" => $user->id
             ], $studentData);
+
+            if ($request->has("device_token")&& !is_null($request->device_token)){
+                $recipients = $request->only($request->device_token);
+                Notification::create([
+                    "type" => "newAccount",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.your_account_added_please_wait_activation"),
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount",$user);
+            }
             DB::commit();
             return api_response(1, __("site.student created successfully wait admins for approve"));
         } catch (\Exception $exception) {
@@ -150,14 +176,18 @@ class StudentController extends Controller
 
     public function getTrainings(){
         $trainings = Training::active()->withCount("applications")->latest()->paginate(6);
-        foreach ($trainings as $training){
-            $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
-            // remove status
-            $status = in_array(auth("api")->id(),$mytraining_ids) ? TrainingApplication::where("training_id",$training->id)->pluck("status")->first(): null;
-            $training->setAttribute("application_status",$status);
-            // end remove
-            $training->setAttribute("applied",in_array(auth("api")->id(),$mytraining_ids));
-        }
+//        foreach ($trainings as $training){
+//            $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
+//            // remove status
+//            if(in_array(auth("api")->id(),$mytraining_ids)){
+//                $status =TrainingApplication::where("training_id",$training->id)->pluck("status")->first();
+//                $training->setAttribute("application_status",$status);
+//                $training->setAttribute("applied",true);
+//            }else{
+//                $training->setAttribute("application_status",null);
+//                $training->setAttribute("applied",false);
+//            }
+//        }
         return api_response(1,"",$trainings);
     }
 
@@ -176,6 +206,22 @@ class StudentController extends Controller
         if ($training->paid == "no"){
              $applyTraining->update(["status" => "inProgress"]);
         }
+        if ($applyTraining->status == "canceled"){
+             $applyTraining->update(["status" => "pending"]);
+        }
+        if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
+            $recipients = [auth("api")->user()->device_token];
+            Notification::create([
+                "type" => "pendingTraining",
+                "title" => __("site.markz_el_markaba"),
+                "body" => __("site.you_has_apply_training_and_now_pending"),
+                "read" => "0",
+                "model_id" => $training->id,
+                "model_json" => $training,
+                "user_id" => auth("api")->id(),
+            ]);
+            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
+        }
         return api_response(1,__("site.Applied Training Successfully"),TrainingApplication::find($applyTraining->id));
     }
     public function myTrainings(){
@@ -191,21 +237,36 @@ class StudentController extends Controller
     public function confirmAppliedTraining(Request $request){
         $request->validate([
             "training_id" => ["required",Rule::exists("trainings","id")],
-            "receipt_image" => 'required|mimes:jpeg,png,jpg|max:2048',
+            "receipt_image" => 'required|mimes:jpeg,png,jpg|max:4096',
         ]);
         $mytraining_ids = TrainingApplication::where("user_id",auth("api")->id())->pluck("training_id")->toArray();
         if (in_array($request->training_id,$mytraining_ids)){
             $training_application = TrainingApplication::whereUserId(auth("api")->id())->where("training_id",$request->training_id)->first();
             if ($training_application->status == "inProgress" && !is_null($training_application->receipt_image)){
-                return api_response(1,"Please Wait Admins Confirmation");
+                return api_response(1,__("site.Please Wait Admins Confirmation"));
             }else if ($training_application->status !== "confirmed"){
+                $training = Training::find($request->training_id);
                 if ($request->has("receipt_image") && is_file($request->receipt_image)){
                     deleteOldFiles("uploads/student/" . auth("api")->id() . "/training/".$request->training_id."/receipt_image");
                     if ($request->receipt_image) {
+                        if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
+                            $recipients = [auth("api")->user()->device_token];
+                            Notification::create([
+                                "type" => "pendingTraining",
+                                "title" => __("site.markz_el_markaba"),
+                                "body" => __("site.you_has_apply_training_and_now_pending"),
+                                "read" => "0",
+                                "model_id" => $request->training_id,
+                                "model_json" => $training,
+                                "user_id" => auth("api")->id(),
+                            ]);
+                            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
+                        }
                         $training_application->update(["status" => "inProgress","receipt_image" => uploadImage($request->receipt_image, "uploads/student/training/" . auth("api")->id() . "/".$request->training_id."/receipt_image")]);
                     }
                 }
             }
+
             return api_response(1,__("site.Your Application Applied Please Wait Admins Confirmation"));
         }else{
             return api_response(1,__("site.sorry this training you haven't applied before"));
@@ -218,6 +279,20 @@ class StudentController extends Controller
         ]);
         $applyTraining = TrainingApplication::where("training_id",$request->training_id)->where("user_id",auth("api")->id())->first();
         if (!is_null($applyTraining)){
+
+            if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
+                $recipients = [auth("api")->user()->device_token];
+                Notification::create([
+                    "type" => "myTraining",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_has_delete_training_successfully"),
+                    "read" => "0",
+                    "model_id" => $request->training_id,
+                    "model_json" => Training::find($request->training_id),
+                    "user_id" => auth("api")->id(),
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining",Training::find($request->training_id));
+            }
             $applyTraining->delete();
             return api_response(1,__("site.Training canceled successfully"));
         }else{
@@ -254,7 +329,7 @@ class StudentController extends Controller
     public function myJobs(){
 //        $mytrainings = TrainingApplication::where("user_id",auth("api")->id())->with("training")->get();
         $myJob_ids = JobApplication::IgnoreCancel()->where("user_id",auth("api")->id())->pluck("job_id")->toArray();
-        $myJobs = Job::Active()->whereIn("id",$myJob_ids)->with("company")->latest()->get();
+        $myJobs = Job::whereIn("id",$myJob_ids)->with("company")->latest()->get();
         foreach ($myJobs as $job){
             $myJob_ids = JobApplication::where("job_id",$job->id)->where("user_id",auth("api")->id())->pluck("status")->first();
             $job->setAttribute("application_status",$myJob_ids);
@@ -285,4 +360,24 @@ class StudentController extends Controller
         $job->setAttribute("application_status",$myJob_ids->status);
         return api_response(1,"",$job);
     }
+
+
+    public function notifications(){
+        $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(10);
+        return api_response(1,"",$notifications);
+    }
+
+    public function updateNotification(Request $request){
+        $request->validate([
+            "notification_id" => ["required","numeric",Rule::exists("notifications","id")->where("user_id",auth("api")->id())],
+            "read" => ["required","in:0,1"]
+        ]);
+        $notification = Notification::find($request->notification_id);
+        $notification->update(["read" => $request->read]);
+        return api_response(1,__('site.updated_successfully'));
+    }
+
+
+
+
 }//end of controller

@@ -21,14 +21,14 @@
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                            <h3>2</h3>
+                            <h3>{{ \App\Models\User::where("role","student")->where("status","active")->count() }}</h3>
 
-                            <p>@lang('site.categories')</p>
+                            <p>@lang('site.students')</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="fa fa-users"></i>
                         </div>
-                        <a href="#" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route("dashboard.student_details.index") }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
@@ -36,14 +36,14 @@
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>5</h3>
+                            <h3>{{ \App\Models\User::where("role","company")->where("status","active")->count() }}</h3>
 
-                            <p>@lang('site.products')</p>
+                            <p>@lang('site.companies')</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route("dashboard.companies.index") }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
@@ -51,14 +51,13 @@
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>1</h3>
-
-                            <p>@lang('site.clients')</p>
+                            <h3>{{ \App\Models\Post::where("status","active")->count() }}</h3>
+                            <p>@lang('site.posts')</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-file"></i>
                         </div>
-                        <a href="#" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route("dashboard.posts.index") }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
@@ -66,7 +65,7 @@
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>{{ $users_count }}</h3>
+                            <h3>{{ \App\Models\User::where("role","super_admin")->where("status","active")->count() }}</h3>
 
                             <p>@lang('site.users')</p>
                         </div>

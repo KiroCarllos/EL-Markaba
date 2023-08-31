@@ -27,4 +27,5 @@ class TrainingApplication extends Model
     public function scopeIgnoreCancel($q){
         return $q->whereNotIn("status",["canceled"]);
     }
+
 }

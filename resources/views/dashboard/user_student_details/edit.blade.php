@@ -71,37 +71,62 @@
                             <input type="text" name="national_id" maxlength="14" minlength="14" class="form-control"
                                    value="{{ $userStudentDetail->student_details->national_id }}">
                         </div>
+                        @if(!is_null($userStudentDetail->student_details->faculty))
                         <div class="form-group">
                             <label>@lang('site.university')</label>
                             <select id="university_select" class="form-control">
                                 <option></option>
                                 @isset($universities)
+                                    @if(is_null($userStudentDetail->student_details->faculty))
+                                        <option></option>
+                                        @foreach($universities as $university)
+                                            <option
+                                              value="{{$university->id  }}">{{ $university->name }}</option>
+                                        @endforeach
+                                    @else
                                     @foreach($universities as $university)
                                         <option
                                             {{ $university->id == $userStudentDetail->student_details->faculty->university_id ?"Selected":"" }} value="{{$university->id  }}">{{ $university->name }}</option>
                                     @endforeach
+                                    @endif
                                 @endisset
                             </select>
                         </div>
                         <div class="form-group">
                             <label>@lang('site.faculty')</label>
-                            <select id="faculty_select" class="form-control">
+                            <select id="faculty_select" name="faculty_id" class="form-control">
                                 <option></option>
 
                                 @isset($faculties)
+                                    @if(is_null($userStudentDetail->student_details->faculty))
+                                        <option></option>
+                                        @foreach($faculties as $faculty)
+                                            <option
+                                                 value="{{$faculty->id  }}">{{ $faculty->name }}</option>
+                                        @endforeach
+                                    @else
                                     @foreach($faculties as $faculty)
                                         <option
                                             {{ $faculty->id == $userStudentDetail->student_details->faculty->id ?"Selected":"" }} value="{{$faculty->id  }}">{{ $faculty->name }}</option>
                                     @endforeach
+                                    @endif
                                 @endisset
                             </select>
                         </div>
-
                         <div id="major" class="form-group">
                             <label>@lang('site.major')</label>
                             <input id="major" type="text" name="major" class="form-control"
                                    value="{{ $userStudentDetail->student_details->major }}">
                         </div>
+                        @else
+                            <div id="major" class="form-group">
+                                <label>@lang('site.major')</label>
+                                <input id="major" type="text" name="else_education" class="form-control"
+                                       value="{{ $userStudentDetail->student_details->else_education }}">
+                            </div>
+
+                        @endif
+
                         <div class="form-group">
                             <label>@lang('site.graduated_at')</label>
                             <input type="text" name="graduated_at" class="form-control"
@@ -155,7 +180,11 @@
                             <input type="password" name="password"
                                    placeholder="@lang("site.fill password if need to reset only")" class="form-control">
                         </div>
-
+                        <div class="form-group">
+                            <label>@lang('site.notify')</label>
+                            <input type="text" name="notify"
+                                   placeholder="@lang("site.fill notify if need to send notification only")" class="form-control">
+                        </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')

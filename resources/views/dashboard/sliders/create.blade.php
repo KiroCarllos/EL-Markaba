@@ -53,7 +53,7 @@
                             <input type="file" name="image" class="form-control image">
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset('default.png') }}"  style="width: 100px" class="img-thumbnail image-preview" alt="">
+                            <img src="{{ asset('default.png') }}"  style="width: 400px" class="img-thumbnail image-preview" alt="">
                         </div>
                           <div class="col-md-12 ">
                               <div class="form-group">

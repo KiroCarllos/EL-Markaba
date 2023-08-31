@@ -101,8 +101,8 @@ return [
     |
     */
 
-//    'ttl' => env('JWT_TTL', 60),
-    'ttl' => PHP_INT_MAX,
+    'ttl' => env('JWT_TTL', 60),
+//    'ttl' => PHP_INT_MAX,
 
     /*
     |--------------------------------------------------------------------------
@@ -121,8 +121,8 @@ return [
     |
     */
 
-    'refresh_ttl' => PHP_INT_MAX,
-//    'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
+//    'refresh_ttl' => PHP_INT_MAX,
+    'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
 
     /*
     |--------------------------------------------------------------------------

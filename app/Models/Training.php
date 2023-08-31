@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,8 +21,18 @@ class Training extends Model
         "user_id",
         "image",
     ];
-    public $timestamps = false;
-    protected $appends = ["title", "description"];
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->created_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+            $model->updated_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+
+        static::updating(function ($model) {
+            $model->updated_at = Carbon::now()->timezone('Africa/Cairo')->toDateTimeString();
+        });
+    }
+    protected $appends = ["title", "description", "application_status", "applied"];
 
     public function user()
     {
@@ -59,4 +70,24 @@ class Training extends Model
         $description = app()->getLocale() == "ar" ? $this->description_ar : $this->description_en;
         return $description;
     }
+
+    public function getApplicationStatusAttribute()
+    {
+        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
+        if(in_array($this->id,$mytraining_ids)){
+            return  TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("status")->first();
+        }else{
+            return null;
+        }
+    }
+    public function getAppliedAttribute()
+    {
+        $mytraining_ids = TrainingApplication::where("training_id",$this->id)->where("user_id",auth("api")->id())->pluck("training_id")->toArray();
+        if(in_array($this->id,$mytraining_ids)){
+            return  true;
+        }else{
+            return false;
+        }
+    }
+
 }

@@ -26,6 +26,8 @@ Route::group(['namespace' => 'Api',"middleware"=>["changeLanguage"]], function (
     Route::post('getUniversities', 'GeneralController@getUniversities')->name("getUniversities");
     Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity')->name("getFacultyByUniversity");
     Route::post('getSlider', 'GeneralController@getSlider');
+    Route::post('about', 'GeneralController@about');
+    Route::post('getSetting', 'GeneralController@getSetting');
 
 
     // Forget Password
@@ -66,6 +68,12 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","chan
     Route::post('addJob', 'CompanyController@addJob');
     Route::post('updateJob', 'CompanyController@updateJob');
     Route::post('deleteJob', 'CompanyController@deleteJob');
+    Route::post('getJobApplications', 'CompanyController@getJobApplications');
+
+    Route::post('notifications', 'CompanyController@notifications');
+    Route::post('updateApplicationStatus', 'CompanyController@updateApplicationStatus');
+    Route::post('updateNotification', 'CompanyController@updateNotification');
+
 });
 // end company routes
 
@@ -99,6 +107,10 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","chan
     Route::post('myTrainings', 'StudentController@myTrainings');
     Route::post('confirmAppliedTraining', 'StudentController@confirmAppliedTraining');
     Route::post('cancelAppliedTraining', 'StudentController@cancelAppliedTraining');
+
+
+    Route::post('notifications', 'StudentController@notifications');
+    Route::post('updateNotification', 'StudentController@updateNotification');
 
     // job
     Route::post('applyJob', 'StudentController@applyJob');

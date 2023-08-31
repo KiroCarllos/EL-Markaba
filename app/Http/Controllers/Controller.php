@@ -15,7 +15,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function getUniversities(){
+    public function getAllUniversities(){
         $universities= University::select("id","name_en","name_ar")->get();
         foreach ($universities as $university){
             $name = app()->getLocale() == "ar" ?$university->name_ar:$university->name_en;

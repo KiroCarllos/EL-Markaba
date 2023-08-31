@@ -60,9 +60,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>@lang('site.image')</th>
+                                    <th>@lang('site.company_name')</th>
                                     <th>@lang('site.job_title')</th>
                                     <th>@lang('site.status_job')</th>
                                     <th>@lang('site.job_type')</th>
+                                    <th>@lang('site.job_applications_count')</th>
                                     <th>@lang('site.action')</th>
                                 </tr>
                                 </thead>
@@ -75,16 +77,26 @@
 
                                         <td><img src="{{ $job->company->image }}" style="width: 100px;"
                                                  class="img-thumbnail" alt=""></td>
+                                        <td>{{ $job->company->name }}</td>
                                         <td>{{ $job->title }}</td>
                                         <td>{{ $job->status }}</td>
                                         <td>{{ $job->work_type }}</td>
+                                        <td>{{ $job->applications->count() }}</td>
                                         <td>
                                             @if (auth()->user()->hasRole('super_admin') )
-                                                <a href="{{ route('dashboard.jobs.edit', $job->id) }}"
+                                                <a href="{{ route('dashboard.jobs.applications', $job->id) }}"
                                                    class="btn btn-info btn-sm"><i
-                                                        class="fa fa-edit"></i> @lang('site.edit')</a>
+                                                        class="fa fa-file"></i> @lang('site.applications')</a>
                                             @else
                                                 <a href="#" class="btn btn-info btn-sm disabled"><i
+                                                        class="fa fa-edit"></i> @lang('site.applications')</a>
+                                            @endif
+                                            @if (auth()->user()->hasRole('super_admin') )
+                                                <a href="{{ route('dashboard.jobs.edit', $job->id) }}"
+                                                   class="btn btn-success btn-sm"><i
+                                                        class="fa fa-edit"></i> @lang('site.edit')</a>
+                                            @else
+                                                <a href="#" class="btn btn-success btn-sm disabled"><i
                                                         class="fa fa-edit"></i> @lang('site.edit')</a>
                                             @endif
                                             @if (auth()->user()->hasRole('super_admin') )

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyDetail;
+use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,9 +42,9 @@ class CompanyController extends Controller
             'bio' => 'required|string',
             'created_date' => 'required|date',
             'address' => 'required|string',
-            'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'commercial_record_image' => 'required|mimes:jpeg,png,jpg|max:4096',
+            'tax_card_image' => 'required|mimes:jpeg,png,jpg|max:4096',
         ]);
         $userData = $request->only(["name","mobile","email"]);
         $userData["password"] = Hash::make($request->password);
@@ -106,9 +107,9 @@ class CompanyController extends Controller
             'bio' => 'required|string',
             'created_date' => 'required|date',
             'address' => 'required|string',
-            'logo' => 'nullable|mimes:jpeg,png,jpg|max:2048',
-            'commercial_record_image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
-            'tax_card_image' => 'nullable|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'nullable|mimes:jpeg,png,jpg|max:4096',
+            'commercial_record_image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
+            'tax_card_image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
         ]);
         $userData = $request->only(["name","mobile","email","status"]);
         if ($request->has("password") && !is_null($request->password)){
@@ -134,6 +135,19 @@ class CompanyController extends Controller
             if ($request->has("tax_card_image") && !is_null($request->tax_card_image)) {
                 deleteOldFiles("uploads/companies/".$user->id."/tax_card");
                 $company->update(["tax_card_image" => uploadImage($request->tax_card_image,"uploads/companies/".$user->id."/tax_card/".generateBcryptHash($user->id)."/tax_card")]);
+            }
+            if ($request->has("notify") && !is_null($request->notify)) {
+                $recipients = [$user->device_token];
+                Notification::create([
+                    "type" => "posts",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => $request->notify,
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                ]);
+                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$user);
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));

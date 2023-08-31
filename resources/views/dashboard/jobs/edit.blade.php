@@ -37,7 +37,7 @@
                                 <option value="active" {{ $job->status == "active" ? "selected" :"" }}>@lang("site.active")</option>
                                 <option value="inProgress" {{ $job->status == "inProgress" ? "selected" :"" }}>@lang("site.inProgress")</option>
                                 <option value="pending" {{ $job->status == "pending" ? "selected" :"" }}>@lang("site.pending")</option>
-                                <option value="pending" {{ $job->status == "enough" ? "selected" :"" }}>@lang("site.enough")</option>
+                                <option disabled {{ $job->status == "enough" ? "selected" :"" }}>@lang("site.enough")</option>
                                 <option value="pending" {{ $job->status == "deleted" ? "selected" :"" }}>@lang("site.deleted")</option>
                             </select>
                         </div>
@@ -59,15 +59,21 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('site.job_type')</label>
-                            <select name="work_type" id="work_type" class="form-control">
+                            <select name="work_type"  class="form-control">
                                 <option {{ $job->work_type == "full_time" ? "selected" :"" }} value="full_time">@lang("site.full_time")</option>
                                 <option {{ $job->work_type == "part_time" ? "selected" :"" }} value="part_time">@lang("site.part_time")</option>
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label>@lang('site.work_type')</label>
+                            <select name="job_type"  class="form-control">
+                                <option {{ $job->job_type == "online" ? "selected" :"" }} value="online">@lang("site.online")</option>
+                                <option {{ $job->job_type == "from_company" ? "selected" :"" }} value="from_company">@lang("site.from_company")</option>
+                            </select>
+                        </div>
                         <div id="work_hours" class="form-group">
                             <label>@lang('site.work_hours')</label>
-                            <input max="10" type="number" name="work_hours" class="form-control" value="{{ $job->work_hours }}">
+                            <input max="24" type="number" name="work_hours" class="form-control" value="{{ $job->work_hours }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.contact_email')</label>
