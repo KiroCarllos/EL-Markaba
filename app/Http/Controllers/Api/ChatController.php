@@ -45,7 +45,16 @@ class ChatController extends Controller
                 "created_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
                 "updated_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
             ]);
-            return api_response(1,__("site.message sent successfully"));
+
+            $data["id"] = $chat->id;
+            $data["direct"] = "right";
+            $data["name"] = auth("api")->user()->name;
+            $data["image"] = auth("api")->user()->image;
+            $data["message"] = $request->message;
+            $data["status"] = "notReaded";
+            $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->toDateTimeString() ;
+
+            return api_response(1,__("site.message sent successfully"),$data);
         }catch (\Exception $exception){
             return api_response(0,$exception->getMessage(),"");
         }
