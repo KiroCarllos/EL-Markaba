@@ -168,6 +168,7 @@ if (!function_exists('sendFcm')) {
 
     function sendFcm($tokens, $title, $message, $type = null, $data = [])
     {
+        dd($tokens);
         if (!empty($tokens)) {
             ob_start();
             $curl = curl_init();
