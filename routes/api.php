@@ -70,7 +70,12 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","chan
 // end company routes
 
 
+
+
+
 // student
+
+
 Route::group(['prefix' => "student",'namespace' => 'Api',"middleware" => ["changeLanguage"]], function () {
     Route::post('login', 'StudentController@login');
     Route::post('register', 'StudentController@register');
@@ -103,3 +108,16 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","chan
 
 });
 // end student routes
+
+
+
+
+
+
+// Chat Auth
+Route::group(['prefix' => "chat",'namespace' => 'Api',"middleware" => ['auth:api',"check_auth","changeLanguage"]], function () {
+    Route::post('admins', 'ChatController@admins');
+    Route::post('sendMessage', 'ChatController@sendMessage');
+    Route::post('getMyMessages', 'ChatController@getMyMessages');
+
+});

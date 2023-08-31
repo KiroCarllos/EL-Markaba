@@ -52,6 +52,7 @@ return [
     'blocked' => 'محظور',
     'major' => 'التخصص',
     'deleteAccount' => 'حذف الحساب',
+    'message sent successfully' => 'تم استلام رسابتك بنجاح',
 
 
     'prior_experiences' => 'خيرات سابقه',

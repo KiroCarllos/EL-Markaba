@@ -34,6 +34,7 @@ return[
     'image_company' => 'Image Company',
     'image_commercial_record' => 'Image Commercial Record',
     'image_tax_card' => 'Image Tax Card',
+    'message sent successfully' => 'Message Sent Successfully',
 
 
 
