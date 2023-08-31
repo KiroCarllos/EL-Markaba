@@ -52,7 +52,7 @@ class ChatController extends Controller
             $data["image"] = auth("api")->user()->image;
             $data["message"] = $request->message;
             $data["status"] = "notReaded";
-            $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->toDateTimeString() ;
+            $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans()->toDateTimeString() ;
 
             return api_response(1,__("site.message sent successfully"),$data);
         }catch (\Exception $exception){
