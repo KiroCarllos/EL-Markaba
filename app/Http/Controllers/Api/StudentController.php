@@ -372,7 +372,7 @@ class StudentController extends Controller
             "notification_id" => ["required","numeric",Rule::exists("notifications","notification_id")->where("user_id",auth("api")->id())],
             "read" => ["required","in:0,1"]
         ]);
-        $notification = Notification::find($request->notification_id);
+        $notification = Notification::whereId($request->notification_id)->first();
         $notification->update(["read" => $request->read]);
         return api_response(1,__('site.updated_successfully'));
     }
