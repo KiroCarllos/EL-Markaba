@@ -30,9 +30,9 @@ Route::get('/sendFcm', function () {
 //    }
 
 
-    $recipients = ["d8ocrNveSUGBSur9bip1m7:APA91bFG_H2EfgEHdDhFDUY4cGJ99dtEpmz9XEGMXSZPZ1Ks6b72tMtztYHffHthyvs0FdgRvb7zV_R61sqegv9QSTdXgvreM9n_61KC7aT_5cOzM9-fCtqnbmKP5HD5mNkiVB6IiAa8"];
+    $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d"];
     $message = "ماشي مفيش مشكله";
-    $s = sendFcm([$recipients],"مركز المركبة",$message,"chat",$message);
+    $s = send_fcm($recipients,"مركز المركبة",$message,"chat",$message);
     dd($s);
 
 

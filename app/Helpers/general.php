@@ -128,17 +128,17 @@ if (!function_exists('sendFcm')) {
                     'sound' => 'default',
                     'data' => $data
                 ],
-//                "content_available" => true,
-//                "apns-priority" => "5",
-                'registration_ids' => $tokens,
-//                "android_channel_id"=> "Low Calories Channel",
+                "content_available" => true,
+                "apns-priority" => "5",
+                'registration_ids' => ["d8ocrNveSUGBSur9bip1m7:APA91bFG_H2EfgEHdDhFDUY4cGJ99dtEpmz9XEGMXSZPZ1Ks6b72tMtztYHffHthyvs0FdgRvb7zV_R61sqegv9QSTdXgvreM9n_61KC7aT_5cOzM9-fCtqnbmKP5HD5mNkiVB6IiAa8"],
+                "android_channel_id"=> "Low Calories Channel",
                 'priority' => 'high',
-//                "show_notification_android"=>"true",
-//                'sound' => 'default',
-//                "android"=> [
-//                    "priority"=> "high"
-//                ],
-//                'badge' => 1,
+                "show_notification_android"=>"true",
+                'sound' => 'default',
+                "android"=> [
+                    "priority"=> "high"
+                ],
+                'badge' => 1,
                 'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
             ];
             $headers = [
@@ -164,53 +164,3 @@ if (!function_exists('sendFcm')) {
     }
 }
 
-if (!function_exists('sendFcm')) {
-
-    function sendFcm($tokens, $title, $message, $type = null, $data = [])
-    {
-        dd($tokens);
-        if (!empty($tokens)) {
-            ob_start();
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://fcm.googleapis.com/fcm/send',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => '{
-                  "priority": "high",
-                  "data": {
-                    "type": '.$type.',
-                    "title": '.$title.',
-                    "body": '.$message.',
-                    "data": '.$data.'
-                  },
-                  "notification": {
-                    "type": '.$type.',
-                    "title": '.$title.',
-                    "body": '.$message.',
-                    "data": '.$data.'
-
-                  },
-                  "registration_ids":'.$tokens.'
-                }',
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: key=AAAAmm0zoMA:APA91bHJeMQiLObppn7UWBl2dx30MSx5GZi-pJz3RsmB6WEXyR29-h6wbLC37TiCvyK7HMrLtKme8YmHmtgpiFw03ViYZG7_wpqtMSrZ0oCbgIarcPl6KwTABXlIUk5RzjbyH_J7k0FL',
-                    'Content-Type: application/json'
-                ),
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
-             dd($response);
-            ob_end_clean();
-            return true;
-        } else {
-            return false;
-        }
-    }
-}

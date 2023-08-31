@@ -53,12 +53,12 @@ class ChatController extends Controller
     public function getMyMessages()
     {
         Carbon::setLocale(app()->getLocale());
-        $messages = ChatMessage::where("from_user_id",auth()->id())->orWhere("to_user_id",auth()->id())->latest()->get();
+        $messages = ChatMessage::where("from_user_id",auth()->id())->orWhere("to_user_id",auth()->id())->latest()->paginate(10);
         foreach ($messages as $index=>$obj){
             $data[$index]["id"] = $obj->id;
             $data[$index]["direct"] = $obj->from_user_id == auth()->id() ?"right":"left";
             $data[$index]["name"] =  $obj->fromUser->name;
-            $data[$index]["image"] =  $obj->fromUser->image ;
+            $data[$index]["image"] =  $obj->fromUser->image;
             $data[$index]["message"] = $obj->message;
             $data[$index]["status"] = $obj->status;
             $data[$index]["sent_at"] = Carbon::parse($obj->created_at)->diffForHumans();
