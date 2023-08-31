@@ -72,6 +72,7 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","chan
 
     Route::post('notifications', 'CompanyController@notifications');
     Route::post('updateApplicationStatus', 'CompanyController@updateApplicationStatus');
+    Route::post('updateNotification', 'CompanyController@updateNotification');
 
 });
 // end company routes
@@ -104,6 +105,7 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","chan
 
 
     Route::post('notifications', 'StudentController@notifications');
+    Route::post('updateNotification', 'StudentController@updateNotification');
 
     // job
     Route::post('applyJob', 'StudentController@applyJob');

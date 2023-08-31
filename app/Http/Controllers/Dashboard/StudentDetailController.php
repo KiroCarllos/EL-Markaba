@@ -135,7 +135,7 @@ class StudentDetailController extends Controller
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
-                    "body" => __("site.you_has_add_post_successfully"),
+                    "body" => __("site.your_account_activated_can_make_login_now"),
                     "read" => "0",
                     "model_id" => $user->id,
                     "model_json" => $user,

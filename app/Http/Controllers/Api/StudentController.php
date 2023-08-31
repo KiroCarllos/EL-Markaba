@@ -366,4 +366,18 @@ class StudentController extends Controller
         $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(10);
         return api_response(1,"",$notifications);
     }
+
+    public function updateNotification(Request $request){
+        $request->validate([
+            "notification_id" => ["required","numeric",Rule::exists("notifications","notification_id")->where("user_id",auth("api")->id())],
+            "read" => ["required","in:0,1"]
+        ]);
+        $notification = Notification::find($request->notification_id);
+        $notification->update(["read" => $request->read]);
+        return api_response(1,__('site.updated_successfully'));
+    }
+
+
+
+
 }//end of controller
