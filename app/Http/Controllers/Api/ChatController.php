@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ChatResource;
 use App\Models\AdminCanChat;
 use App\Models\ChatMessage;
 use App\Models\CompanyDetail;
@@ -53,17 +54,7 @@ class ChatController extends Controller
     public function getMyMessages()
     {
         Carbon::setLocale(app()->getLocale());
-        $messages = ChatMessage::where("from_user_id",auth()->id())->orWhere("to_user_id",auth()->id())->latest()->paginate(10);
-        foreach ($messages as $index=>$obj){
-            $data[$index]["id"] = $obj->id;
-            $data[$index]["direct"] = $obj->from_user_id == auth()->id() ?"right":"left";
-            $data[$index]["name"] =  $obj->fromUser->name;
-            $data[$index]["image"] =  $obj->fromUser->image;
-            $data[$index]["message"] = $obj->message;
-            $data[$index]["status"] = $obj->status;
-            $data[$index]["sent_at"] = Carbon::parse($obj->created_at)->diffForHumans();
-        }
-        return api_response(1,"",$data);
-
+        $messages = ChatMessage::where("from_user_id",auth()->id())->orWhere("to_user_id",auth()->id())->latest()->paginate(20);
+        return api_response(1,"",ChatResource::collection($messages));
     }
 }//end of controller
