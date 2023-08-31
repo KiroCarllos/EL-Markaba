@@ -11,8 +11,10 @@
 |
 */
 
+use App\Models\ChatMessage;
 use App\Models\Notification;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
@@ -32,8 +34,25 @@ Route::get('/sendFcm', function () {
 
     $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d"];
     $message = "ماشي مفيش مشكله";
-    $s = send_fcm($recipients,"مركز المركبة",$message,"chat",$message);
-    dd($s);
+
+    $chat = ChatMessage::query()->create([
+        "message" => $message,
+        "from_user_id" => 1,
+        "to_user_id" => 28,
+        "created_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+        "updated_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+    ]);
+
+    $data["id"] = $chat->id;
+    $data["direct"] = "left";
+    $data["name"] = "Super Admin";
+    $data["image"] = "http://el-markaba.kirellos.com/uploads/student/28/profile/student_profile_image_1690881214.";
+    $data["message"] = $message;
+    $data["status"] = "notReaded";
+    $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans();
+
+    $s = send_fcm($recipients,"مركز المركبة",$message,"receiveMessage",$data);
+    dd($data);
 
 
 });
