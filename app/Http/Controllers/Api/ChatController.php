@@ -34,13 +34,13 @@ class ChatController extends Controller
     {
         $request->validate([
             "message" => ["required", "string", "max:191"],
-            "admin_id" => ["required", "numeric", Rule::exists("users","id")->where("role","super_admin")->where("status","active")]
+//            "admin_id" => ["required", "numeric", Rule::exists("users","id")->where("role","super_admin")->where("status","active")]
         ]);
         try {
             $chat = ChatMessage::query()->create([
                 "message" => $request->message,
-                "from_user_id" => auth()->id(),
-                "to_user_id" => $request->admin_id,
+                "from_user_id" => auth("api")->id(),
+                "to_user_id" => User::where("role" ,"super_admin")->where("status","active")->pluck("id")->first(),
                 "created_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
                 "updated_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
             ]);
