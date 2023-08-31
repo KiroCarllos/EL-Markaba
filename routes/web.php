@@ -32,7 +32,7 @@ Route::get('/sendFcm', function () {
 
     $recipients = ["d8ocrNveSUGBSur9bip1m7:APA91bFG_H2EfgEHdDhFDUY4cGJ99dtEpmz9XEGMXSZPZ1Ks6b72tMtztYHffHthyvs0FdgRvb7zV_R61sqegv9QSTdXgvreM9n_61KC7aT_5cOzM9-fCtqnbmKP5HD5mNkiVB6IiAa8"];
     $message = "ماشي مفيش مشكله";
-    $s = send_fcm([$recipients],"مركز المركبة",$message,"chat",$message);
+    $s = sendFcm([$recipients],"مركز المركبة",$message,"chat",$message);
     dd($s);
 
 

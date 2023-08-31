@@ -35,26 +35,28 @@ function uploadImage($image, $path)
     $image = $image->move($path, $name);
     return $path . "/" . $name;
 }
- function calculateAgeFromNationalId($nationalId)
+
+function calculateAgeFromNationalId($nationalId)
 {
-    if (substr($nationalId, 0, 1) == 2){
+    if (substr($nationalId, 0, 1) == 2) {
         $array = str_split($nationalId);
-        $dateOfBirth = "19".$array[1].$array[2]."-".$array[3].$array[4]."-".$array[5].$array[6];
-        return  calculateAgeFromDateOfBirth($dateOfBirth);
-    }elseif (substr($nationalId, 0, 4) == 3000){
+        $dateOfBirth = "19" . $array[1] . $array[2] . "-" . $array[3] . $array[4] . "-" . $array[5] . $array[6];
+        return calculateAgeFromDateOfBirth($dateOfBirth);
+    } elseif (substr($nationalId, 0, 4) == 3000) {
         $array = str_split($nationalId);
-        $dateOfBirth = "20".$array[1].$array[2]."-".$array[4].$array[5]."-".$array[6].$array[7];
-        return  calculateAgeFromDateOfBirth($dateOfBirth);
-    }elseif (substr($nationalId, 0, 3) == 300){
+        $dateOfBirth = "20" . $array[1] . $array[2] . "-" . $array[4] . $array[5] . "-" . $array[6] . $array[7];
+        return calculateAgeFromDateOfBirth($dateOfBirth);
+    } elseif (substr($nationalId, 0, 3) == 300) {
         $array = str_split($nationalId);
-        $dateOfBirth = "20".$array[1].$array[2]."-".$array[3].$array[4]."-".$array[5].$array[6];
-        return  calculateAgeFromDateOfBirth($dateOfBirth);
-    }else{
+        $dateOfBirth = "20" . $array[1] . $array[2] . "-" . $array[3] . $array[4] . "-" . $array[5] . $array[6];
+        return calculateAgeFromDateOfBirth($dateOfBirth);
+    } else {
         $dateOfBirth = "2021-01-01";
-        return  calculateAgeFromDateOfBirth($dateOfBirth);
+        return calculateAgeFromDateOfBirth($dateOfBirth);
     }
 }
- function calculateAgeFromDateOfBirth($dateOfBirth)
+
+function calculateAgeFromDateOfBirth($dateOfBirth)
 {
     $birthdate = Carbon::parse($dateOfBirth);
     $currentDate = Carbon::now();
@@ -63,19 +65,20 @@ function uploadImage($image, $path)
 
     return $age;
 }
- function generateBcryptHash($userId)
+
+function generateBcryptHash($userId)
 {
     // Define a secret key
     $secretKey = '$2y$10$RIxZbN3vmqowhC5XaeBC4';
     // Concatenate the user ID with the secret key
     $valueToHash = $userId . $secretKey;
     // Generate the bcrypt hash
-    $bcryptHash =str_replace(['.', '/'], '', $valueToHash);
+    $bcryptHash = str_replace(['.', '/'], '', $valueToHash);
     return $bcryptHash;
 }
 
 // Decrypt bcrypt hash to retrieve user ID
- function decryptHash($bcryptHash)
+function decryptHash($bcryptHash)
 {
     // Define the secret key used during hash generation
     $secretKey = '$2y$10$RIxZbN3vmqowhC5XaeBC4';
@@ -93,7 +96,8 @@ function uploadImage($image, $path)
 }
 
 
-function deleteOldFiles($path){
+function deleteOldFiles($path)
+{
     $directoryPath = public_path($path);
     if (File::isDirectory($directoryPath)) {
         File::deleteDirectory($directoryPath);
@@ -104,7 +108,7 @@ function deleteOldFiles($path){
 }
 
 
-if (!function_exists('send_fcm')) {
+if (!function_exists('sendFcm')) {
 
     function send_fcm($tokens, $title, $message, $type = null, $data = [])
     {
@@ -152,6 +156,56 @@ if (!function_exists('send_fcm')) {
                 'body' => json_encode($notification),
                 'headers' => $headers
             ]);
+            ob_end_clean();
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+if (!function_exists('sendFcm')) {
+
+    function sendFcm($tokens, $title, $message, $type = null, $data = [])
+    {
+        if (!empty($tokens)) {
+            ob_start();
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://fcm.googleapis.com/fcm/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => '{
+                  "priority": "high",
+                  "data": {
+                    "type": '.$type.',
+                    "title": '.$title.',
+                    "body": '.$message.',
+                    "data": '.$data.'
+                  },
+                  "notification": {
+                    "type": '.$type.',
+                    "title": '.$title.',
+                    "body": '.$message.',
+                    "data": '.$data.'
+
+                  },
+                  "registration_ids":'.$tokens.'
+                }',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: key=AAAAmm0zoMA:APA91bHJeMQiLObppn7UWBl2dx30MSx5GZi-pJz3RsmB6WEXyR29-h6wbLC37TiCvyK7HMrLtKme8YmHmtgpiFw03ViYZG7_wpqtMSrZ0oCbgIarcPl6KwTABXlIUk5RzjbyH_J7k0FL',
+                    'Content-Type: application/json'
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+             dd($response);
             ob_end_clean();
             return true;
         } else {
