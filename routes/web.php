@@ -26,7 +26,7 @@ Route::get('/sendFcm', function () {
     $recipients = User::where("role","student")->whereNotNull("device_token")->get();
 
     foreach ($recipients as $recipient){
-        send_fcm([$recipient->device_token],"من جوجل بلاي تقدر تحديث","لقد تم تفعيل الوظايف لتطبيق الشركه والطالب");
+        send_fcm([$recipient->device_token],"من جوجل بلاي تقدر تحديث","لقد تم تفعيل الوظايف لتطبيق الشركه والطالب","chat");
     }
 });
 

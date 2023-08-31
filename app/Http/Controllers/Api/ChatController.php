@@ -56,6 +56,7 @@ class ChatController extends Controller
         $messages = ChatMessage::where("from_user_id",auth()->id())->orWhere("to_user_id",auth()->id())->latest()->get();
         foreach ($messages as $index=>$obj){
             $data[$index]["id"] = $obj->id;
+            $data[$index]["user_id"] = auth("api")->id();
             $data[$index]["direct"] = $obj->from_user_id == auth()->id() ?"left":"right";
             $data[$index]["name"] =  $obj->fromUser->name;
             $data[$index]["image"] =  $obj->fromUser->image ;
