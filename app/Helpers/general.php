@@ -124,18 +124,17 @@ if (!function_exists('send_fcm')) {
                     'sound' => 'default',
                     'data' => $data
                 ],
-                "content_available" => true,
-                "apns-priority" => "5",
+//                "content_available" => true,
+//                "apns-priority" => "5",
                 'registration_ids' => $tokens,
-                "android_channel_id"=> "Low Calories Channel",
-//                "to" => "/topics/app",
+//                "android_channel_id"=> "Low Calories Channel",
                 'priority' => 'high',
-                "show_notification_android"=>"true",
-                'sound' => 'default',
-                "android"=> [
-                    "priority"=> "high"
-                ],
-                'badge' => 1,
+//                "show_notification_android"=>"true",
+//                'sound' => 'default',
+//                "android"=> [
+//                    "priority"=> "high"
+//                ],
+//                'badge' => 1,
                 'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
             ];
             $headers = [
