@@ -55,7 +55,7 @@ class ChatController extends Controller
     {
         Carbon::setLocale(app()->getLocale());
         $messages = ChatMessage::where("from_user_id",auth()->id())->orWhere("to_user_id",auth()->id())->latest()->paginate(20);
-        dd($messages,ChatResource::collection($messages));
-        return api_response(1,"",ChatResource::collection($messages));
+
+        return ChatResource::collection($messages);
     }
 }//end of controller
