@@ -26,10 +26,10 @@ Route::get('/', function () {
 Route::get('/sendFcm', function () {
 
 //    $recipients = User::where("role","student")->whereNotNull("device_token")->get();
-//
-//    foreach ($recipients as $recipient){
-//        send_fcm([$recipient->device_token],"من جوجل بلاي تقدر تحديث","لقد تم تفعيل الوظايف لتطبيق الشركه والطالب","chat");
-//    }
+    //
+    //    foreach ($recipients as $recipient){
+    //        send_fcm([$recipient->device_token],"من جوجل بلاي تقدر تحديث","لقد تم تفعيل الوظايف لتطبيق الشركه والطالب","chat");
+    //    }
 
 
     $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d"];
