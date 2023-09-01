@@ -32,7 +32,7 @@ Route::get('/sendFcm', function () {
     //    }
 
 
-    $recipients = ["dxWUemmZSkm7zQdmpxWrNJ:APA91bELXt2_xq-oZXJfepfzBgFtMtt_U_PbP94g_1O00myoi7yxLha3uXrXsSsI2BInC3bJ33n1QOPASDlALzqIStutDSGKfhdwQF6-etB1L3YXEryd7D-_Dmd3s83k0Pz0cG2avz3d"];
+    $recipients = ["cIaR3G8bRDukEuQkoL5FVX:APA91bHgzhX9haR0SSrb_W7es-BUWBkLt4iTnET5xlPgt_5Eb-FfbxyVZVpcOnECPlCKElFoOufPOZyf4szODYeyyvBGwczm_Rn4DOisiW5S-XYP-2x6PIQCz4cs_v1vE5DrRJMzozqq","cnUvEJ5RTmOzxqLaRFTOnF:APA91bGNTBV2klCJRWlIiHVMVogTBy7IEhzvamFLPFKCiRCXukKiE8AE4ikJrMUUCrbvelJ27reNCnJyLg40hx2XTZH0EqlT_UY6R80iU0vi8XNyHtUBNhXDLYZhWmIzhz1TQdDrKwH-"];
     $message = "ماشي مفيش مشكله";
 
     $chat = ChatMessage::query()->create([
@@ -51,7 +51,7 @@ Route::get('/sendFcm', function () {
     $data["status"] = "notReaded";
     $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans();
 
-    $s = send_fcm($recipients,"مركز المركبة",$message,"receiveMessage",$data);
+    $s = sendFcm($recipients,"مركز المركبة",$message,"receiveMessage",$data);
     dd($data);
 
 
