@@ -32,7 +32,7 @@ Route::get('/sendFcm', function () {
     //    }
 
 
-    $recipients = ["cIaR3G8bRDukEuQkoL5FVX:APA91bHgzhX9haR0SSrb_W7es-BUWBkLt4iTnET5xlPgt_5Eb-FfbxyVZVpcOnECPlCKElFoOufPOZyf4szODYeyyvBGwczm_Rn4DOisiW5S-XYP-2x6PIQCz4cs_v1vE5DrRJMzozqq","cnUvEJ5RTmOzxqLaRFTOnF:APA91bGNTBV2klCJRWlIiHVMVogTBy7IEhzvamFLPFKCiRCXukKiE8AE4ikJrMUUCrbvelJ27reNCnJyLg40hx2XTZH0EqlT_UY6R80iU0vi8XNyHtUBNhXDLYZhWmIzhz1TQdDrKwH-"];
+    $recipients = ["d8ocrNveSUGBSur9bip1m7:APA91bFG_H2EfgEHdDhFDUY4cGJ99dtEpmz9XEGMXSZPZ1Ks6b72tMtztYHffHthyvs0FdgRvb7zV_R61sqegv9QSTdXgvreM9n_61KC7aT_5cOzM9-fCtqnbmKP5HD5mNkiVB6IiAa8","exrqk0ThSnmreYizaZFoPW:APA91bEe3lf_-E-TKmBspyaoQOQok8NzoR-ZkjhZq_onuLVfHbruoCuPq_lYAuTn7SpAah_rCihE6KgATc9wtmNQV14vIAeXAlxiBEwz6ghNd7bsIdPshfLan3Rrs2zwyYQitYeV_QQ-","cnUvEJ5RTmOzxqLaRFTOnF:APA91bGNTBV2klCJRWlIiHVMVogTBy7IEhzvamFLPFKCiRCXukKiE8AE4ikJrMUUCrbvelJ27reNCnJyLg40hx2XTZH0EqlT_UY6R80iU0vi8XNyHtUBNhXDLYZhWmIzhz1TQdDrKwH-"];
     $message = "ماشي مفيش مشكله";
 
     $chat = ChatMessage::query()->create([
@@ -51,8 +51,8 @@ Route::get('/sendFcm', function () {
     $data["status"] = "notReaded";
     $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans();
 
-    $s = sendFcm($recipients,"مركز المركبة",$message,"receiveMessage",$data);
-    dd($data);
+    $s = send_fcm($recipients,"مركز المركبة",$message,"receiveMessage",$data);
+    dd($s);
 
 
 });

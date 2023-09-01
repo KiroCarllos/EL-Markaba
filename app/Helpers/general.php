@@ -172,9 +172,7 @@ if (!function_exists('send_fcm')) {
             "priority" => "high",
             "data" => [
                 "title" => $title,
-                "body" => $message,
-                "type" => $type,
-                "data" => $data,
+                "body" => $message
             ],
             "notification" => [
                 "title" => $title,
