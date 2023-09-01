@@ -165,7 +165,7 @@ function deleteOldFiles($path)
 //}
 
 
-function sendFcm($tokens, $title, $message, $type = null, $data = []){
+function send_fcm($tokens, $title, $message, $type = null, $data = []){
 
     $curl = curl_init();
     $dataArray = [
