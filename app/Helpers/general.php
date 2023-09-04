@@ -40,19 +40,35 @@ function calculateAgeFromNationalId($nationalId)
 {
     if (substr($nationalId, 0, 1) == 2) {
         $array = str_split($nationalId);
-        $dateOfBirth = "19" . $array[1] . $array[2] . "-" . $array[3] . $array[4] . "-" . $array[5] . $array[6];
-        return calculateAgeFromDateOfBirth($dateOfBirth);
+        $month = $array[3] . $array[4] ;
+        $day = $array[5] . $array[6];
+        if ($month <= 12 && $day<= 31){
+            $dateOfBirth = "19" . $array[1] . $array[2] . "-" . $array[3] . $array[4] . "-" . $array[5] . $array[6];
+            return calculateAgeFromDateOfBirth($dateOfBirth);
+        }
+        return 25;
     } elseif (substr($nationalId, 0, 4) == 3000) {
         $array = str_split($nationalId);
-        $dateOfBirth = "20" . $array[1] . $array[2] . "-" . $array[4] . $array[5] . "-" . $array[6] . $array[7];
-        return calculateAgeFromDateOfBirth($dateOfBirth);
+        $year = "20" . $array[1] . $array[2];
+        $month = $array[4] . $array[5];
+        $day = $array[6] . $array[7];
+        if ($month <= 12 && $day<= 31){
+            $dateOfBirth = "20" . $array[1] . $array[2] . "-" . $array[4] . $array[5] . "-" . $array[6] . $array[7];
+            return calculateAgeFromDateOfBirth($dateOfBirth);
+        }
+        return 23;
     } elseif (substr($nationalId, 0, 3) == 300) {
         $array = str_split($nationalId);
-        $dateOfBirth = "20" . $array[1] . $array[2] . "-" . $array[3] . $array[4] . "-" . $array[5] . $array[6];
-        return calculateAgeFromDateOfBirth($dateOfBirth);
+        $year = "20" . $array[1] . $array[2];
+        $month = $array[3] . $array[4];
+        $day = $array[5] . $array[6];
+        if ($month <= 12 && $day<= 31){
+            $dateOfBirth = "20" . $array[1] . $array[2] . "-" . $array[3] . $array[4] . "-" . $array[5] . $array[6];
+            return calculateAgeFromDateOfBirth($dateOfBirth);
+        }
+        return 23;
     } else {
-        $dateOfBirth = "2021-01-01";
-        return calculateAgeFromDateOfBirth($dateOfBirth);
+        return 23;
     }
 }
 
@@ -170,14 +186,17 @@ if (!function_exists('send_fcm')) {
         $curl = curl_init();
         $dataArray = [
             "priority" => "high",
+
             "data" => [
                 "title" => $title,
-                "body" => $message
+                "body" => $message,
+                "state"=> $type,
+                "data" => $data,
             ],
             "notification" => [
                 "title" => $title,
                 "body" => $message,
-                "type" => $type,
+                "state"=> $type,
                 "data" => $data,
             ],
             "registration_ids" => $tokens,
