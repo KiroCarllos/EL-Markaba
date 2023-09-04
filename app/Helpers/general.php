@@ -183,7 +183,7 @@ function deleteOldFiles($path)
 if (!function_exists('send_fcm')) {
     function send_fcm($tokens, $title, $message, $type = null, $data = [])
     {
-        dd($tokens);
+        dd($tokens,is_null($tokens),\PHPUnit\Framework\isEmpty($tokens),count($tokens));
         $curl = curl_init();
         $dataArray = [
             "priority" => "high",
