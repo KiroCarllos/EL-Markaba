@@ -121,6 +121,7 @@ return [
 
     'work_type' => 'نوغ العمل',
     'online' => 'اونلاين',
+    'age' => 'السن',
     'from_company' => 'من الشركة',
 
     'added_successfully' => 'تم اضافه البيانات بنجاح',
