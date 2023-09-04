@@ -71,6 +71,11 @@
                             <input type="text" name="national_id" maxlength="14" minlength="14" class="form-control"
                                    value="{{ $userStudentDetail->student_details->national_id }}">
                         </div>
+                        <div class="form-group">
+                            <label>@lang('site.age')</label>
+                            <input readonly type="text"  maxlength="14" minlength="14" class="form-control"
+                                   value="{{ $userStudentDetail->age }}">
+                        </div>
                         @if(!is_null($userStudentDetail->student_details->faculty))
                         <div class="form-group">
                             <label>@lang('site.university')</label>
