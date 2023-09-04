@@ -183,54 +183,54 @@ function deleteOldFiles($path)
 if (!function_exists('send_fcm')) {
     function send_fcm($tokens, $title, $message, $type = null, $data = [])
     {
-        dd($tokens,is_null($tokens),\PHPUnit\Framework\isEmpty($tokens),count($tokens));
-        $curl = curl_init();
-        $dataArray = [
-            "priority" => "high",
+        if (!is_null($tokens[0])){
+            $curl = curl_init();
+            $dataArray = [
+                "priority" => "high",
 
-            "data" => [
-                "title" => $title,
-                "body" => $message,
-                "state"=> $type,
-                "data" => $data,
-            ],
-            "notification" => [
-                "title" => $title,
-                "body" => $message,
-                "state"=> $type,
-                "data" => $data,
-            ],
-            "registration_ids" => $tokens,
-        ];
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://fcm.googleapis.com/fcm/send',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($dataArray),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: key=AAAAmm0zoMA:APA91bHJeMQiLObppn7UWBl2dx30MSx5GZi-pJz3RsmB6WEXyR29-h6wbLC37TiCvyK7HMrLtKme8YmHmtgpiFw03ViYZG7_wpqtMSrZ0oCbgIarcPl6KwTABXlIUk5RzjbyH_J7k0FL',
-                'Content-Type: application/json'
-            ),
-        ));
+                "data" => [
+                    "title" => $title,
+                    "body" => $message,
+                    "state"=> $type,
+                    "data" => $data,
+                ],
+                "notification" => [
+                    "title" => $title,
+                    "body" => $message,
+                    "state"=> $type,
+                    "data" => $data,
+                ],
+                "registration_ids" => $tokens,
+            ];
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://fcm.googleapis.com/fcm/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($dataArray),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: key=AAAAmm0zoMA:APA91bHJeMQiLObppn7UWBl2dx30MSx5GZi-pJz3RsmB6WEXyR29-h6wbLC37TiCvyK7HMrLtKme8YmHmtgpiFw03ViYZG7_wpqtMSrZ0oCbgIarcPl6KwTABXlIUk5RzjbyH_J7k0FL',
+                    'Content-Type: application/json'
+                ),
+            ));
 
-        $response = curl_exec($curl);
-        curl_close($curl);
-        if (json_decode($response) != null) {
-            $data = (array)json_decode($response);
-            if ($data['failure'] == 0) {
-                return true;
+            $response = curl_exec($curl);
+            curl_close($curl);
+            if (json_decode($response) != null) {
+                $data = (array)json_decode($response);
+                if ($data['failure'] == 0) {
+                    return true;
+                } else {
+                    dd($data);
+                }
             } else {
-                dd($data);
+                dd(json_decode($response));
             }
-        } else {
-            dd(json_decode($response));
         }
-
 
     }
 }
