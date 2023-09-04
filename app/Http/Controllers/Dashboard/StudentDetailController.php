@@ -132,7 +132,6 @@ class StudentDetailController extends Controller
             $user = User::query()->whereId($id)->first();
             if (($user->status != "active" && $request->status == "active" )){
                 $recipients = [$user->device_token];
-                dd($user);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
