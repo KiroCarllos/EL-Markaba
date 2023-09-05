@@ -20,6 +20,9 @@ return[
     'training'=>'Training',
     'not_found'=>'Not Found',
     'confirmed' => 'confirmed',
+    'student update successfully wait admins for approve' => 'student update successfully wait admins for approve',
+    'sorry your should call admins to enable update' => 'sorry your should call admins to enable update',
+
     'new_job_added'=>'A new job has been posted, please apply if it suits you',
     'student_has_suggest_for_job'=>'Student Has Suggest For Job',
     'age'=>'Age',

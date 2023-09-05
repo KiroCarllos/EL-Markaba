@@ -13,6 +13,7 @@ class StudentDetail extends Model
         "faculty_id",
         "gender",
         "national_id",
+        "enable_update",
         "education",
         "graduated_at",
         "else_education",

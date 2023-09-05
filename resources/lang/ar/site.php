@@ -20,6 +20,8 @@ return [
     'all_companies' => 'كل الشركات',
     'enough' => 'تم الاكتفاء',
     'deleted' => 'محذوفة',
+    'student update successfully wait admins for approve' => 'تم تحديث بياناتك انها تحت المراجعه الان من قبل الادارة',
+    'sorry your should call admins to enable update' => 'نأسف يجب التواصل مع اداره المركبه لتفعيل التعديل',
     'setting' => 'الاعدادات',
     'company' => 'شركه',
     'paid' => 'مدفوع',

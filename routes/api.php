@@ -94,6 +94,8 @@ Route::group(['prefix' => "student",'namespace' => 'Api',"middleware" => ["chang
 });
 Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
     Route::post('profile', 'StudentController@profile');
+    Route::post('updateProfile', 'StudentController@updateProfile');
+
     Route::post('logout', 'StudentController@logout');
     Route::post('deleteAccount', 'StudentController@deleteAccount');
     Route::post('resetPassword', 'GeneralController@resetPassword');

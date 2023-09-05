@@ -136,7 +136,61 @@ class StudentController extends Controller
         $user = User::query()->where("id", auth("api")->id())->with("student_details")->first();
         return api_response(1, __("site.profile student get successfully"), $user);
     }
+    public function updateProfile(Request $request){
+        $studentProfile = StudentDetail::where("user_id",auth("api")->id())->first();
+        if (!$studentProfile->enable_update){
+            return api_response(0,__("site.sorry your should call admins to enable update"));
+        }
 
+        $request->validate([
+            'name' => ["required", "string","max:191"],
+            'mobile' => ["required","string","size:11",Rule::unique("users","mobile")->ignore(auth("api")->id())],
+            'email' => ["required","string","max:191",Rule::unique("users","email")->ignore(auth("api")->id())],
+            'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
+            'gender' => 'required|in:male,female',
+            'education' => 'required|in:high,medium,low,else',
+            'national_id' => 'required|string|size:14',
+            "prior_experiences" => ["nullable", "array"],
+            "courses" => ["nullable", "array"],
+            "device_token" => ["nullable","string"],
+            "address" => ["required", "string"],
+        ]);
+        $userData = $request->only(["name", "mobile", "email","device_token"]);
+        try {
+            DB::beginTransaction();
+            $user = User::find(auth("api")->id());
+            $user->update([
+                "mobile" => $userData["mobile"],
+                "name" => $userData["name"],
+                "email" => $userData["email"],
+                "device_token" => $userData["device_token"],
+                "role" => "student",
+            ]);
+            if ($request->image) {
+                deleteOldFiles("uploads/student/" . $user->id . "/profile");
+                $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
+            }
+            if ($request->education == "else"){
+                $request->validate([
+                    "else_education" => ["required","string","max:191"]
+                ]);
+            }else{
+                $request->validate([
+                    'major' => ["required", "string","max:191"],
+                    'faculty_id' => ["required", "numeric",Rule::exists("faculties","id")],
+                    'graduated_at' => ['required', 'date_format:Y'],
+                ]);
+            }
+            $studentData = $request->only(["gender","education","else_education", "national_id", "faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
+            $studentProfile->update($studentData);
+
+            DB::commit();
+            return api_response(1, __("site.student update successfully wait admins for approve"));
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return api_response(0, $exception);
+        }
+    }
     // student logout
     public function logout()
     {
