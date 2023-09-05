@@ -29,6 +29,10 @@ class StudentDetail extends Model
     public function getFacultyNameAttribute(){
         return Faculty::where("id",$this->faculty_id)->pluck( "name_".app()->getLocale())->first();
     }
+    public function getEnableUpdateAttribute($value){
+
+        return $value == 0 ? false : true;
+    }
     public function getUniversityNameAttribute(){
         $university_id = Faculty::where("id",$this->faculty_id)->pluck("university_id")->first();
         return University::where("id",$university_id)->pluck( "name_".app()->getLocale())->first();
