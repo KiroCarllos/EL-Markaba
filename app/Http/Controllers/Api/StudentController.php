@@ -170,6 +170,7 @@ class StudentController extends Controller
                 deleteOldFiles("uploads/student/" . $user->id . "/profile");
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
+            dd($request->all());
             if ($request->education == "else"){
                 $request->validate([
                     "else_education" => ["required","string","max:191"]
@@ -182,7 +183,7 @@ class StudentController extends Controller
                 ]);
             }
             $studentData = $request->only(["gender", "national_id", "else_education","faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
-            dd($studentData);
+
             $studentProfile->update($studentData);
 
             DB::commit();
