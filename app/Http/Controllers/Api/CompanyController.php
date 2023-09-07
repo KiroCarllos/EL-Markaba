@@ -267,6 +267,7 @@ class CompanyController extends Controller
             }
             if ($request->status == "confirmed"){
                 $recipients = [$application->user->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.congratulations_your_application_has_been_accepted"),"posts",$application);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -275,10 +276,11 @@ class CompanyController extends Controller
                     "model_id" => $application->id,
                     "model_json" => $application,
                     "user_id" => $application->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.congratulations_your_application_has_been_accepted"),"posts",$application);
             }else{
                 $recipients = [$application->user->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$application);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -287,8 +289,8 @@ class CompanyController extends Controller
                     "model_id" => $application->id,
                     "model_json" => $application,
                     "user_id" => $application->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$application);
             }
             $application->update(["status" => $request->status]);
             return api_response(1,"");

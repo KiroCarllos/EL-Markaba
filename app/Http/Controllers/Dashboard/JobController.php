@@ -188,6 +188,7 @@ class JobController extends Controller
 
                 $company = [$job->company->device_token];
                 // comapny
+                $result = send_fcm($company,__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
                 Notification::create([
                     "type" => "jobs",
                     "title" => __("site.markz_el_markaba"),
@@ -196,10 +197,11 @@ class JobController extends Controller
                     "model_id" => $job->id,
                     "model_json" => $job,
                     "user_id" => $job->company->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($company,__("site.markz_el_markaba"),__("site.student_has_suggest_for_job"),"jobs",$job);
 
                 $recipients = [$jobApplication->user->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_application_under_review_from_company"),"myJob",$job);
                 Notification::create([
                         "type" => "myJob",
                     "title" => __("site.markz_el_markaba"),
@@ -208,8 +210,8 @@ class JobController extends Controller
                     "model_id" => $job->id,
                     "model_json" => $job,
                     "user_id" => $jobApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_application_under_review_from_company"),"myJob",$job);
 
 
 
@@ -218,6 +220,7 @@ class JobController extends Controller
                 $jobApplication->update($jobData);
             }elseif (($jobApplication->status == "inProgress" && $request->status == "canceled") || $jobApplication->status == "pending" && $request->status == "canceled"){
                 $recipients = [$jobApplication->user->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$job);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -226,11 +229,12 @@ class JobController extends Controller
                     "model_id" => $job->id,
                     "model_json" => $job,
                     "user_id" => $jobApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.we_really_sorry_your_application_has_been_rejected"),"posts",$job);
                 $jobApplication->update($jobData);
             }else if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$jobApplication->user->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$job);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -239,8 +243,8 @@ class JobController extends Controller
                     "model_id" => $job->id,
                     "model_json" => $job,
                     "user_id" => $jobApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$job);
             }
 
 

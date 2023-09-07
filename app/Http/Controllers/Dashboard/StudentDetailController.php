@@ -142,7 +142,7 @@ class StudentDetailController extends Controller
                     "model_id" => $user->id,
                     "model_json" => $user,
                     "user_id" => $user->id,
-
+                    "fcm" => $result,
                 ]);
             }
             $user->update($userData);

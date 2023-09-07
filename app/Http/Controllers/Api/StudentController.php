@@ -111,6 +111,7 @@ class StudentController extends Controller
 
             if ($request->has("device_token")&& !is_null($request->device_token)){
                 $recipients = $request->only($request->device_token);
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount",$user);
                 Notification::create([
                     "type" => "newAccount",
                     "title" => __("site.markz_el_markaba"),
@@ -119,8 +120,8 @@ class StudentController extends Controller
                     "model_id" => $user->id,
                     "model_json" => $user,
                     "user_id" => $user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount",$user);
             }
             DB::commit();
             return api_response(1, __("site.student created successfully wait admins for approve"));
@@ -265,6 +266,7 @@ class StudentController extends Controller
         }
         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
             $recipients = [auth("api")->user()->device_token];
+            $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
             Notification::create([
                 "type" => "pendingTraining",
                 "title" => __("site.markz_el_markaba"),
@@ -273,8 +275,8 @@ class StudentController extends Controller
                 "model_id" => $training->id,
                 "model_json" => $training,
                 "user_id" => auth("api")->id(),
+                "fcm" => $result,
             ]);
-            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
         }
         return api_response(1,__("site.Applied Training Successfully"),TrainingApplication::find($applyTraining->id));
     }
@@ -305,6 +307,7 @@ class StudentController extends Controller
                     if ($request->receipt_image) {
                         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
                             $recipients = [auth("api")->user()->device_token];
+                            $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
                             Notification::create([
                                 "type" => "pendingTraining",
                                 "title" => __("site.markz_el_markaba"),
@@ -313,8 +316,8 @@ class StudentController extends Controller
                                 "model_id" => $request->training_id,
                                 "model_json" => $training,
                                 "user_id" => auth("api")->id(),
+                                "fcm" => $result,
                             ]);
-                            send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
                         }
                         $training_application->update(["status" => "inProgress","receipt_image" => uploadImage($request->receipt_image, "uploads/student/training/" . auth("api")->id() . "/".$request->training_id."/receipt_image")]);
                     }
@@ -336,6 +339,7 @@ class StudentController extends Controller
 
             if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
                 $recipients = [auth("api")->user()->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining",Training::find($request->training_id));
                 Notification::create([
                     "type" => "myTraining",
                     "title" => __("site.markz_el_markaba"),
@@ -344,8 +348,8 @@ class StudentController extends Controller
                     "model_id" => $request->training_id,
                     "model_json" => Training::find($request->training_id),
                     "user_id" => auth("api")->id(),
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining",Training::find($request->training_id));
             }
             $applyTraining->delete();
             return api_response(1,__("site.Training canceled successfully"));
