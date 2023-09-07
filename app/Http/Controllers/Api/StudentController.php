@@ -149,7 +149,6 @@ class StudentController extends Controller
             'email' => ["required","string","max:191",Rule::unique("users","email")->ignore(auth("api")->id())],
             'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
             'gender' => 'required|in:male,female',
-            'education' => 'required|in:high,medium,low,else',
             'national_id' => 'required|string|size:14',
             "prior_experiences" => ["nullable", "array"],
             "courses" => ["nullable", "array"],
@@ -182,7 +181,7 @@ class StudentController extends Controller
                     'graduated_at' => ['required', 'date_format:Y'],
                 ]);
             }
-            $studentData = $request->only(["gender","education","else_education", "national_id", "faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
+            $studentData = $request->only(["gender", "national_id", "faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
             $studentProfile->update($studentData);
 
             DB::commit();
