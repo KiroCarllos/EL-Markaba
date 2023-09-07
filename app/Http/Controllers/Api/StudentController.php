@@ -182,6 +182,7 @@ class StudentController extends Controller
                 ]);
             }
             $studentData = $request->only(["gender", "national_id", "else_education","faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
+            dd($studentData);
             $studentProfile->update($studentData);
 
             DB::commit();
