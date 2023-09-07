@@ -166,7 +166,7 @@ class StudentController extends Controller
                 "device_token" => $userData["device_token"],
                 "role" => "student",
             ]);
-            if ($request->image) {
+            if ($request->has("image") &&  !is_null($request->image)) {
                 deleteOldFiles("uploads/student/" . $user->id . "/profile");
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
