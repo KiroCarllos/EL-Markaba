@@ -87,7 +87,6 @@ class JobController extends Controller
 
         $request_data = $request->only(['title_ar','job_type','title_en','user_id','status', 'description_en','description_ar', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
         if (($job->status == "pending"  && $request->status == "active") ||($job->status == "pending" && $request->status == "active") ){
-
             $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
             foreach ($recipients as $recipient){
                 $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$job);
@@ -100,7 +99,7 @@ class JobController extends Controller
                         "model_id" => $job->id,
                         "model_json" => $job,
                         "user_id" => $job->id,
-                        "fcm" => 0,
+                        "fcm" => $result,
                     ]);
                 }else{
                     Notification::create([
@@ -111,7 +110,7 @@ class JobController extends Controller
                         "model_id" => $job->id,
                         "model_json" => $job,
                         "user_id" => $job->id,
-                        "fcm" => 0,
+                        "fcm" => $result,
                     ]);
                 }
             }

@@ -51,16 +51,30 @@ class PostController extends Controller
 
             $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
             foreach ($recipients as $recipient){
-                Notification::create([
-                    "type" => "newAccount",
-                    "title" => __("site.markz_el_markaba"),
-                    "body" => __("site.you_has_add_post_successfully"),
-                    "read" => "0",
-                    "model_id" => $post->id,
-                    "model_json" => $post,
-                    "user_id" => $recipient->id,
-                ]);
-                send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_post_successfully"),"posts",$post);
+
+                $request = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_post_successfully"),"posts",$post);
+                if ($request){
+                    Notification::create([
+                        "type" => "newAccount",
+                        "title" => __("site.markz_el_markaba"),
+                        "body" => __("site.you_has_add_post_successfully"),
+                        "read" => "0",
+                        "model_id" => $post->id,
+                        "model_json" => $post,
+                        "user_id" => $recipient->id,
+
+                    ]);
+                }else{
+                    Notification::create([
+                        "type" => "newAccount",
+                        "title" => __("site.markz_el_markaba"),
+                        "body" => __("site.you_has_add_post_successfully"),
+                        "read" => "0",
+                        "model_id" => $post->id,
+                        "model_json" => $post,
+                        "user_id" => $recipient->id,
+                    ]);
+                }
             }
             return redirect()->route('dashboard.posts.index');
         }catch (\Exception $exception){
