@@ -15,6 +15,7 @@ class Notification extends Model
         "model_id",
         "read",
         "user_id",
+        "fcm",
         "model_json",
     ];
     protected static function booted()
@@ -29,13 +30,16 @@ class Notification extends Model
         });
     }
     protected $casts = [
-        "model_json" => "json"
+        "model_json" => "json",
+        "fcm" => "boolean",
+
     ];
     protected $appends = ["created_ago"];
     public function getCreatedAgoAttribute(){
 
         return Carbon::parse($this->created_at)->diffForHumans();
     }
+
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
     }

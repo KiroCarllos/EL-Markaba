@@ -225,10 +225,12 @@ if (!function_exists('send_fcm')) {
                 if ($data['failure'] == 0) {
                     return true;
                 } else {
-                    dd($data);
+                    return false;
+//                    dd($data);
                 }
             } else {
-                dd(json_decode($response));
+                return false;
+//                dd(json_decode($response));
             }
         }
 
