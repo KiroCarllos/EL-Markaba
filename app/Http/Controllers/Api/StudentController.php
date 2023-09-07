@@ -171,7 +171,7 @@ class StudentController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
 //            dd($request->all());
-            if ($studentProfile->education == "else"){
+            if ($studentProfile->education == "high"){
                 $request->validate([
                     "else_education" => ["required","string","max:191"]
                 ]);
