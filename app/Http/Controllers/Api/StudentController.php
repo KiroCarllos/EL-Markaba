@@ -171,17 +171,17 @@ class StudentController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
 //            dd($request->all());
-            if ($studentProfile->education == "high"){
-                $request->validate([
-                    "else_education" => ["required","string","max:191"]
-                ]);
-            }else{
-                $request->validate([
-                    'major' => ["required", "string","max:191"],
-                    'faculty_id' => ["required", "numeric",Rule::exists("faculties","id")],
-                    'graduated_at' => ['required', 'date_format:Y'],
-                ]);
-            }
+//            if ($studentProfile->education == "high"){
+//                $request->validate([
+//                    "else_education" => ["required","string","max:191"]
+//                ]);
+//            }else{
+//                $request->validate([
+//                    'major' => ["required", "string","max:191"],
+//                    'faculty_id' => ["required", "numeric",Rule::exists("faculties","id")],
+//                    'graduated_at' => ['required', 'date_format:Y'],
+//                ]);
+//            }
             $studentData = $request->only(["gender", "national_id", "else_education","faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
 
             $studentProfile->update($studentData);
