@@ -90,29 +90,16 @@ class JobController extends Controller
             $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
             foreach ($recipients as $recipient){
                 $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$job);
-                if($result){
-                    Notification::create([
-                        "type" => "newJob",
-                        "title" => __("site.markz_el_markaba"),
-                        "body" => __("site.new_job_added"),
-                        "read" => "0",
-                        "model_id" => $job->id,
-                        "model_json" => $job,
-                        "user_id" => $job->id,
-                        "fcm" => $result,
-                    ]);
-                }else{
-                    Notification::create([
-                        "type" => "newJob",
-                        "title" => __("site.markz_el_markaba"),
-                        "body" => __("site.new_job_added"),
-                        "read" => "0",
-                        "model_id" => $job->id,
-                        "model_json" => $job,
-                        "user_id" => $job->id,
-                        "fcm" => $result,
-                    ]);
-                }
+                Notification::create([
+                    "type" => "newJob",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.new_job_added"),
+                    "read" => "0",
+                    "model_id" => $job->id,
+                    "model_json" => $job,
+                    "user_id" => $job->id,
+                    "fcm" => $result,
+                ]);
             }
         }
         $job->update($request_data);

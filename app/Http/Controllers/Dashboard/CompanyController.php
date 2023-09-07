@@ -138,6 +138,8 @@ class CompanyController extends Controller
             }
             if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$user->device_token];
+
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$user);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -146,8 +148,8 @@ class CompanyController extends Controller
                     "model_id" => $user->id,
                     "model_json" => $user,
                     "user_id" => $user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$user);
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));

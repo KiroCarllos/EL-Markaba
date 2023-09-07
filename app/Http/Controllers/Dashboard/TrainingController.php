@@ -53,6 +53,7 @@ class TrainingController extends Controller
 
             $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
             foreach ($recipients as $recipient){
+                $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_training_successfully"),"trainings",$training);
                 Notification::create([
                     "type" => "newAccount",
                     "title" => __("site.markz_el_markaba"),
@@ -61,8 +62,8 @@ class TrainingController extends Controller
                     "model_id" => $training->id,
                     "model_json" => $training,
                     "user_id" => $recipient->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_training_successfully"),"trainings",$training);
             }
             return redirect()->route('dashboard.trainings.index');
         }catch (\Exception $exception){
@@ -142,6 +143,7 @@ class TrainingController extends Controller
 
             }else if ($trainingApplication->status != "pending" && $request->status == "confirmed"){
                 $recipients = [$trainingApplication->user->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining",$training);
                 Notification::create([
                     "type" => "myTraining",
                     "title" => __("site.markz_el_markaba"),
@@ -150,10 +152,12 @@ class TrainingController extends Controller
                     "model_id" => $training->id,
                     "model_json" => $training,
                     "user_id" => $trainingApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining",$training);
             } else if ($trainingApplication->status != "inProgress" && $request->status == "confirmed"){
                 $recipients = [$trainingApplication->user->device_token];
+
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining",$training);
                 Notification::create([
                     "type" => "myTraining",
                     "title" => __("site.markz_el_markaba"),
@@ -162,10 +166,12 @@ class TrainingController extends Controller
                     "model_id" => $training->id,
                     "model_json" => $training,
                     "user_id" => $trainingApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_training_has_been_confirmed"),"myTraining",$training);
             } else if ($trainingApplication->status != "enough" && $request->status == "enough"){
                 $recipients = [$trainingApplication->user->device_token];
+
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_has_been_enough_numbers"),"myTraining",$training);
                 Notification::create([
                     "type" => "myTraining",
                     "title" => __("site.markz_el_markaba"),
@@ -174,10 +180,11 @@ class TrainingController extends Controller
                     "model_id" => $training->id,
                     "model_json" => $training,
                     "user_id" => $trainingApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_has_been_enough_numbers"),"myTraining",$training);
             }else  if ($trainingApplication->status != "notConfirmed" && $request->status == "notConfirmed"){
                 $recipients = [$trainingApplication->user->device_token];
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_application_have_some_notes"),"myTraining",$training);
                 Notification::create([
                     "type" => "myTraining",
                     "title" => __("site.markz_el_markaba"),
@@ -186,10 +193,12 @@ class TrainingController extends Controller
                     "model_id" => $training->id,
                     "model_json" => $training,
                     "user_id" => $trainingApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),__("site.sorry_your_training_application_have_some_notes"),"myTraining",$training);
             }else  if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$trainingApplication->user->device_token];
+
+                $result = send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$training);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -198,8 +207,8 @@ class TrainingController extends Controller
                     "model_id" => $training->id,
                     "model_json" => $training,
                     "user_id" => $trainingApplication->user->id,
+                    "fcm" => $result,
                 ]);
-                send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$training);
             }
             $trainingApplication->update($trainingData);
 
