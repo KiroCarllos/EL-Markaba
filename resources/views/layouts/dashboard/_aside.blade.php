@@ -24,6 +24,10 @@
                             class="fa fa-th"></i><span>@lang('site.student_graduated')</span></a></li>
             @endif
             @if (auth()->user()->hasRole('super_admin'))
+                <li><a href="{{ route('dashboard.chats.index') }}"><i
+                            class="fa fa-th"></i><span>@lang('site.chat')</span></a></li>
+            @endif
+            @if (auth()->user()->hasRole('super_admin'))
                 <li><a href="{{ route('dashboard.jobs.index') }}"><i
                             class="fa fa-th"></i><span>@lang('site.jobs')</span></a></li>
             @endif

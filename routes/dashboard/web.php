@@ -20,6 +20,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             //students
             Route::resource('student_details', 'StudentDetailController');
             Route::resource('jobs', 'JobController');
+            Route::resource('chats', 'ChatController');
+            Route::get('/chat/massages', 'ChatController@getMassages')->name('chats.massages');
 
             Route::resource('posts', 'PostController');
             Route::resource('sliders', 'SliderController');

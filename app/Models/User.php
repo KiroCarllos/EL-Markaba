@@ -34,7 +34,9 @@ class User extends Authenticatable  implements JWTSubject
         }
         return null;
     }
-
+    public function chats(){
+        return $this->hasMany(ChatMessage::class,"to_user_id","id");
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
