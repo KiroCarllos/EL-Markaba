@@ -185,11 +185,13 @@
                             <input type="password" name="password"
                                    placeholder="@lang("site.fill password if need to reset only")" class="form-control">
                         </div>
+                        @if(!is_null($user->device_token))
                         <div class="form-group">
                             <label>@lang('site.notify')</label>
                             <input type="text" name="notify"
                                    placeholder="@lang("site.fill notify if need to send notification only")" class="form-control">
                         </div>
+                        @endif
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')
