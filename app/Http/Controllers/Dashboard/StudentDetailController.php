@@ -154,7 +154,7 @@ class StudentDetailController extends Controller
             $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
             $studentDetails->update($studentData);
             if ($request->has("notify") && !is_null($request->notify)) {
-                $request_two = send_fcm([$user->device_token],__("site.markz_el_markaba"),$request->notify,"posts",$user);
+                $request = send_fcm([$user->device_token],__("site.markz_el_markaba"),$request->notify,"posts",$user);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -163,7 +163,7 @@ class StudentDetailController extends Controller
                     "model_id" => $user->id,
                     "model_json" => $user,
                     "user_id" => $user->id,
-                    "fcm" => is_null($request_two) ? false : true,
+                    "fcm" => $request,
                 ]);
             }
                 DB::commit();

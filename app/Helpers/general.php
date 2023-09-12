@@ -183,7 +183,6 @@ function deleteOldFiles($path)
 if (!function_exists('send_fcm')) {
     function send_fcm($tokens, $title, $message, $type = null, $data = [])
     {
-        dd(!is_null($tokens[0]));
         if (!is_null($tokens[0])){
             $curl = curl_init();
             $dataArray = [
@@ -235,6 +234,8 @@ if (!function_exists('send_fcm')) {
 //                dd(json_decode($response));
             }
             dd(json_decode($response),"2");
+        }else{
+            return false;
         }
 
     }
