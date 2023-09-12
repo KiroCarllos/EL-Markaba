@@ -155,8 +155,8 @@ class StudentDetailController extends Controller
             $studentDetails->update($studentData);
             if ($request->has("notify") && !is_null($request->notify)) {
                 $recipients = [$user->device_token];
-
-                $result = send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$user);
+                $request_two = send_fcm($recipients,__("site.markz_el_markaba"),$request->notify,"posts",$user);
+                dd($request_two);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),
@@ -165,7 +165,7 @@ class StudentDetailController extends Controller
                     "model_id" => $user->id,
                     "model_json" => $user,
                     "user_id" => $user->id,
-                    "fcm" => $result,
+                    "fcm" => $request_two,
                 ]);
             }
                 DB::commit();
