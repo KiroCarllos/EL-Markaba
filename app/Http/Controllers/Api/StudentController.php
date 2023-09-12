@@ -110,8 +110,7 @@ class StudentController extends Controller
             ], $studentData);
 
             if ($request->has("device_token")&& !is_null($request->device_token)){
-                $recipients = $request->only($request->device_token);
-                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount",$user);
+                $result = send_fcm([$request->device_token],__("site.markz_el_markaba"),__("site.your_account_added_please_wait_activation"),"newAccount",$user);
                 Notification::create([
                     "type" => "newAccount",
                     "title" => __("site.markz_el_markaba"),
