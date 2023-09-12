@@ -185,7 +185,7 @@
                             <input type="password" name="password"
                                    placeholder="@lang("site.fill password if need to reset only")" class="form-control">
                         </div>
-                        @if(!is_null($user->device_token))
+                        @if(!is_null($userStudentDetail->device_token))
                         <div class="form-group">
                             <label>@lang('site.notify')</label>
                             <input type="text" name="notify"
