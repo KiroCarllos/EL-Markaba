@@ -1,13 +1,13 @@
-@extends('layouts.dashboard.app')
+{{--@extends('layouts.dashboard.app')--}}
 
-@section('content')
+{{--@section('content')--}}
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>@lang('site.all_chats')</h1>
+{{--            <h1>@lang('site.all_chats')</h1>--}}
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a>
+{{--                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a>--}}
                 </li>
-                <li><a href="{{ route('dashboard.chats.index') }}"> @lang('site.all_chats')</a></li>
+{{--                <li><a href="{{ route('dashboard.chats.index') }}"> @lang('site.all_chats')</a></li>--}}
             </ol>
         </section>
         <section class="content">
@@ -27,7 +27,7 @@
                         <tr>
                             <th>@lang("site.user_image")</th>
                             <th style="overflow: hidden;">@lang('site.user_name')</th>
-                            <th style="overflow: hidden;">@lang('site.un_read_messages')</th>
+{{--                            <th style="overflow: hidden;">@lang('site.un_read_messages')</th>--}}
                             <th style="overflow: hidden;">@lang('site.actions')</th>
                         </tr>
                         </thead>
@@ -38,7 +38,7 @@
                                     <td><img src="{{ $user->image }}" style="width: 100px;" class="img-thumbnail" alt=""></td>
 
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->chats->where("status","notReaded")->count() }}</td>
+                                    {{-- <td>{{ $user->chats->where("status","notReaded")->count() }}</td>--}}
                                     <td class="d-inline-block" >
 
                                         <form style="display: inline" action="{{ route('dashboard.chats.massages') }}" method="GET">
