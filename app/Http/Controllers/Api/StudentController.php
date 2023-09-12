@@ -78,7 +78,7 @@ class StudentController extends Controller
         $userData = $request->only(["name", "mobile", "email","device_token"]);
         $userData["password"] = Hash::make($request->password);
         try {
-            DB::beginTransaction();
+            DB::connection("mysql")->beginTransaction();
             $user = User::query()->firstOrCreate([
                 "mobile" => $userData["mobile"]
             ], [
@@ -122,10 +122,10 @@ class StudentController extends Controller
                     "fcm" => $result,
                 ]);
             }
-            DB::commit();
+            DB::connection("mysql")->commit();
             return api_response(1, __("site.student created successfully wait admins for approve"));
         } catch (\Exception $exception) {
-            DB::rollBack();
+            DB::connection("mysql")->rollBack();
             return api_response(0, $exception->getMessage());
         }
     }
