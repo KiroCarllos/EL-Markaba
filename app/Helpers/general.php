@@ -222,6 +222,7 @@ if (!function_exists('send_fcm')) {
             curl_close($curl);
             if (json_decode($response) != null) {
                 $data = (array)json_decode($response);
+                dd($data,"1");
                 if ($data['failure'] == 0) {
                     return true;
                 } else {
@@ -232,6 +233,7 @@ if (!function_exists('send_fcm')) {
                 return false;
 //                dd(json_decode($response));
             }
+            dd(json_decode($response),"2");
         }
 
     }
