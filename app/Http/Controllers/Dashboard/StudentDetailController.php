@@ -163,7 +163,7 @@ class StudentDetailController extends Controller
                     "model_id" => $user->id,
                     "model_json" => $user,
                     "user_id" => $user->id,
-                    "fcm" => $request_two,
+                    "fcm" => is_null($request_two) ? false : true,
                 ]);
             }
                 DB::commit();
