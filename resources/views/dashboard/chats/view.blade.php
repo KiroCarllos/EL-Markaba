@@ -39,37 +39,18 @@
                                         </button>
                                     </div>
                                 </div>
-                                @isset($chats)
-                                    @foreach($chats as $msg)
-                                        <div class="box-body">
-                                            <div style="height: 100%" class="direct-chat-messages">
-                                                 @if($msg->to_user_id != $user_id )
-                                                        <div  class="direct-chat-msg">
-                                                            <div class="direct-chat-info clearfix">
-                                                                <span class="direct-chat-name pull-left">{{ $msg->fromUser->name }}</span>
-                                                                <span
-                                                                    class="direct-chat-timestamp pull-right">{{ $msg->sent_at }}</span>
-                                                            </div>
-                                                            <div class="direct-chat-text">
-                                                                {{ $msg->message }}
+                                <input class="form-control" id="next_url" value="{{ $next_page_url }}">
+                                <input class="form-control" id="user_id" value="{{ $user_id }}">
 
-                                                            </div>
-                                                        </div>
-                                                    @else
-                                                        <div class="direct-chat-msg right">
-                                                            <div class="direct-chat-info clearfix">
-                                                                <span  class="direct-chat-name pull-right">{{ $msg->fromUser->name }}</span>
-                                                                <span class="direct-chat-timestamp pull-left">{{ $msg->sent_at }}</span>
-                                                            </div>
-                                                            <div class="direct-chat-text">
-                                                             {{ $msg->message }}
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                            </div>
+                                <div id="chat_wrapper">
+                                <div id="chat_screen" style="overflow: auto">
+                                    <div class="box-body">
+                                        <div style="height: 100%" class="direct-chat-messages">
+
                                         </div>
-                                    @endforeach
-                                @endisset
+                                    </div>
+                                </div>
+                                </div>
                                     <div class="box-footer">
                                         <form action="" method="post">
                                             @csrf
@@ -97,3 +78,87 @@
     </div>
 
 @endsection
+@push("scripts")
+    <script>
+        // window.innerHeight
+        $("#chat_screen").css("height",window.innerHeight -500 )
+
+    </script>
+    <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var chatScreen = $('#chat_screen');
+
+            chatScreen.scroll(function () {
+                if (chatScreen.scrollTop() === 0) {
+                    // Load more data when scrolling up
+                    var s = $("#next_url").val();
+                    if ( s != ""){
+                        loadMoreMessages();
+                    }
+                }
+            });
+
+        });
+        $(".direct-chat-messages").empty()
+        loadMoreMessages();
+        function loadMoreMessages() {
+            $.ajax({
+                url: $("#next_url").val(),
+                method: 'GET',
+                dataType: 'json', // Expect JSON response
+                success: function (data) {
+
+                    console.log(data.data)
+                    if(data.data.length > 0){
+                        data.data.forEach((e)=>{
+                            if(e.direct == 'right'){
+                                $(".direct-chat-messages").prepend(getRightChat(e.name,e.sent_at,e.message));
+                            }else{
+                                $(".direct-chat-messages").prepend(getLeftChat(e.name,e.sent_at,e.message));
+                            }
+                        })
+                    }
+                    console.log()
+                    if(data.links.next == null){
+                        $("#next_url").val("");
+                    }else{
+                        $("#next_url").val(data.links.next.split("?")[0] + "?user_id="+$("#user_id").val()+"&"+data.links.next.split("?")[1]);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error loading more data:', error);
+                }
+            });
+        }
+        function getLeftChat(name,sent_at,message){
+            var html = `<div  class="direct-chat-msg" style="float: right">
+                        <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-left">${name}</span>
+                            <span
+                                class="direct-chat-timestamp pull-right">${sent_at}</span>
+                        </div>
+                        <div style="width: fit-content;" class="direct-chat-text">
+                            ${message}
+                </div>
+            </div>
+                                                        <div class="clearfix"></div>
+`;
+            return html;
+        }
+        function getRightChat(name,sent_at,message){
+            var html = `<div  class="direct-chat-msg right"  style="float: left">
+                    <div class="direct-chat-info clearfix">
+                        <span  class="direct-chat-name pull-right">${name}</span>
+                        <span class="direct-chat-timestamp pull-left">${sent_at}</span>
+                    </div>
+                    <div class="direct-chat-text" style="width: fit-content;">
+                        ${message}
+                </div>
+            </div>
+                                                        <div class="clearfix"></div>
+`;
+            return html;
+        }
+    </script>
+@endpush
