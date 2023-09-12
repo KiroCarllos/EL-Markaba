@@ -127,7 +127,7 @@ class StudentController extends Controller
             return api_response(1, __("site.student created successfully wait admins for approve"));
         } catch (\Exception $exception) {
             DB::rollBack();
-            return api_response(0, $exception);
+            return api_response(0, $exception->getMessage());
         }
     }
 
