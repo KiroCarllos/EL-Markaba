@@ -131,9 +131,7 @@ class StudentDetailController extends Controller
             DB::beginTransaction();
             $user = User::query()->whereId($id)->first();
             if (($user->status != "active" && $request->status == "active" )){
-                $recipients = [$user->device_token];
-
-                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts",$user);
+                $result = send_fcm([$user->device_token],__("site.markz_el_markaba"),__("site.your_account_activated_can_make_login_now"),"posts",$user);
                 Notification::create([
                     "type" => "posts",
                     "title" => __("site.markz_el_markaba"),

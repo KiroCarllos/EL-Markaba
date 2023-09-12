@@ -265,8 +265,7 @@ class StudentController extends Controller
              $applyTraining->update(["status" => "pending"]);
         }
         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
-            $recipients = [auth("api")->user()->device_token];
-            $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
+            $result = send_fcm([auth("api")->user()->device_token],__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
             Notification::create([
                 "type" => "pendingTraining",
                 "title" => __("site.markz_el_markaba"),
@@ -306,8 +305,8 @@ class StudentController extends Controller
                     deleteOldFiles("uploads/student/" . auth("api")->id() . "/training/".$request->training_id."/receipt_image");
                     if ($request->receipt_image) {
                         if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
-                            $recipients = [auth("api")->user()->device_token];
-                            $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
+
+                            $result = send_fcm([auth("api")->user()->device_token],__("site.markz_el_markaba"),__("site.you_has_apply_training_and_now_pending"),"pendingTraining",$training);
                             Notification::create([
                                 "type" => "pendingTraining",
                                 "title" => __("site.markz_el_markaba"),
@@ -338,8 +337,7 @@ class StudentController extends Controller
         if (!is_null($applyTraining)){
 
             if (auth("api")->user()->device_token&& !is_null(auth("api")->user()->device_token)){
-                $recipients = [auth("api")->user()->device_token];
-                $result = send_fcm($recipients,__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining",Training::find($request->training_id));
+                $result = send_fcm([auth("api")->user()->device_token],__("site.markz_el_markaba"),__("site.you_has_delete_training_successfully"),"myTraining",Training::find($request->training_id));
                 Notification::create([
                     "type" => "myTraining",
                     "title" => __("site.markz_el_markaba"),

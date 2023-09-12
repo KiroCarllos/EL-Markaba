@@ -66,7 +66,6 @@ class ChatController extends Controller
 
             $result = false;
             if(!is_null($user->device_token)){
-                $recipients = [$user->device_token];
                 $da["id"] = $chat->id;
                 $da["direct"] = "left";
                 $da["name"] = "المركبة";
@@ -74,7 +73,7 @@ class ChatController extends Controller
                 $da["message"] = $request->message;
                 $da["status"] = "notReaded";
                 $da["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans();
-                $result = send_fcm($recipients,"مركز المركبة",$request->message,"receiveMessage",$da);
+                $result = send_fcm([$user->device_token],"مركز المركبة",$request->message,"receiveMessage",$da);
             }
             Notification::create([
                 "type" => "receiveMessage",
