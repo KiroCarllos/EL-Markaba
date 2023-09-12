@@ -39,8 +39,8 @@
                                         </button>
                                     </div>
                                 </div>
-                                <input class="form-control" id="next_url" value="{{ $next_page_url }}">
-                                <input class="form-control" id="user_id" value="{{ $user_id }}">
+                                <input type="hidden" class="form-control" id="next_url" value="{{ $next_page_url }}">
+                                <input type="hidden" class="form-control" id="user_id" value="{{ $user_id }}">
 
                                 <div id="chat_wrapper">
                                 <div id="chat_screen" style="overflow: auto">
@@ -52,15 +52,15 @@
                                 </div>
                                 </div>
                                     <div class="box-footer">
-                                        <form action="" method="post">
+                                        <form id="form_chat" method="POST" action="{{ route("dashboard.chats.sendMessage") }}">
                                             @csrf
-                                            <div class="input-group {{ $errors->has("text") ? ' has-error' : '' }}">
-                                                <input type="hidden" name="complain_id" value="">
-                                                <input class="form-control {{ $errors->has("text") ? ' has-error' : '' }}"
-                                                       style="height: 42px;" type="text" name="text"
+                                            <div id="message-validation" class="input-group  ">
+                                                <input type="hidden" name="to_user_id" value="{{ $user_id }}">
+                                                <input id="message" class="form-control "
+                                                       style="height: 42px;" type="text" name="message"
                                                        placeholder="Type Message ...">
                                                 <span class="input-group-btn">
-                                            <button type="submit" class="btn btn-primary btn-flat">Send</button>
+                                            <button id="send_message" type="submit" class="btn btn-primary btn-flat">Send</button>
                                           </span>
                                             </div>
                                         </form>
@@ -84,6 +84,8 @@
         $("#chat_screen").css("height",window.innerHeight -500 )
 
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
     <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -146,10 +148,11 @@
 `;
             return html;
         }
+        // admins
         function getRightChat(name,sent_at,message){
             var html = `<div  class="direct-chat-msg right"  style="float: left">
                     <div class="direct-chat-info clearfix">
-                        <span  class="direct-chat-name pull-right">${name}</span>
+                        <span  class="direct-chat-name pull-right">El Markaba</span>
                         <span class="direct-chat-timestamp pull-left">${sent_at}</span>
                     </div>
                     <div class="direct-chat-text" style="width: fit-content;">
@@ -160,5 +163,36 @@
 `;
             return html;
         }
+        $("#message-validation").on("keyup",function (){
+            if($("#message").val() == ""){
+                $("#message-validation").addClass("has-error")
+            }else{
+                $("#message-validation").removeClass("has-error")
+
+            }
+        });
+
+
+        $('#form_chat').ajaxForm({
+            beforeSubmit: function () {
+                if($("#message").val() == ""){
+                    $("#message-validation").addClass("has-error")
+                }else{
+                    $("#message-validation").removeClass("has-error")
+                }
+            },
+            success: function (response) {
+                $(".direct-chat-messages").append(getRightChat(response.data.name,response.data.sent_at,response.data.message));
+                $("#message").val("");
+            },
+            error: function (response) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response,
+                });
+                return false;
+            }
+        });
     </script>
 @endpush

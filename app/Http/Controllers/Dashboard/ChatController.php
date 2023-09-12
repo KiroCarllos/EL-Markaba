@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ChatResource;
 use App\Models\ChatMessage;
+use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,6 +38,58 @@ class ChatController extends Controller
         }
         return view("dashboard.chats.view",compact("chats","user_id","next_page_url"));
 
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $request->validate([
+            "message" => ["required", "string", "max:191"],
+        ]);
+        try {
+            $admin = User::where("role" ,"super_admin")->where("status","active")->first();
+            $user = User::where("id",$request->to_user_id)->first();
+            $chat = ChatMessage::query()->create([
+                "message" => $request->message,
+                "from_user_id" =>$admin->id ,
+                "to_user_id" => $request->to_user_id,
+                "created_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+                "updated_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+            ]);
+
+            $data["id"] = $chat->id;
+            $data["direct"] = "right";
+            $data["name"] = "المركبة";
+            $data["image"] = $admin->image;
+            $data["message"] = $request->message;
+            $data["status"] = "notReaded";
+            $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans() ;
+
+            $result = false;
+            if(!is_null($user->device_token)){
+                $recipients = [$user->device_token];
+                $da["id"] = $chat->id;
+                $da["direct"] = "left";
+                $da["name"] = "المركبة";
+                $da["image"] = "http://el-markaba.kirellos.com/uploads/student/28/profile/student_profile_image_1690881214.";
+                $da["message"] = $request->message;
+                $da["status"] = "notReaded";
+                $da["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans();
+                $result = send_fcm($recipients,"مركز المركبة",$request->message,"receiveMessage",$da);
+            }
+            Notification::create([
+                "type" => "receiveMessage",
+                "title" => __("site.markz_el_markaba"),
+                "body" => $request->message,
+                "read" => "0",
+                "model_id" => $user->id,
+                "model_json" => $user,
+                "user_id" => $user->id,
+                "fcm" => $result,
+            ]);
+            return api_response(1,__("site.message sent successfully"),$data);
+        }catch (\Exception $exception){
+            return api_response(0,$exception->getMessage(),"");
+        }
     }
 
 }//end of controller
