@@ -226,13 +226,10 @@ if (!function_exists('send_fcm')) {
                     return true;
                 } else {
                     return false;
-//                    dd($data);
                 }
             } else {
                 return false;
-//                dd(json_decode($response));
             }
-            dd(json_decode($response),"2");
         }else{
             return false;
         }
