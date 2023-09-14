@@ -65,14 +65,14 @@
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>{{ \App\Models\User::where("role","super_admin")->where("status","active")->count() }}</h3>
+                            <h3>{{ \App\Models\Job::count() }}</h3>
 
-                            <p>@lang('site.users')</p>
+                            <p>@lang('site.jobs')</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-users"></i>
                         </div>
-                        <a href="{{ route('dashboard.users.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
