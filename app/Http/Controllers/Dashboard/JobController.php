@@ -272,8 +272,6 @@ class JobController extends Controller
                     "fcm" => $result,
                 ]);
             }
-
-
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
             return redirect()->route('dashboard.jobs.applications',$jobApplication->job_id);

@@ -73,8 +73,11 @@ return[
     'notify' => 'Notification',
     'applications' => 'Applications',
     'message' => 'Message',
+    'enable_edit_profile' => 'Enable Edit Profile For Student ?',
 
 
+    'you_now_able_to_edit_your_profile_data' => 'Your request to modify your profile has been accepted. You can go to settings and edit now',
+    'you_now_not_able_to_edit_your_profile_data' => 'Your data has been successfully updated. You can now apply for the training or job that suits you',
 
 
 

@@ -38,6 +38,8 @@ return [
     'you_has_apply_training_and_now_pending' => 'لقد تم استلام طلبك بنجاح وهو الان قيد المراجعه',
     'you_has_delete_training_successfully' => 'لقد تم حذف التدريب بنجاح',
     'markz_el_markaba' => 'مركز المركبة للارشاء الوظيفي',
+    'you_now_able_to_edit_your_profile_data' => 'تم قبول طلب تعديل ملفك الشخضي يمكنك الذهاب للاعدادات والتعديل الان',
+    'you_now_not_able_to_edit_your_profile_data' => 'لقد تم تحديث بياناتك بنجاح بمكنك الان التقديم علي التدريب او الوظيفة التي تناسبك',
     'you_has_add_training_successfully' => 'لقد تم اضافه تدريب جديد',
     'you_has_add_post_successfully' => 'لقد تم اضافه منشور جديد',
     'your_account_activated_can_make_login_now' => 'لقد تم تفعيل حسابك، يمكنك تسجيل الدخول الآن',
@@ -48,6 +50,7 @@ return [
     'message' => 'رسالة',
     'fill notify if need to send notification only' => 'ارسل اشعار اذا كنت تريد الارسال',
     'fill message if need to send notification only' => 'ارسل رسالة اذا كنت تريد الارسال',
+    'enable_edit_profile' => 'تفعيل التعديل للطالب ؟',
 
     'student' => 'طالب',
     'sliders' => 'سلايدر الاعلانات',

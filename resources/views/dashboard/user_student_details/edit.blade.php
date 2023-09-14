@@ -185,6 +185,10 @@
                             <input type="password" name="password"
                                    placeholder="@lang("site.fill password if need to reset only")" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>@lang('site.enable_edit_profile')</label> &nbsp;&nbsp; <input type="checkbox" name="enable_update" class="flat-red" {{$userStudentDetail->student_details->enable_update ?"checked":"" }} style="position: relative; opacity: 1;">
+                        </div>
+
                         @if(!is_null($userStudentDetail->device_token))
                         <div class="form-group">
                             <label>@lang('site.notify')</label>
@@ -192,6 +196,10 @@
                                    placeholder="@lang("site.fill notify if need to send notification only")" class="form-control">
                         </div>
                         @endif
+                        <div class="form-group">
+                            <label>@lang('site.message')</label>
+                            <input type="text" name="message" placeholder="@lang("site.fill message if need to send notification only")" class="form-control">
+                        </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')

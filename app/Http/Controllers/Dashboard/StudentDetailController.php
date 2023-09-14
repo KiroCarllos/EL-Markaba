@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\GeneralController;
+use App\Models\ChatMessage;
 use App\Models\Notification;
 use App\Models\University;
 use App\Models\User;
 use App\Models\StudentDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -149,7 +151,34 @@ class StudentDetailController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
             $studentDetails = StudentDetail::whereUserId($id)->first();
-            $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at", "prior_experiences", "courses", "address"]);
+            $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at","prior_experiences", "courses", "address"]);
+            $studentData["enable_update"] = $request->has("enable_update") && !is_null($request->enable_update) && $request->enable_update == "on"? 1:0;
+            if (($request->has("enable_update") && $request->enable_update == "on") && !$studentDetails->enable_update){
+                $result = send_fcm([$user->device_token],__("site.markz_el_markaba"),__("site.you_now_able_to_edit_your_profile_data"),"dashboard",$user);
+                Notification::create([
+                    "type" => "dashboard",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_now_able_to_edit_your_profile_data"),
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                    "fcm" => $result,
+                ]);
+            }
+            if ($studentDetails->enable_update && !($request->has("enable_update"))){
+                $result = send_fcm([$user->device_token],__("site.markz_el_markaba"),__("site.you_now_not_able_to_edit_your_profile_data"),"dashboard",$user);
+                Notification::create([
+                    "type" => "dashboard",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => __("site.you_now_not_able_to_edit_your_profile_data"),
+                    "read" => "0",
+                    "model_id" => $user->id,
+                    "model_json" => $user,
+                    "user_id" => $user->id,
+                    "fcm" => $result,
+                ]);
+            }
             $studentDetails->update($studentData);
             if ($request->has("notify") && !is_null($request->notify)) {
                 $result = send_fcm([$user->device_token],__("site.markz_el_markaba"),$request->notify,"posts",$user);
@@ -160,6 +189,36 @@ class StudentDetailController extends Controller
                     "read" => "0",
                     "model_id" => $user->id,
                     "model_json" => $user,
+                    "user_id" => $user->id,
+                    "fcm" => $result,
+                ]);
+            }
+            if ($request->has("message") && !is_null($request->message)) {
+                $admin = User::where("role" ,"super_admin")->where("status","active")->first();
+                $chat = ChatMessage::query()->create([
+                    "message" => $request->message,
+                    "from_user_id" =>$admin->id ,
+                    "to_user_id" => $user->id,
+                    "created_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+                    "updated_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+                ]);
+
+                $data["id"] = $chat->id;
+                $data["direct"] = "left";
+                $data["name"] = "Super Admin";
+                $data["image"] = "http://el-markaba.kirellos.com/uploads/student/28/profile/student_profile_image_1690881214.";
+                $data["message"] = $request->message;
+                $data["status"] = "notReaded";
+                $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans();
+
+                $result = send_fcm([$user->device_token],__("site.markz_el_markaba"),$request->message,"receiveMessage",$data);
+                Notification::create([
+                    "type" => "receiveMessage",
+                    "title" => __("site.markz_el_markaba"),
+                    "body" => $request->message,
+                    "read" => "0",
+                    "model_id" => $chat->id,
+                    "model_json" => $chat,
                     "user_id" => $user->id,
                     "fcm" => $result,
                 ]);
