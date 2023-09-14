@@ -252,7 +252,15 @@ class JobController extends Controller
                     "updated_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
                 ]);
 
-                $result = send_fcm([$jobApplication->user->device_token],__("site.markz_el_markaba"),$request->message,"receiveMessage",$job);
+                $data["id"] = $chat->id;
+                $data["direct"] = "left";
+                $data["name"] = "Super Admin";
+                $data["image"] = "http://el-markaba.kirellos.com/uploads/student/28/profile/student_profile_image_1690881214.";
+                $data["message"] = $request->message;
+                $data["status"] = "notReaded";
+                $data["sent_at"] =Carbon::now()->timezone('Africa/Cairo')->diffForHumans();
+
+                $result = send_fcm([$jobApplication->user->device_token],__("site.markz_el_markaba"),$request->message,"receiveMessage",$data);
                 Notification::create([
                     "type" => "receiveMessage",
                     "title" => __("site.markz_el_markaba"),
