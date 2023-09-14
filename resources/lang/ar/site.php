@@ -45,7 +45,9 @@ return [
 
     'no' => 'لا',
     'students' => 'الطلاب',
+    'message' => 'رسالة',
     'fill notify if need to send notification only' => 'ارسل اشعار اذا كنت تريد الارسال',
+    'fill message if need to send notification only' => 'ارسل رسالة اذا كنت تريد الارسال',
 
     'student' => 'طالب',
     'sliders' => 'سلايدر الاعلانات',

@@ -69,8 +69,10 @@ return[
     'your_account_activated_can_make_login_now' => 'Your Account Has Been Activated You Can Make Login Now',
     'you_has_add_training_successfully' => 'New training has been added',
     'fill notify if need to send notification only' => 'fill notify if need to send notification only',
+    'fill message if need to send notification only' => 'fill message if need to send notification only',
     'notify' => 'Notification',
     'applications' => 'Applications',
+    'message' => 'Message',
 
 
 

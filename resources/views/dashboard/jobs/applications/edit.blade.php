@@ -164,6 +164,11 @@
                                    placeholder="@lang("site.fill notify if need to send notification only")" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label>@lang('site.message')</label>
+                            <input type="text" name="message"
+                                   placeholder="@lang("site.fill message if need to send notification only")" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')</button>
                         </div>
                     </form><!-- end of form -->
