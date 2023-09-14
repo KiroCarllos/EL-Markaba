@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChatMessage;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\Notification;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -241,14 +243,23 @@ class JobController extends Controller
                 ]);
             }
             else if ($request->has("message") && !is_null($request->message)) {
-                $result = send_fcm([$jobApplication->user->device_token],__("site.markz_el_markaba"),$request->message,"posts",$job);
+                $admin = User::where("role" ,"super_admin")->where("status","active")->first();
+                $chat = ChatMessage::query()->create([
+                    "message" => $request->message,
+                    "from_user_id" =>$admin->id ,
+                    "to_user_id" => $jobApplication->user->id,
+                    "created_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+                    "updated_at" => Carbon::now()->timezone('Africa/Cairo')->toDateTimeString(),
+                ]);
+
+                $result = send_fcm([$jobApplication->user->device_token],__("site.markz_el_markaba"),$request->message,"receiveMessage",$job);
                 Notification::create([
                     "type" => "receiveMessage",
                     "title" => __("site.markz_el_markaba"),
                     "body" => $request->message,
                     "read" => "0",
-                    "model_id" => $jobApplication->user->id,
-                    "model_json" => $jobApplication->user,
+                    "model_id" => $chat->id,
+                    "model_json" => $chat,
                     "user_id" => $jobApplication->user->id,
                     "fcm" => $result,
                 ]);
