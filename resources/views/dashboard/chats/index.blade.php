@@ -1,13 +1,12 @@
-{{--@extends('layouts.dashboard.app')--}}
+@extends('layouts.dashboard.app')
 
-{{--@section('content')--}}
+@section('content')
     <div class="content-wrapper">
         <section class="content-header">
-{{--            <h1>@lang('site.all_chats')</h1>--}}
             <ol class="breadcrumb">
-{{--                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a>--}}
+                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a>
                 </li>
-{{--                <li><a href="{{ route('dashboard.chats.index') }}"> @lang('site.all_chats')</a></li>--}}
+                <li><a href="{{ route('dashboard.chats.index') }}"> @lang('site.all_chats')</a></li>
             </ol>
         </section>
         <section class="content">
