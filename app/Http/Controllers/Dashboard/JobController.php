@@ -90,7 +90,7 @@ class JobController extends Controller
 
         $request_data = $request->only(['title_ar','job_type','title_en','user_id','status', 'description_en','description_ar', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
         if (($job->status == "pending"  && $request->status == "active") ||($job->status == "pending" && $request->status == "active") ){
-            $recipients = User::where("role","student")->whereNotNull("device_token")->chunck(50,function ($data) use ($job){
+            $recipients = User::where("role","student")->whereNotNull("device_token")->chunk(50,function ($data) use ($job){
                 dispatch(new AddNewJob($data,$job));
             });
         }
