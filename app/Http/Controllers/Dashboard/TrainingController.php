@@ -19,7 +19,7 @@ class TrainingController extends Controller
 {
 
     public function index(){
-        $trainings = Training::whereIn("status",["active","disActive"])->withCount("applications")->paginate(50);
+        $trainings = Training::whereIn("status",["active","disActive"])->withCount("applications")->latest()->paginate(50);
         return view('dashboard.trainings.index', compact('trainings'));
     }
 
