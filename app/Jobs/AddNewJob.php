@@ -13,11 +13,6 @@ class AddNewJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public $users;
     public $jobModel;
     public function __construct($data,$job)
@@ -27,11 +22,6 @@ class AddNewJob implements ShouldQueue
 
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
         dd($this->users,$this->jobModel);
