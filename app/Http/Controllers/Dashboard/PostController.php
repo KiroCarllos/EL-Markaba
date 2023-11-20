@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AddNewPost;
 use App\Models\Notification;
 use App\Models\Post;
 use App\Models\User;
@@ -16,7 +17,7 @@ use Illuminate\Validation\Rule;
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::whereIn("status",["active","disActive"])->withCount("replies")->paginate(50);
+        $posts = Post::whereIn("status",["active","disActive"])->withCount("replies")->latest()->paginate(50);
         return view('dashboard.posts.index', compact('posts'));
     }
 
@@ -47,23 +48,9 @@ class PostController extends Controller
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
-
-
-            $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
-            foreach ($recipients as $recipient){
-                $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_post_successfully"),"posts",$post);
-                Notification::create([
-                    "type" => "newAccount",
-                    "title" => __("site.markz_el_markaba"),
-                    "body" => __("site.you_has_add_post_successfully"),
-                    "read" => "0",
-                    "model_id" => $post->id,
-                    "model_json" => $post,
-                    "user_id" => $recipient->id,
-                    "fcm" => $result,
-                ]);
-
-            }
+            $recipients = User::where("role","student")->whereNotNull("device_token")->chunk(50,function ($data) use ($post){
+                dispatch(new AddNewPost($data,$post));
+            });
             return redirect()->route('dashboard.posts.index');
         }catch (\Exception $exception){
             DB::rollBack();
