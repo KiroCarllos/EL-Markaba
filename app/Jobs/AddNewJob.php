@@ -25,14 +25,14 @@ class AddNewJob implements ShouldQueue
     public function handle()
     {
         foreach ($this->users as $recipient){
-            $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$this->job);
+            $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$this->jobModel);
             Notification::create([
                 "type" => "newJob",
                 "title" => __("site.markz_el_markaba"),
                 "body" => __("site.new_job_added"),
                 "read" => "0",
-                "model_id" => $this->job->id,
-                "model_json" => $this->job,
+                "model_id" => $this->jobModel->id,
+                "model_json" => $this->jobModel,
                 "user_id" => $recipient->id,
                 "fcm" => $result,
             ]);
