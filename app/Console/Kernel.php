@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command("queue:work")->everyThreeMinutes();
+        $schedule->command("queue:work")->everyFiveMinutes();
         $schedule->command("queue:restart")->everyTenMinutes();
         // $schedule->command('inspire')
         //          ->hourly();
