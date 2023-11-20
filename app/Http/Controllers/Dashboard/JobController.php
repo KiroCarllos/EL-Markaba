@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AddNewJob;
 use App\Models\ChatMessage;
 use App\Models\Job;
 use App\Models\JobApplication;
@@ -89,20 +90,9 @@ class JobController extends Controller
 
         $request_data = $request->only(['title_ar','job_type','title_en','user_id','status', 'description_en','description_ar', 'work_type',"work_hours", 'contact_email', 'address', 'location', 'expected_salary_from','expected_salary_to']);
         if (($job->status == "pending"  && $request->status == "active") ||($job->status == "pending" && $request->status == "active") ){
-            $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
-            foreach ($recipients as $recipient){
-                $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$job);
-                Notification::create([
-                    "type" => "newJob",
-                    "title" => __("site.markz_el_markaba"),
-                    "body" => __("site.new_job_added"),
-                    "read" => "0",
-                    "model_id" => $job->id,
-                    "model_json" => $job,
-                    "user_id" => $job->id,
-                    "fcm" => $result,
-                ]);
-            }
+            $recipients = User::where("role","student")->whereNotNull("device_token")->chunck(50,function ($data) use ($job){
+                dispatch(new AddNewJob($data,$job));
+            });
         }
         $job->update($request_data);
         session()->flash('success', __('site.updated_successfully'));
