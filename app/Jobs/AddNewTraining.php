@@ -9,17 +9,16 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class AddNewPost implements ShouldQueue
+class AddNewTraining implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     public $users;
-    public $postModel;
+    public $trainingModel;
 
-    public function __construct($data,$post)
+    public function __construct($data,$training)
     {
         $this->users = $data;
-        $this->postModel = $post;
+        $this->trainingModel = $training;
 
     }
 
@@ -31,18 +30,17 @@ class AddNewPost implements ShouldQueue
     public function handle()
     {
         foreach ($this->users as $recipient){
-            $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_post_successfully"),"posts",$this->postModel);
+            $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_training_successfully"),"trainings",$this->trainingModel);
             Notification::create([
                 "type" => "newAccount",
                 "title" => __("site.markz_el_markaba"),
-                "body" => __("site.you_has_add_post_successfully"),
+                "body" => __("site.you_has_add_training_successfully"),
                 "read" => "0",
-                "model_id" => $this->postModel->id,
-                "model_json" => $this->postModel,
+                "model_id" => $this->trainingModel->id,
+                "model_json" => $this->trainingModel,
                 "user_id" => $recipient->id,
                 "fcm" => $result,
             ]);
         }
     }
 }
-

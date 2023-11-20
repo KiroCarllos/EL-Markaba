@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AddNewTraining;
 use App\Models\Notification;
 use App\Models\Training;
 use App\Models\TrainingApplication;
@@ -50,21 +51,9 @@ class TrainingController extends Controller
             }
             DB::commit();
             session()->flash('success', __('site.updated_successfully'));
-
-            $recipients = User::where("role","student")->whereNotNull("device_token")->get();;
-            foreach ($recipients as $recipient){
-                $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.you_has_add_training_successfully"),"trainings",$training);
-                Notification::create([
-                    "type" => "newAccount",
-                    "title" => __("site.markz_el_markaba"),
-                    "body" => __("site.you_has_add_post_successfully"),
-                    "read" => "0",
-                    "model_id" => $training->id,
-                    "model_json" => $training,
-                    "user_id" => $recipient->id,
-                    "fcm" => $result,
-                ]);
-            }
+            $recipients = User::where("role","student")->whereNotNull("device_token")->chunk(50,function ($data) use ($training) {
+                dispatch(new AddNewTraining($data,$training));
+            });
             return redirect()->route('dashboard.trainings.index');
         }catch (\Exception $exception){
             DB::rollBack();
@@ -191,7 +180,6 @@ class TrainingController extends Controller
                     "fcm" => $result,
                 ]);
             }else  if ($request->has("notify") && !is_null($request->notify)) {
-
                 $result = send_fcm([$trainingApplication->user->device_token],__("site.markz_el_markaba"),$request->notify,"posts",$training);
                 Notification::create([
                     "type" => "posts",
