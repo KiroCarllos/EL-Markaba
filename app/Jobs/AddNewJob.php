@@ -42,8 +42,7 @@ class AddNewJob implements ShouldQueue
                 "read" => "0",
                 "model_id" => $this->job->id,
                 "model_json" => $this->job,
-                "user_id" => $this->job->id,
-//                "user_id" => 31,
+                "user_id" => $recipient->id,
                 "fcm" => $result,
             ]);
         }
