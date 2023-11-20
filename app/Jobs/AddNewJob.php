@@ -18,12 +18,12 @@ class AddNewJob implements ShouldQueue
      *
      * @return void
      */
-    public $data;
-    public $job;
+    public $users;
+    public $jobModel;
     public function __construct($data,$job)
     {
-        $this->data = $data;
-        $this->job = $job;
+        $this->users = $data;
+        $this->jobModel = $job;
 
     }
 
@@ -34,8 +34,8 @@ class AddNewJob implements ShouldQueue
      */
     public function handle()
     {
-        dd($this->data);
-        foreach ($this->data as $recipient){
+        dd($this->users,$this->jobModel);
+        foreach ($this->users as $recipient){
             $result = send_fcm([$recipient->device_token],__("site.markz_el_markaba"),__("site.new_job_added"),"jobs",$this->job);
             Notification::create([
                 "type" => "newJob",
