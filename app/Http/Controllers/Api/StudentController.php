@@ -434,7 +434,10 @@ class StudentController extends Controller
         ]);
         $notification = Notification::find($request->notification_id);
         $notification->update(["read" => $request->read]);
-        return api_response(1,__('site.updated_successfully'));
+
+        $notificationCount =  Notification::where("user_id",auth("api")->id())->where("read","0")->count();
+
+        return api_response(1,__('site.updated_successfully'),$notificationCount);
     }
 
 
