@@ -231,6 +231,10 @@ class StudentController extends Controller
 
     public function getTrainings(){
         $trainings = Training::active()->withCount("applications")->latest()->paginate(6);
+        $notificationCount =  Notification::where("user_id",auth("api")->id())->where("read","0")->count();
+        foreach ($trainings as $training){
+            $training->setAttribute("notification_counts",$notificationCount);
+        }
 //        foreach ($trainings as $training){
 //            $mytraining_ids = TrainingApplication::where("training_id",$training->id)->pluck("user_id")->toArray();
 //            // remove status
