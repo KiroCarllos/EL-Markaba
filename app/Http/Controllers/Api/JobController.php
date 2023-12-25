@@ -14,7 +14,7 @@ use Illuminate\Validation\Rule;
 class JobController extends Controller
 {
     public function getAvailJobs(){
-        $jobs = Job::where("status","active")->with("company")->latest()->paginate(50);
+        $jobs = Job::where("status","active")->with("company")->latest()->paginate(15);
         return api_response(1,"",$jobs);
     }
     public function getJobDetails(Request $request){
