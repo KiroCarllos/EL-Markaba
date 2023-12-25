@@ -177,7 +177,7 @@ class CompanyController extends Controller
 
     public function updateJob(Request $request){
         $request->validate([
-            'job_id' => ['required',Rule::exists("jobs","id")->where("user_id",auth("api")->id())],
+            'job_id' => ['required',Rule::exists("job_tables","id")->where("user_id",auth("api")->id())],
             'title_en' => 'nullable',
             'title_ar' => 'nullable',
             'description_en' => 'nullable',
@@ -216,7 +216,7 @@ class CompanyController extends Controller
     }
     public function deleteJob(Request $request){
         $request->validate([
-           "job_id"=> ["required","numeric",Rule::exists("jobs","id")],
+           "job_id"=> ["required","numeric",Rule::exists("job_tables","id")],
            "status"=> "required|in:enough,deleted"
         ]);
         $job = Job::whereId($request->job_id)->whereUserId(auth("api")->id())->first();
@@ -230,7 +230,7 @@ class CompanyController extends Controller
     }
     public function getJobApplications(Request $request){
         $request->validate([
-            "job_id"=> ["required","numeric",Rule::exists("jobs","id")->where("user_id",auth("api")->id())],
+            "job_id"=> ["required","numeric",Rule::exists("job_tables","id")->where("user_id",auth("api")->id())],
         ]);
         $job = Job::find($request->job_id);
         if ($job->status == "enough"){

@@ -398,7 +398,7 @@ class StudentController extends Controller
     }
     public function cancelAppliedJob(Request $request){
         $request->validate([
-            "job_id" => ["required",Rule::exists("jobs","id")],
+            "job_id" => ["required",Rule::exists("job_tables","id")],
         ]);
         $applyJob = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
         if (is_null($applyJob)){
