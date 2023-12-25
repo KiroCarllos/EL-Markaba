@@ -362,7 +362,7 @@ class StudentController extends Controller
 
     public function applyJob(Request $request){
         $request->validate([
-            "job_id" => ["required",Rule::exists("jobs","id")],
+            "job_id" => ["required",Rule::exists("job_tables","id")],
         ]);
         $job = Job::find($request->job_id);
         $jobApplication = JobApplication::where("job_id",$request->job_id)->where("user_id",auth("api")->id())->first();
