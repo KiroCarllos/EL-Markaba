@@ -378,6 +378,7 @@ class StudentController extends Controller
             $applyJob = JobApplication::query()->firstOrCreate([
                 "job_id" => $request->job_id,
                 "user_id" => auth("api")->id(),
+                "status" => "inProgress",
             ]);
             return api_response(1,__("site.Applied Job Successfully"));
         }else{
