@@ -231,7 +231,7 @@ class CompanyController extends Controller
     }
     public function getJobApplications(Request $request){
         $request->validate([
-            "job_id"=> ["required","numeric",Rule::exists("job_tables","id")->where("user_id",auth("api")->id())],
+            "job_id"=> ["required","numeric"],
         ]);
         $job = Job::find($request->job_id);
         if ($job->status == "enough"){
