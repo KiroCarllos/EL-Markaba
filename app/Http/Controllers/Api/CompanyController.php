@@ -247,7 +247,11 @@ class CompanyController extends Controller
                 }
             ])->paginate(50);
         }else{
-            $jobApplications =[];
+            $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confidfsdfsdfsdfsdfrmed"])->with([
+                "user" => function ($query) {
+                    $query->with("student_details");
+                }
+            ])->paginate(50);
         }
         return api_response(1,"",$jobApplications);
     }
