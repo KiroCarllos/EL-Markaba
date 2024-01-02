@@ -239,24 +239,24 @@ class CompanyController extends Controller
                 "user" => function ($query) {
                     $query->with("student_details");
                 }
-            ])->paginate(50);
+            ])->paginate(15);
         }elseif($job->status == "active"){
             $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confirmed",'notConfirmed',"inProgress"])->with([
                 "user" => function ($query) {
                     $query->with("student_details");
                 }
-            ])->paginate(50);
+            ])->paginate(15);
         }else{
             $jobApplications = JobApplication::where("job_id",$request->job_id)->whereIn("status",["confidfsdfsdfsdfsdfrmed"])->with([
                 "user" => function ($query) {
                     $query->with("student_details");
                 }
-            ])->paginate(50);
+            ])->paginate(15);
         }
         return api_response(1,"",$jobApplications);
     }
     public function notifications(){
-        $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(50);
+        $notifications = Notification::where("user_id",auth("api")->id())->latest()->paginate(15);
         return api_response(1,"",$notifications);
     }
     public function updateApplicationStatus(Request $request){
