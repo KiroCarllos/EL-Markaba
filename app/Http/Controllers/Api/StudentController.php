@@ -375,7 +375,7 @@ class StudentController extends Controller
             }
         }
         if ($job->status == "active"){
-            $applyJob = JobApplication::query()->firstOrCreate([
+            $applyJob = JobApplication::query()->updateOrCreate([
                 "job_id" => $request->job_id,
                 "user_id" => auth("api")->id(),
                 "status" => "inProgress",
