@@ -14,11 +14,12 @@ use Illuminate\Http\Request;
 class ChatController extends Controller
 {
     public function index(){
-        $chat_from_user_ids = ChatMessage::pluck("from_user_id")->toArray();
-        $chat_to_user_ids = ChatMessage::pluck("to_user_id")->toArray();
-        $chat_ids = array_unique(array_merge($chat_from_user_ids,$chat_to_user_ids));
-        $users = User::whereIn("id",$chat_ids)->where("role","!=","super_admin")->paginate(50);
-        return view("dashboard.chats.index",compact("users"));
+        $chats = ChatMessage::whereIn("from_user_id", function ($query) {
+            $query->select("id")
+                ->from("users")
+                ->where("role", "!=", "super_admin");
+        })->latest()->paginate(50);
+        return view("dashboard.chats.index",compact("chats"));
     }
     public function getMassages(Request $request){
         Carbon::setLocale(app()->getLocale());

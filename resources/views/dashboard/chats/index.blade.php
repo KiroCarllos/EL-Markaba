@@ -33,32 +33,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @isset($users)
-                            @foreach($users as $key => $user)
+                        @isset($chats)
+                            @foreach($chats as $key => $chat)
                                 <tr>
-                                    <td><img src="{{ $user->image }}" style="width: 100px;" class="img-thumbnail" alt=""></td>
+                                    <td><img src="{{ $chat->fromUser->image }}" style="width: 100px;" class="img-thumbnail" alt=""></td>
                                     @php
-                                        $countUnReadMessages = App\Models\ChatMessage::where("from_user_id", $user->id )->where("status", "notReaded")
+                                        $countUnReadMessages = App\Models\ChatMessage::where("from_user_id", $chat->fromUser->id )->where("status", "notReaded")
                                                 ->count();
                                     @endphp
                                     @if($countUnReadMessages > 0)
-                                        <td>{{ $user->name }}      <span class="label label-danger">{{ $countUnReadMessages }}</span> </td>
+                                        <td>{{ $chat->fromUser->name }}      <span class="label label-danger">{{ $countUnReadMessages }}</span> </td>
 
                                     @else
-                                        <td>{{ $user->name }} </td>
+                                        <td>{{ $chat->fromUser->name }} </td>
                                     @endif
 
                                     @php
-                                        $lastMessage = App\Models\ChatMessage::where("from_user_id", $user->id )->latest()
+                                        $lastMessage = App\Models\ChatMessage::where("from_user_id", $chat->fromUser->id )->latest()
                                           ->first();
                                     @endphp
                                     <td>{{!is_null($lastMessage) ?  Carbon\Carbon::parse($lastMessage->created_at)->diffForHumans():'' }} </td>
 
-                                    {{-- <td>{{ $user->chats->where("status","notReaded")->count() }}</td>--}}
+                                    {{-- <td>{{ $chat->fromUser->chats->where("status","notReaded")->count() }}</td>--}}
                                     <td class="d-inline-block" >
 
                                         <form style="display: inline" action="{{ route('dashboard.chats.massages') }}" method="GET">
-                                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $chat->fromUser->id }}">
                                             <button type="submit" class="tooltips btn btn-primary" >
                                                 <i class="fa fa-send"></i>
                                             </button>
@@ -69,7 +69,7 @@
 
                                 </tr>
                                 {{--                                Modal--}}
-                                <div class="modal fade" id="{{$user->id}}" page="dialog" aria-labelledby="confirmDeleteLabel"
+                                <div class="modal fade" id="{{$chat->fromUser->id}}" page="dialog" aria-labelledby="confirmDeleteLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -96,7 +96,7 @@
                         @endisset
                         </tbody>
                     </table>
-                    {{ $users->appends(request()->query())->links() }}
+                    {{ $chats->appends(request()->query())->links() }}
                 </div>
             </div>
         </section>
