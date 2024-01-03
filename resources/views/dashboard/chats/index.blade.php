@@ -3,6 +3,7 @@
 @section('content')
     <div class="content-wrapper">
         <section class="content-header">
+            <h1> @lang('site.chats')</h1>
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a>
                 </li>
@@ -11,21 +12,22 @@
         </section>
         <section class="content">
             <div class="box">
-                <div class="box-header">
-                    <div class="ibox-title">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">@lang('site.chats')</h3>
-                        </div>
-                        <div class="ibox-tools">
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="box-header">--}}
+{{--                    <div class="ibox-title">--}}
+{{--                        <div class="box-header with-border">--}}
+{{--                            <h3 class="box-title">@lang('site.chats')</h3>--}}
+{{--                        </div>--}}
+{{--                        <div class="ibox-tools">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="box-body">
                     <table style="table-layout:fixed" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>@lang("site.user_image")</th>
                             <th style="overflow: hidden;">@lang('site.user_name')</th>
+                            <th style="overflow: hidden;">@lang('site.created_from')</th>
 {{--                            <th style="overflow: hidden;">@lang('site.un_read_messages')</th>--}}
                             <th style="overflow: hidden;">@lang('site.actions')</th>
                         </tr>
@@ -35,8 +37,23 @@
                             @foreach($users as $key => $user)
                                 <tr>
                                     <td><img src="{{ $user->image }}" style="width: 100px;" class="img-thumbnail" alt=""></td>
+                                    @php
+                                        $countUnReadMessages = App\Models\ChatMessage::where("from_user_id", $user->id )->where("status", "notReaded")
+                                                ->count();
+                                    @endphp
+                                    @if($countUnReadMessages > 0)
+                                        <td>{{ $user->name }}      <span class="label label-danger">{{ $countUnReadMessages }}</span> </td>
 
-                                    <td>{{ $user->name }}</td>
+                                    @else
+                                        <td>{{ $user->name }} </td>
+                                    @endif
+
+                                    @php
+                                        $lastMessage = App\Models\ChatMessage::where("from_user_id", $user->id )->latest()
+                                          ->first();
+                                    @endphp
+                                    <td>{{ Carbon\Carbon::parse($lastMessage->created_at)->diffForHumans() }} </td>
+
                                     {{-- <td>{{ $user->chats->where("status","notReaded")->count() }}</td>--}}
                                     <td class="d-inline-block" >
 

@@ -24,8 +24,22 @@
                             class="fa fa-th"></i><span>@lang('site.student_graduated')</span></a></li>
             @endif
             @if (auth()->user()->hasRole('super_admin'))
-                <li><a href="{{ route('dashboard.chats.index') }}"><i
-                            class="fa fa-th"></i><span>@lang('site.chat')</span></a></li>
+                <li>
+                    @php
+                        $countUnReadMessages = App\Models\ChatMessage::whereIn("from_user_id", function ($query) {
+                            $query->select("id")
+                                ->from("users")
+                                ->where("role", "!=", "super_admin");
+                        })->where("status", "notReaded")
+                         ->count();
+                    @endphp
+                    <a href="{{ route('dashboard.chats.index') }}">
+                        <i class="fa fa-th"></i><span>@lang('site.chat')</span>
+                        @if($countUnReadMessages > 0)
+                            <span class="label label-danger">{{ $countUnReadMessages }}</span>
+                        @endif
+                    </a>
+                </li>
             @endif
             @if (auth()->user()->hasRole('super_admin'))
                 <li><a href="{{ route('dashboard.jobs.index') }}"><i
