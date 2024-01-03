@@ -14,7 +14,15 @@ use Illuminate\Http\Request;
 class ChatController extends Controller
 {
     public function index(){
-        $chatIds = ChatMessage::latest()->pluck("from_user_id")
+        $latestMessageIds = ChatMessage::selectRaw('MAX(id) as latest_message_id')
+            ->groupBy('from_user_id', 'to_user_id');
+
+        $chatIds = ChatMessage::whereIn('id', function ($query) use ($latestMessageIds) {
+            $query->select('latest_message_id')
+                ->fromSub($latestMessageIds, 'latest_messages');
+        })
+            ->latest()
+            ->pluck("from_user_id")
             ->merge(ChatMessage::latest()->pluck("to_user_id"))
             ->unique()
             ->toArray();
