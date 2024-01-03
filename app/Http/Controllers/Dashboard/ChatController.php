@@ -14,11 +14,26 @@ use Illuminate\Http\Request;
 class ChatController extends Controller
 {
     public function index(){
-        $chats = ChatMessage::whereIn("from_user_id", function ($query) {
-            $query->select("id")
-                ->from("users")
-                ->where("role", "!=", "super_admin");
-        })->latest()->paginate(50);
+//        $chat_from_user_ids = ChatMessage::pluck("from_user_id")->toArray();
+//        $chat_to_user_ids = ChatMessage::pluck("to_user_id")->toArray();
+//        $chat_ids = array_unique(array_merge($chat_from_user_ids,$chat_to_user_ids));
+//        $users = User::whereIn("id",$chat_ids)->where("role","!=","super_admin")->paginate(50);
+//        return view("dashboard.chats.index",compact("users"));
+        $super_admin_ids = User::where('role', 'super_admin')->pluck("id")->toArray();
+        $chats = ChatMessage::join('users as from_user', 'from_user.id', '=', 'chat_messages.from_user_id')
+            ->join('users as to_user', 'to_user.id', '=', 'chat_messages.to_user_id')
+            ->whereIn('from_user.id', function ($query) use ($super_admin_ids){
+                $query->select('id')
+                    ->from('users')
+                    ->whereNotIn('id',  $super_admin_ids);
+            })
+            ->orWhereIn('to_user.id', function ($query) use ($super_admin_ids) {
+                $query->select('id')
+                    ->from('users')
+                    ->where('role', $super_admin_ids);
+            })
+            ->latest('chat_messages.created_at')
+            ->paginate(50);
         return view("dashboard.chats.index",compact("chats"));
     }
     public function getMassages(Request $request){
