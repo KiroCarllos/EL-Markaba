@@ -9,26 +9,31 @@ use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class ChatController extends Controller
 {
     public function index(){
-        $latestMessageIds = ChatMessage::selectRaw('MAX(id) as latest_message_id')
-            ->groupBy('from_user_id', 'to_user_id');
+//        $chatIds = ChatMessage::latest()->pluck("from_user_id")
+//            ->merge(ChatMessage::latest()->pluck("to_user_id"))
+//            ->unique()
+//            ->toArray();
+//        $users = User::whereIn("id",$chatIds)->where("role","!=","super_admin")->paginate(50);
 
-        $chatIds = ChatMessage::whereIn('id', function ($query) use ($latestMessageIds) {
-            $query->select('latest_message_id')
-                ->fromSub($latestMessageIds, 'latest_messages');
-        })
-            ->latest()
-            ->pluck("from_user_id")
+        $chatIds = ChatMessage::latest()->pluck("from_user_id")
             ->merge(ChatMessage::latest()->pluck("to_user_id"))
             ->unique()
             ->toArray();
 
-        $users = User::whereIn("id",$chatIds)->where("role","!=","super_admin")->latest()->paginate(50);
+        $users = User::whereIn("id", $chatIds)
+            ->where("role", "!=", "super_admin")
+            ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $chatIds) . ")"))
+            ->paginate(50);
         return view("dashboard.chats.index",compact("users"));
+
+
+
 
 
 //        $super_admin_ids = User::where('role', 'super_admin')->pluck("id")->toArray();
