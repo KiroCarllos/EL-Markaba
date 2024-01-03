@@ -52,7 +52,7 @@
                                         $lastMessage = App\Models\ChatMessage::where("from_user_id", $user->id )->latest()
                                           ->first();
                                     @endphp
-                                    <td>{{ Carbon\Carbon::parse($lastMessage->created_at)->diffForHumans() }} </td>
+                                    <td>{{!is_null($lastMessage->created_at) ?  Carbon\Carbon::parse($lastMessage->created_at)->diffForHumans():'' }} </td>
 
                                     {{-- <td>{{ $user->chats->where("status","notReaded")->count() }}</td>--}}
                                     <td class="d-inline-block" >
