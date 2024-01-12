@@ -96,7 +96,7 @@
                         @endisset
                         </tbody>
                     </table>
-                    {{ $users->appends(request()->query())->links() }}
+{{--                    {{ $users->appends(request()->query())->links() }}--}}
                 </div>
             </div>
         </section>

@@ -118,7 +118,7 @@
 
                             </table><!-- end of table -->
 
-                            {{ $companies->appends(request()->query())->links() }}
+{{--                            {{ $companies->appends(request()->query())->links() }}--}}
 
                         @else
 
