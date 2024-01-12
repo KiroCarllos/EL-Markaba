@@ -47,7 +47,7 @@
                 <div class="box-body">
                     @isset($applications)
                         @if ($applications->count() > 0)
-                            <table class="table table-hover">
+                            <table class="table table-bordered table-striped dataTable">
                                 <thead>
                                 <tr>
                                     <th>#</th>

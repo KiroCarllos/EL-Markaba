@@ -53,7 +53,7 @@
                 <div class="box-body">
                     @isset($posts)
                         @if ($posts->count() > 0)
-                            <table class="table table-hover">
+                            <table class="table table-bordered table-striped dataTable">
                                 <thead>
                                 <tr>
                                     <th>#</th>

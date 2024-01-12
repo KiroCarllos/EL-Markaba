@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="{{ asset('dashboard_files/css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('dashboard_files/css/AdminLTE.min.css') }}">
     @endif
+    <link rel="stylesheet" href="{{ asset('dashboard_files/css/dataTables.bootstrap.min.css') }}">
 
     <style>
         .mr-2{
@@ -245,6 +246,8 @@
 
 {{--icheck--}}
 <script src="{{ asset('dashboard_files/plugins/icheck/icheck.min.js') }}"></script>
+<script src="{{ asset('dashboard_files/plugins/data-table/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('dashboard_files/plugins/data-table/dataTables.bootstrap.min.js') }}"></script>
 
 {{--<!-- FastClick -->--}}
 <script src="{{ asset('dashboard_files/js/fastclick.js') }}"></script>
@@ -271,6 +274,18 @@
 
 <script>
     $(document).ready(function () {
+        $(function () {
+            $('.dataTable').DataTable()
+            // $('#example2').DataTable({
+            //     'paging'      : true,
+            //     'lengthChange': false,
+            //     'searching'   : false,
+            //     'ordering'    : true,
+            //     'info'        : true,
+            //     'autoWidth'   : false
+            // })
+        })
+
         $(".js-enable-tags").select2({
             tags: true
         });
