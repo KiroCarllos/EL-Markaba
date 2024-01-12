@@ -17,7 +17,7 @@ use Illuminate\Validation\Rule;
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::whereIn("status",["active","disActive"])->withCount("replies")->latest()->paginate(10);
+        $posts = Post::whereIn("status",["active","disActive"])->withCount("replies")->latest()->get();
         return view('dashboard.posts.index', compact('posts'));
     }
 
