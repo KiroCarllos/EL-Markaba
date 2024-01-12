@@ -20,7 +20,7 @@
 
                 <div class="box-header with-border">
 
-                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.user_student_details') <small>{{ $user_student_details->total() }}</small></h3>
+                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.user_student_details') <small>{{ count($user_student_details) }}</small></h3>
 
                     <form action="{{ route('dashboard.student_details.index') }}" method="get">
 
