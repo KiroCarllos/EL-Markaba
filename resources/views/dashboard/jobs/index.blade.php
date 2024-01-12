@@ -119,7 +119,7 @@
 
                             </table><!-- end of table -->
 
-                            {{ $jobs->appends(request()->query())->links() }}
+{{--                            {{ $jobs->appends(request()->query())->links() }}--}}
 
                         @else
                             <h2>@lang('site.no_data_found')</h2>

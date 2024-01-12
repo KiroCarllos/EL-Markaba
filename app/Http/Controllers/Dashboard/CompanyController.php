@@ -19,7 +19,7 @@ class CompanyController extends Controller
 {
     public function index(Request $request)
     {
-        $companies = User::company()->latest()->paginate(10);
+        $companies = User::company()->latest()->get();
         return view('dashboard.companies.index', compact('companies'));
     }//end of index
 

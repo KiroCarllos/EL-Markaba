@@ -106,7 +106,7 @@
 
                             </table><!-- end of table -->
 
-                            {{ $sliders->appends(request()->query())->links() }}
+{{--                            {{ $sliders->appends(request()->query())->links() }}--}}
 
                         @else
 

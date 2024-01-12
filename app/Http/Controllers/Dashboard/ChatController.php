@@ -29,7 +29,7 @@ class ChatController extends Controller
         $users = User::whereIn("id", $chatIds)
             ->where("role", "!=", "super_admin")
             ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $chatIds) . ")"))
-            ->paginate(10);
+            ->get();
         return view("dashboard.chats.index",compact("users"));
 
 

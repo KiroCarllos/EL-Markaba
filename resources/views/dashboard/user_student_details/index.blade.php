@@ -92,7 +92,7 @@
 
                         </table><!-- end of table -->
 
-                        {{ $user_student_details->appends(request()->query())->links() }}
+{{--                        {{ $user_student_details->appends(request()->query())->links() }}--}}
 
                     @else
 

@@ -102,7 +102,7 @@
 
                             </table><!-- end of table -->
 
-                            {{ $posts->appends(request()->query())->links() }}
+{{--                            {{ $posts->appends(request()->query())->links() }}--}}
 
                         @else
 

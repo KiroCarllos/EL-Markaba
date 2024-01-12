@@ -110,7 +110,7 @@
 
                             </table><!-- end of table -->
 
-                            {{ $trainings->appends(request()->query())->links() }}
+{{--                            {{ $trainings->appends(request()->query())->links() }}--}}
 
                         @else
 

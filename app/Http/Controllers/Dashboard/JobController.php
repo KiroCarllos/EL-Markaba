@@ -20,7 +20,7 @@ class JobController extends Controller
     public function index(Request $request)
     {
 
-        $jobs = Job::whereNotIn("status",["deleted"])->whereHas("company")->latest()->paginate(10);
+        $jobs = Job::whereNotIn("status",["deleted"])->whereHas("company")->latest()->get();
 //        dd($jobs);
         return view('dashboard.jobs.index', compact('jobs'));
 
