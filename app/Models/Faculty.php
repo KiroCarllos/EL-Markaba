@@ -11,4 +11,7 @@ class Faculty extends Model
         "name_ar",
         "university_id",
     ];
+    public function university(){
+        return $this->belongsTo(University::class);
+    }
 }

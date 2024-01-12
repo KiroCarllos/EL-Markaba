@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\CompanyExport;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyDetail;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyController extends Controller
 {
@@ -185,6 +187,8 @@ class CompanyController extends Controller
 
     }//end of destroy
 
-
+    public function export(){
+        return Excel::download(new CompanyExport(), 'companies.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
 
 }//end of controller

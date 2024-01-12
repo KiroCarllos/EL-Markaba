@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\StudentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\GeneralController;
 use App\Models\ChatMessage;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentDetailController extends Controller
 {
@@ -242,4 +244,8 @@ class StudentDetailController extends Controller
 
     }//end of destroy
 
+
+    public function export(){
+        return Excel::download(new StudentExport(), 'students.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
 }//end of controller

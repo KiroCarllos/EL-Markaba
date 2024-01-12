@@ -28,14 +28,10 @@
 
                         <div class="row">
 
-                            <div class="col-md-4">
-                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                                       value="{{ request()->search }}">
-                            </div>
+
 
                             <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i
-                                        class="fa fa-search"></i> @lang('site.search')</button>
+
                                 @if (auth()->user()->hasRole('super_admin') )
                                     <a href="{{ route('dashboard.trainings.create') }}" class="btn btn-primary"><i
                                             class="fa fa-plus"></i> @lang('site.add')</a>
@@ -60,6 +56,7 @@
                                     <th>@lang('site.image')</th>
                                     <th>@lang('site.status_post')</th>
                                     <th>@lang('site.title')</th>
+                                    <th>@lang('site.job_applications_count')</th>
                                     <th>@lang('site.action')</th>
                                 </tr>
                                 </thead>
@@ -71,8 +68,17 @@
                                                  class="img-thumbnail" alt=""></td>
                                         <td>{{ $training->status }}</td>
                                         <td>{{ app()->getLocale() == "ar" ? $training->title_ar : $training->title_en }}</td>
+                                        <td>{{  $training->applications->count() }}</td>
                                         <td>
                                             @if (auth()->user()->hasRole('super_admin') )
+                                                <a href="{{ route('dashboard.trainings.applications.export', $training->id) }}"
+                                                   class="btn btn-primary btn-sm"><i
+                                                        class="fa fa-file-excel-o"></i> @lang('site.export')</a>
+                                            @else
+                                                <a href="#" class="btn btn-primary btn-sm disabled"><i
+                                                        class="fa fa-file-excel-o"></i> @lang('site.export')</a>
+                                            @endif
+                                                @if (auth()->user()->hasRole('super_admin') )
                                                 <a href="{{ route('dashboard.trainings.applications', $training->id) }}"
                                                    class="btn btn-info btn-sm"><i
                                                         class="fa fa-file"></i> @lang('site.applications')</a>

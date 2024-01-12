@@ -28,20 +28,26 @@
 
                         <div class="row">
 
-                            <div class="col-md-4">
-                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                                       value="{{ request()->search }}">
-                            </div>
+{{--                            <div class="col-md-4">--}}
+{{--                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"--}}
+{{--                                       value="{{ request()->search }}">--}}
+{{--                            </div>--}}
 
                             <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i
-                                        class="fa fa-search"></i> @lang('site.search')</button>
-                                @if (auth()->user()->hasRole('super_admin') )
+
+                                @if (auth()->user()->hasRole('super_admin'))
                                     <a href="{{ route('dashboard.companies.create') }}" class="btn btn-primary"><i
                                             class="fa fa-plus"></i> @lang('site.add')</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled"><i
                                             class="fa fa-plus"></i> @lang('site.add')</a>
+                                @endif
+                                @if (auth()->user()->hasRole('super_admin'))
+                                    <a href="{{ route('dashboard.companies.export') }}" class="btn btn-primary"><i
+                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>
+                                @else
+                                    <a href="#" class="btn btn-primary disabled"><i
+                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>
                                 @endif
                             </div>
 

@@ -13,6 +13,7 @@ return [
     'part_time' => 'دوام جزئي',
     'full_time' => 'دوام كامل',
     'work_hours' => 'سعات العمل',
+    'export' => 'تصدير الي ملف اكسل',
     'expected_salary_from' => 'الراتب المتوقع من ',
     'expected_salary_to' => 'الراتب المتوقع الي ',
     'select_work_type' => 'اختر نوع الدوام',

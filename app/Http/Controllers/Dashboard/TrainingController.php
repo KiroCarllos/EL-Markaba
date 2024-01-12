@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\TrainingApplicationExport;
 use App\Http\Controllers\Controller;
 use App\Jobs\AddNewTraining;
 use App\Models\Notification;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
 {
@@ -214,6 +216,11 @@ class TrainingController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.trainings.applications',$training->training_id);
     }//end of destroy
+    public function exportTrainingsApplications($id)
+    {
+        $training = Training::find($id);
 
+        return Excel::download(new TrainingApplicationExport($id), $training->title_en.'_applications.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
 
 }//end of controller

@@ -25,17 +25,20 @@
                     <form action="{{ route('dashboard.student_details.index') }}" method="get">
 
                         <div class="row">
-
+{{--                            <div class="col-md-4">--}}
+{{--                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')" value="{{ request()->search }}">--}}
+{{--                            </div>--}}
                             <div class="col-md-4">
-                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')" value="{{ request()->search }}">
-                            </div>
-
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
+{{--                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>--}}
                                 @if (auth()->user()->hasPermission('create_student_details') ||auth()->user()->hasRole('super_admin') )
                                     <a href="{{ route('dashboard.student_details.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.add')</a>
+                                @endif
+                                @if (auth()->user()->hasPermission('create_student_details') ||auth()->user()->hasRole('super_admin') )
+                                    <a href="{{ route('dashboard.student_details.export') }}" class="btn btn-primary"><i class="fa fa-file"></i> @lang('site.export')</a>
+                                @else
+                                    <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.export')</a>
                                 @endif
                             </div>
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\JobApplicationExport;
+use App\Exports\JobExport;
 use App\Http\Controllers\Controller;
 use App\Jobs\AddNewJob;
 use App\Models\ChatMessage;
@@ -13,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JobController extends Controller
 {
@@ -270,6 +273,7 @@ class JobController extends Controller
             dd($exception);
         }
     }//end of update
+
     public  function deleteApplication($id)
     {
         $job = JobApplication::findOrFail($id);
@@ -278,4 +282,13 @@ class JobController extends Controller
         return redirect()->route('dashboard.jobs.applications',$job->job_id);
     }//end of destroy
 
+    public function exportJobs(){
+
+        return Excel::download(new JobExport(), 'jobs.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
+    public function exportJobApplications($id)
+    {
+        $job = Job::find($id);
+        return Excel::download(new JobApplicationExport($id), $job->title_en.'_applications.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
 }//end of controller
