@@ -90,7 +90,7 @@
 
                         </table><!-- end of table -->
 
-                        {{ $users->appends(request()->query())->links() }}
+{{--                        {{ $users->appends(request()->query())->links() }}--}}
 
                     @else
 
