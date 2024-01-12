@@ -22,7 +22,7 @@
 {{--                    </div>--}}
 {{--                </div>--}}
                 <div class="box-body">
-                    <table style="table-layout:fixed" class="table table-bordered table-striped">
+                    <table style="table-layout:fixed" class="table table-bordered table-striped dataTable">
                         <thead>
                         <tr>
                             <th>@lang("site.user_image")</th>
