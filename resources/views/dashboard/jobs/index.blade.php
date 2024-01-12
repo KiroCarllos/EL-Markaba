@@ -22,7 +22,7 @@
                 <div class="box-header with-border">
 
                     <h3 class="box-title" style="margin-bottom: 15px">@lang('site.jobs')
-                        <small>{{ $jobs->total() }}</small></h3>
+                        <small>{{ count($jobs) }}</small></h3>
 
                     <form action="{{ route('dashboard.jobs.index') }}" method="get">
 
