@@ -275,7 +275,11 @@
 <script>
     $(document).ready(function () {
         $(function () {
-            $('.dataTable').DataTable()
+            $('.dataTable').DataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Arabic.json"
+                }
+            })
             // $('#example2').DataTable({
             //     'paging'      : true,
             //     'lengthChange': false,
