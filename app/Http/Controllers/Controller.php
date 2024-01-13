@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Faculty;
 use App\Models\University;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -23,6 +24,15 @@ class Controller extends BaseController
             $university->makeHidden(["name_en","name_ar"]);
         }
         return $universities;
+    }
+    public function getAllAreas(){
+        $areas= Area::select("id","name_en","name_ar")->get();
+        foreach ($areas as $area){
+            $name = app()->getLocale() == "ar" ?$area->name_ar:$area->name_en;
+            $area->setAttribute("name",$name);
+            $area->makeHidden(["name_en","name_ar"]);
+        }
+        return $areas;
     }
     public function getFacultyByUniversityById($university_id){
         $faculties = Faculty::query()->select("id","name_en","name_ar")->where("university_id",$university_id)->get();

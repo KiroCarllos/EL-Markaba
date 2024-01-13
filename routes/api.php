@@ -23,6 +23,7 @@ Route::group(['middleware'=>['auth:api',"check_auth"],'namespace' => 'Api'], fun
 
 Route::group(['namespace' => 'Api',"middleware"=>["changeLanguage"]], function () {
     // General
+    Route::post('getAreas', 'GeneralController@getAreas')->name("getAreas");
     Route::post('getUniversities', 'GeneralController@getUniversities')->name("getUniversities");
     Route::post('getFacultyByUniversity', 'GeneralController@getFacultyByUniversity')->name("getFacultyByUniversity");
     Route::post('getSlider', 'GeneralController@getSlider');
@@ -82,8 +83,6 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","chan
 
 
 // student
-
-
 Route::group(['prefix' => "student",'namespace' => 'Api',"middleware" => ["changeLanguage"]], function () {
     Route::post('login', 'StudentController@login');
     Route::post('register', 'StudentController@register');
@@ -124,7 +123,23 @@ Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","chan
 // end student routes
 
 
+// Fathers
+Route::group(['prefix' => "father",'namespace' => 'Api',"middleware" =>["changeLanguage"]], function () {
+    Route::post('login', 'FatherController@login');
+    Route::post('register', 'FatherController@register');
 
+});
+Route::group(['prefix' => "father",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
+    Route::post('profile', 'FatherController@profile');
+    Route::post('logout', 'FatherController@logout');
+    Route::post('deleteAccount', 'FatherController@deleteAccount');
+    Route::post('resetPassword', 'GeneralController@resetPassword');
+
+
+    Route::post('notifications', 'FatherController@notifications');
+    Route::post('updateNotification', 'FatherController@updateNotification');
+
+});
 
 
 

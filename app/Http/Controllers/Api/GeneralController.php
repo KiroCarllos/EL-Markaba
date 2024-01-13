@@ -18,8 +18,13 @@ use Illuminate\Validation\Rule;
 
 class GeneralController extends Controller
 {
+    public function getAreas(){
+        $areas = $this->getAllAreas();
+        return api_response(1,"",$areas);
+    }
    public function getUniversities(){
        $universities= $this->getAllUniversities();
+
        return api_response(1,"",$universities);
    }
     public function getFacultyByUniversity(Request $request){
