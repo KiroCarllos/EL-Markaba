@@ -144,6 +144,7 @@ return [
 
     'added_successfully' => 'تم اضافه البيانات بنجاح',
     'updated_successfully' => 'تم تعديل البيانات بنجاح',
+    'get_successfully' => 'تم جلب البيانات بنجاح',
     'deleted_successfully' => 'تم حذف البيانات بنجاح',
 
     'no_data_found' => 'للاسف لا يوجد اي سجلات',

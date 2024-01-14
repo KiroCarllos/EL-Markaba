@@ -14,6 +14,7 @@ use App\Models\Training;
 use App\Models\TrainingApplication;
 use App\Models\User;
 use App\Models\StudentDetail;
+use App\Repositories\StudentRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,13 @@ use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
+    protected $studentRepository;
+
+    public function __construct(StudentRepository $studentRepository)
+    {
+        $this->studentRepository = $studentRepository;
+    }
+
     // student login
     public function login(Request $request)
     {
@@ -445,5 +453,9 @@ class StudentController extends Controller
 
 
 
+    public function searchStudent(Request $request){
+        $students = $this->studentRepository->search($request->search);
+        return api_response(1,__('site.get_successfully'),$students);
+    }
 
 }//end of controller
