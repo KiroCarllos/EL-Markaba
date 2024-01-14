@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Exports\StudentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\GeneralController;
+use App\Models\Area;
 use App\Models\ChatMessage;
 use App\Models\Notification;
 use App\Models\University;
@@ -31,8 +32,8 @@ class StudentDetailController extends Controller
 
     public
     function create()
-    {
-        return view('dashboard.user_student_details.create');
+    {$areas = Area::all();
+        return view('dashboard.user_student_details.create',compact("areas"));
 
     }//end of create
 
@@ -54,6 +55,7 @@ class StudentDetailController extends Controller
             'major_id' => ["required", Rule::exists('majors',"id")->whereIn('id', Major::pluck('id')->toArray())->whereNotIn('id', ['not_from_above'])],
             'else_major' => 'required_if:major_id,not_from_above',
             'else_education' => 'nullable',
+            'area_id' => 'nullable',
 
         ]);
         $userData = $request->only(["name", "mobile", "email"]);
@@ -74,7 +76,7 @@ class StudentDetailController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
             $user->attachRole('student');
-            $studentData = $request->only(["gender", "national_id", "graduated_at", "prior_experiences", "else_education","courses", "address"]);
+            $studentData = $request->only(["gender", "national_id", "area_id", "graduated_at", "prior_experiences", "else_education","courses", "address"]);
             if($request->has("major_id")){
                 $major_id = (int) $request->major_id;
                 if (is_int($major_id)){
@@ -98,6 +100,7 @@ class StudentDetailController extends Controller
 
     public function edit($id)
     {
+        $areas = Area::all();
         $userStudentDetail = User::whereId($id)->with("student_details")->first();
         if (is_null($userStudentDetail->student_details->faculty)){
             $faculties=[];
@@ -106,7 +109,7 @@ class StudentDetailController extends Controller
         }
         $universities = $this->getAllUniversities();
 
-        return view('dashboard.user_student_details.edit', compact('userStudentDetail',"universities","faculties"));
+        return view('dashboard.user_student_details.edit', compact('userStudentDetail',"universities","faculties",'areas'));
     } //end of user
 
     public function update(Request $request, $id)
@@ -117,6 +120,7 @@ class StudentDetailController extends Controller
             'mobile' => ['required',"size:11", Rule::unique('users','mobile')->ignore($request->user_id)],
             'password' => 'nullable',
             'national_id' => 'required|string|size:14',
+            'area_id' => 'nullable',
             'graduated_at' => ['nullable', 'date_format:Y'],
             'image' => 'nullable|mimes:jpeg,png,jpg|max:4096',
             'gender' => 'required|in:male,female',
@@ -153,7 +157,7 @@ class StudentDetailController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
             $studentDetails = StudentDetail::whereUserId($id)->first();
-            $studentData = $request->only(["gender", "faculty_id","else_education","major","national_id", "graduated_at","prior_experiences", "courses", "address"]);
+            $studentData = $request->only(["gender", "faculty_id","else_education","major",'area_id',"national_id", "graduated_at","prior_experiences", "courses", "address"]);
             $studentData["enable_update"] = $request->has("enable_update") && !is_null($request->enable_update) && $request->enable_update == "on"? 1:0;
             if (($request->has("enable_update") && $request->enable_update == "on") && !$studentDetails->enable_update){
                 $result = send_fcm([$user->device_token],__("site.markz_el_markaba"),__("site.you_now_able_to_edit_your_profile_data"),"dashboard",$user);

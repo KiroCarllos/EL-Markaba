@@ -152,6 +152,16 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>@lang('site.area')</label>
+                            <select required name="area_id" class="form-control">
+                                <option></option>
+                                @foreach($areas as $area)
+                                <option  value="{{ $area->id }}" {{ $userStudentDetail->student_details->area_id == $area->id ? "selected" :"" }}>
+                                    {{ $area->name_ar }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>@lang('site.prior_experiences')</label>
                             <select name="prior_experiences[]" class="form-control js-enable-tags" multiple="multiple">
                                 @if(!is_null($userStudentDetail->student_details->prior_experiences))

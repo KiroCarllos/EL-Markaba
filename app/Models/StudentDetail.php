@@ -11,6 +11,7 @@ class StudentDetail extends Model
         "gender",
         "major",
         "faculty_id",
+        "area_id",
         "gender",
         "national_id",
         "enable_update",
@@ -54,5 +55,8 @@ class StudentDetail extends Model
     }
     public function faculty(){
         return $this->belongsTo(Faculty::class,"faculty_id",'id');
+    }
+    public function area(){
+        return $this->belongsTo(Area::class,"area_id",'id');
     }
 }

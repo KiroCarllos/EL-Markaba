@@ -44,6 +44,7 @@ return[
     'review_to_company' => 'Suggest to Company ?',
     'you_application_under_review_from_company' => 'Your Application Under Review From Company',
     'export' => 'Export To Excel',
+    'area' => 'Area',
 
     'student_name' => 'student name',
     'we_really_sorry_your_application_has_been_rejected' => 'We Really Sorry, Your Application Has Been Rejected',

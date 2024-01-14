@@ -94,6 +94,16 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>@lang('site.area')</label>
+                            <select required name="area_id" class="form-control">
+                                <option></option>
+                                @foreach($areas as $area)
+                                    <option  value="{{ $area->id }}" >
+                                        {{ $area->name_ar }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>@lang('site.prior_experiences')</label>
                             <select name="prior_experiences[]" class="form-control js-enable-tags" multiple="multiple">
                             </select>
@@ -194,34 +204,34 @@
             });
         });
         // major
-        $(document).ready(function() {
-            var facultySelect = $('#faculty_select');
-            var majorSelect = $('#major_select');
-            facultySelect.on('change', function() {
-                var facultyId = $(this).val();
-                majorSelect.empty();
-                $.ajax({
-                    url: '{{ route("getMajorByFaculty") }}',
-                    method: 'POST',
-                    data: { faculty_id: facultyId },
-                    dataType: 'json',
-                    success: function(response) {
-                        var majors = response.data;
-                        var defaultOption = $('<option>').val('').text("{{__("site.select_student_major")}}");
-                        majorSelect.append(defaultOption);
-                        $.each(majors, function(index, major) {
-                            var option = $('<option>').val(major.id).text(major.name_{{app()->getLocale()}});
-                            majorSelect.append(option);
-                        });
-                        var defaultOption = $('<option>').val('not_from_above').text("{{__("site.not_from_above")}}");
-                        majorSelect.append(defaultOption);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            });
-        });
+        {{--$(document).ready(function() {--}}
+        {{--    var facultySelect = $('#faculty_select');--}}
+        {{--    var majorSelect = $('#major_select');--}}
+        {{--    facultySelect.on('change', function() {--}}
+        {{--        var facultyId = $(this).val();--}}
+        {{--        majorSelect.empty();--}}
+        {{--        $.ajax({--}}
+        {{--            url: '{{ route("getMajorByFaculty") }}',--}}
+        {{--            method: 'POST',--}}
+        {{--            data: { faculty_id: facultyId },--}}
+        {{--            dataType: 'json',--}}
+        {{--            success: function(response) {--}}
+        {{--                var majors = response.data;--}}
+        {{--                var defaultOption = $('<option>').val('').text("{{__("site.select_student_major")}}");--}}
+        {{--                majorSelect.append(defaultOption);--}}
+        {{--                $.each(majors, function(index, major) {--}}
+        {{--                    var option = $('<option>').val(major.id).text(major.name_{{app()->getLocale()}});--}}
+        {{--                    majorSelect.append(option);--}}
+        {{--                });--}}
+        {{--                var defaultOption = $('<option>').val('not_from_above').text("{{__("site.not_from_above")}}");--}}
+        {{--                majorSelect.append(defaultOption);--}}
+        {{--            },--}}
+        {{--            error: function(xhr, status, error) {--}}
+        {{--                console.error(error);--}}
+        {{--            }--}}
+        {{--        });--}}
+        {{--    });--}}
+        {{--});--}}
         $(document).ready(function(){
              $("#else_major").hide();
              $("#else_major_input").val("");

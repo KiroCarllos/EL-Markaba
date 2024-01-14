@@ -30,13 +30,13 @@
 {{--                            </div>--}}
                             <div class="col-md-4">
 {{--                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>--}}
-                                @if (auth()->user()->hasPermission('create_student_details') ||auth()->user()->hasRole('super_admin') )
-                                    <a href="{{ route('dashboard.student_details.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>
-                                @else
+{{--                                @if (auth()->user()->hasPermission('create_student_details') ||auth()->user()->hasRole('super_admin') )--}}
+{{--                                    <a href="{{ route('dashboard.student_details.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>--}}
+{{--                                @else--}}
                                     <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.add')</a>
-                                @endif
+{{--                                @endif--}}
                                 @if (auth()->user()->hasPermission('create_student_details') ||auth()->user()->hasRole('super_admin') )
-                                    <a href="{{ route('dashboard.student_details.export') }}" class="btn btn-primary"><i class="fa fa-file"></i> @lang('site.export')</a>
+                                    <a href="{{ route('dashboard.student_details.export') }}" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> @lang('site.export')</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.export')</a>
                                 @endif
@@ -60,6 +60,7 @@
                                 <th>@lang('site.status_account')</th>
                                 <th>@lang('site.name')</th>
                                 <th>@lang('site.email')</th>
+                                <th>@lang('site.area')</th>
                                 <th>@lang('site.action')</th>
                             </tr>
                             </thead>
@@ -72,6 +73,7 @@
                                     <td>{{ $user_student_detail->status }}</td>
                                     <td>{{ $user_student_detail->name}}</td>
                                     <td>{{ $user_student_detail->email }}</td>
+                                    <td>{{ $user_student_detail->student_details->area->name_ar ?? null }}</td>
                                     <td>
                                         @if (auth()->user()->hasRole('super_admin'))
                                             <a href="{{ route('dashboard.student_details.edit', $user_student_detail->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>

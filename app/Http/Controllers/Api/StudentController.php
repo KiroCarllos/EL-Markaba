@@ -73,6 +73,7 @@ class StudentController extends Controller
             "prior_experiences" => ["nullable", "array"],
             "courses" => ["nullable", "array"],
             "device_token" => ["nullable","string"],
+            "area_id" => ["nullable"],
             "address" => ["required", "string"],
         ]);
         $userData = $request->only(["name", "mobile", "email","device_token"]);
@@ -104,7 +105,7 @@ class StudentController extends Controller
                     'graduated_at' => ['required', 'date_format:Y'],
                 ]);
             }
-            $studentData = $request->only(["gender","education","else_education", "national_id", "faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
+            $studentData = $request->only(["gender","education","else_education", "national_id", "area_id", "faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
             $studentData = StudentDetail::query()->updateOrCreate([
                 "user_id" => $user->id
             ], $studentData);
