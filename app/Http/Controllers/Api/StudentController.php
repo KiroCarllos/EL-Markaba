@@ -456,6 +456,7 @@ class StudentController extends Controller
     public function searchStudent(Request $request){
 
         $students = $this->studentRepository->search($request->search);
+        dd(auth("api")->id(),$students);
         return api_response(1,__('site.get_successfully'),$students);
     }
 
