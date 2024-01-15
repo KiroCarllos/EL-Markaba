@@ -17,9 +17,9 @@ class StudentRepository
                         $subquery->where("area_id", auth()->user()->father_details->area_id);
                     });
             })
-            ->where(function ($query) use ($filterValue) {
-                $query->SearchSuggestion($filterValue);
-            })
+//            ->where(function ($query) use ($filterValue) {
+//                $query->SearchSuggestion($filterValue);
+//            })
             ->with("student_details")
             ->paginate(5);
         return $results;
