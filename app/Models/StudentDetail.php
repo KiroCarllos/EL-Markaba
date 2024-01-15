@@ -26,9 +26,12 @@ class StudentDetail extends Model
         "courses" => "json",
         "prior_experiences" => "json",
     ];
-    protected $appends = ["faculty_name","university_name"];
+    protected $appends = ["faculty_name","university_name","area_name"];
     public function getFacultyNameAttribute(){
         return Faculty::where("id",$this->faculty_id)->pluck( "name_".app()->getLocale())->first();
+    }
+    public function getAreaNameAttribute(){
+        return Area::where("id",$this->area_id)->pluck( "name_".app()->getLocale())->first();
     }
     public function getEnableUpdateAttribute($value){
 
