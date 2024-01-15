@@ -15,7 +15,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $connection = "mysql";
     protected $fillable = [
-        'name', "status", "role", "mobile", 'email', 'password', 'image', 'auth_token', 'device_token'
+        'name', "status", "role", "mobile", 'email', 'password', 'image', 'auth_token', 'device_token', 'created_by'
     ];
     protected $appends = ["education", "age"];
 

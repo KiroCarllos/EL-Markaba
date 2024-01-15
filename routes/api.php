@@ -89,8 +89,6 @@ Route::group(['prefix' => "student",'namespace' => 'Api',"middleware" => ["chang
 
     // POSTS
     Route::post('getPosts', 'StudentController@getPosts');
-    // Suggestion Api
-    Route::post('searchStudent', 'StudentController@searchStudent');
 
 });
 Route::group(['prefix' => "student",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
@@ -140,6 +138,10 @@ Route::group(['prefix' => "father",'middleware'=>['auth:api',"check_auth","chang
 
     Route::post('notifications', 'FatherController@notifications');
     Route::post('updateNotification', 'FatherController@updateNotification');
+
+
+    // Suggestion Api
+    Route::post('searchStudent', 'StudentController@searchStudent');
 
 });
 

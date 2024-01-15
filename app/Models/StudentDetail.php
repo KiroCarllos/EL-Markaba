@@ -78,10 +78,13 @@ class StudentDetail extends Model
                 }) ->orWhere(function ($query) use ($search) {
                     $query->whereJsonContains('courses', $search)
                         ->orWhere('courses->key', 'like', "%$search%");
-                })->orWhereHas('area', function ($subquery) use ($search) {
-                $subquery->where('name_en', 'like', "%".$search."%")
-                            ->orWhere('name_ar', 'like', "%".$search."%");
-            })->orWhereHas('faculty', function ($subquery) use ($search) {
+                })
+//                ->orWhereHas('area', function ($subquery) use ($search) {
+//                $subquery->where('name_en', 'like', "%".$search."%")
+//                            ->orWhere('name_ar', 'like', "%".$search."%")
+//                            ->orWhere('name_ar', 'like', "%".$search."%");
+//            })
+                ->orWhereHas('faculty', function ($subquery) use ($search) {
                 $subquery->where('name_en', 'like', "%".$search."%")
                             ->orWhere('name_ar', 'like', "%".$search."%")
                     ->orWhereHas('university', function ($subquery) use ($search) {
