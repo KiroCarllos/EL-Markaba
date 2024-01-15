@@ -14,7 +14,8 @@ class StudentRepository
             ->where(function ($query) {
                 $query->where("created_by", auth("api")->id())
                     ->orWhereHas('student_details', function ($subquery) {
-                        $subquery->where("area_id", auth()->user()->father_details->area_id);
+                        $subquery->where("area_id", auth()->user()->father_details->area_id)
+                            ->SearchSuggestion($subquery);
                     });
             })
 //            ->where(function ($query) use ($filterValue) {
