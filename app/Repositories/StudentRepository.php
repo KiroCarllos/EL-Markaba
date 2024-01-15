@@ -9,6 +9,7 @@ class StudentRepository
 {
     public function search($filterValue)
     {
+        dd(auth()->user()->father_details->area_id);
         $results = User::student()
             ->active()
 //            ->where("created_by", auth("api")->id())
