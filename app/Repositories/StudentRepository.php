@@ -11,7 +11,7 @@ class StudentRepository
     {
         $results = User::student()
             ->active()
-            ->where("created_by", auth("api")->id()
+            ->where("created_by", auth("api")->id())
 //            ->where(function ($query)   use ($filterValue) {
 //                $query->where("created_by", auth("api")->id())
 //                    ->orWhereHas('student_details', function ($subquery)  use ($filterValue){
