@@ -12,7 +12,7 @@ class StudentRepository
 
         $results = User::student()
             ->active()
-            ->where("created_by", auth()->id())
+            ->where("created_by", auth("api")->id())
             ->where(function ($query) use ($filterValue) {
                 $query->SearchSuggestion($filterValue)
                     ->orWhereHas('student_details', function ($subquery) use ($filterValue) {
@@ -25,7 +25,7 @@ class StudentRepository
                     });
             })
             ->with("student_details")
-            ->paginate(50);
+            ->paginate(5);
         return $results;
     }
 }
