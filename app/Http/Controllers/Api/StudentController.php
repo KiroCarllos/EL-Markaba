@@ -90,6 +90,7 @@ class StudentController extends Controller
                 "email" => $userData["email"],
                 "password" => $userData["password"],
                 "device_token" => $userData["device_token"],
+                "created_by" => auth("api")->check() ? auth("api")->id() : null,
                 "role" => "student",
             ]);
             deleteOldFiles("uploads/student/" . $user->id . "/profile");
