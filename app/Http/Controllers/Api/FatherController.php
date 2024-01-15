@@ -153,9 +153,9 @@ class FatherController extends Controller
 
 
     public function searchStudent(Request $request){
-
-        $students = $this->studentRepository->search($request->search);
-        return api_response(1,__('site.get_successfully'),$students);
+        return api_response(0,"aaaaaaaaaaaaaaaaaaaaaaaa");
+//        $students = $this->studentRepository->search($request->search);
+//        return api_response(1,__('site.get_successfully'),$students);
     }
 
 }//end of controller
