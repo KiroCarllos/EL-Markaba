@@ -10,7 +10,6 @@ class StudentRepository
     public function search($filterValue)
     {
         $results = User::student()
-            ->active()
             ->where(function ($query) {
                 $query->where("created_by", auth("api")->id())
                     ->orWhereHas('student_details', function ($subquery) {
