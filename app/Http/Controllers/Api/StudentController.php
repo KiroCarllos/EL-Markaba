@@ -23,12 +23,7 @@ use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
-    protected $studentRepository;
 
-    public function __construct(StudentRepository $studentRepository)
-    {
-        $this->studentRepository = $studentRepository;
-    }
 
     // student login
     public function login(Request $request)
@@ -449,15 +444,6 @@ class StudentController extends Controller
         $notificationCount =  Notification::where("user_id",auth("api")->id())->where("read","0")->count();
 
         return api_response(1,__('site.updated_successfully'),$notificationCount);
-    }
-
-
-
-    public function searchStudent(Request $request){
-
-        $students = $this->studentRepository->search($request->search);
-        dd(auth("api")->id(),$students);
-        return api_response(1,__('site.get_successfully'),$students);
     }
 
 }//end of controller

@@ -141,7 +141,7 @@ Route::group(['prefix' => "father",'middleware'=>['auth:api',"check_auth","chang
 
 
     // Suggestion Api
-    Route::post('searchStudent', 'StudentController@searchStudent');
+    Route::post('searchStudent', 'FatherController@searchStudent');
 
 });
 

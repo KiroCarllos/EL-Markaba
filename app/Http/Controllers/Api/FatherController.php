@@ -10,6 +10,7 @@ use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\Notification;
 use App\Models\User;
+use App\Repositories\StudentRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,12 @@ use Illuminate\Validation\Rule;
 
 class FatherController extends Controller
 {
+    protected $studentRepository;
+
+    public function __construct(StudentRepository $studentRepository)
+    {
+        $this->studentRepository = $studentRepository;
+    }
     // company login
     public function login(Request $request)
     {
@@ -141,6 +148,14 @@ class FatherController extends Controller
         $notification->update(["read" => $request->read]);
         $notificationCount =  Notification::where("user_id",auth("api")->id())->where("read","0")->count();
         return api_response(1,__('site.updated_successfully'),$notificationCount);
+    }
+
+
+
+    public function searchStudent(Request $request){
+
+        $students = $this->studentRepository->search($request->search);
+        return api_response(1,__('site.get_successfully'),$students);
     }
 
 }//end of controller
