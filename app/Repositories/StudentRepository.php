@@ -9,7 +9,6 @@ class StudentRepository
 {
     public function search($filterValue)
     {
-
         $results = User::student()
             ->active()
             ->where(function ($query) {
