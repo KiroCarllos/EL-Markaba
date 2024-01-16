@@ -41,7 +41,7 @@ class FatherController extends Controller
         if ($user->role == "father" || $user->role == "super_admin") {
             if ($user->status == "active") {
                 $user->update(["auth_token" => $token,"device_token"=>$request->device_token]);
-                return api_response(1, __("site.father successfully login"), $user->with("father_details"));
+                return api_response(1, __("site.father successfully login"), User::where("id",$user->id)->with("father_details")->first());
             } else {
                 $msg = "Sorry Your Account is " . $user->status . " now";
                 return api_response(0, __("site.".$msg));
