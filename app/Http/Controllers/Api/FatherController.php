@@ -116,7 +116,7 @@ class FatherController extends Controller
     {
         $user = auth("api")->user();
         $user->update(["auth_token" => null]);
-        return api_response(1, __("site.father signOut successfully"));
+        return api_response(1, __("site.get_successfully"));
     }
 
     public function deleteAccount(Request $request)
@@ -128,7 +128,7 @@ class FatherController extends Controller
         if (Hash::check($request->password,$user->password)){
             $user->update(["email"=>rand(1000,9999)."#".$user->email,"mobile"=>rand(1000,9999)."#".$user->mobile]);
             $user->delete();
-            return api_response(1, __("site.father deleted successfully"));
+            return api_response(1, __("site.get_successfully"));
         }
         return api_response(0, __("site.Sorry Wrong Password"));
 
