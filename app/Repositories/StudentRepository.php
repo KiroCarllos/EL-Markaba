@@ -9,14 +9,18 @@ class StudentRepository
 {
     public function search($filterValue)
     {
+        $userId = auth("api")->id();
+        $userAreaId = auth()->user()->father_details->area_id;
+
         $results = User::student()
-            ->where("created_by", auth("api")->id())
-            ->orWhereHas('student_details', function ($subquery) use ($filterValue) {
-                $subquery->where("area_id", auth()->user()->father_details->area_id)
-                    ->SearchSuggestion($filterValue);
+            ->where("created_by", $userId)
+            ->orWhereHas('student_details', function ($subquery) use ($filterValue, $userAreaId) {
+                $subquery->where("area_id", $userAreaId)
+                    ->searchSuggestion($filterValue);
             })
             ->with("student_details")
             ->paginate(5);
+
         return $results;
     }
 }
