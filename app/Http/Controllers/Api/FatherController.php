@@ -86,6 +86,8 @@ class FatherController extends Controller
             $user->attachRole('father');
             $fatherDetails = FatherDetail::query()->updateOrCreate([
                 "user_id" => $user->id
+            ],[
+                "area_id" => $request->area_id
             ]);
             deleteOldFiles("uploads/fathers/" . $user->id . "/national_image");
             if ($request->national_id_image) {
