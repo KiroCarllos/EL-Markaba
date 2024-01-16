@@ -11,10 +11,8 @@ class StudentRepository
     {
         $results = User::student()
             ->where("created_by", auth("api")->id())
-            ->orWhere(function ($query) use ($filterValue) {
-                $query->whereHas("student_details", function ($q) use ($filterValue) {
-                    $q->SearchSuggestion($filterValue)->where("area_id", auth()->user()->father_details->area_id);
-                });
+            ->orWhereHas("student_details", function ($q) use ($filterValue) {
+                $q->SearchSuggestion($filterValue)->where("area_id", auth()->user()->father_details->area_id);
             })
             ->with("student_details")
             ->paginate(5);
