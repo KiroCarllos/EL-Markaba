@@ -11,7 +11,7 @@ class StudentRepository
     {
         $userId = auth("api")->id();
         $userAreaId = auth()->user()->father_details->area_id;
-
+        dd($userAreaId);
         $results = User::student()
             ->where(function ($query) use ($userId, $userAreaId, $filterValue) {
                 $query->where("created_by", $userId)
