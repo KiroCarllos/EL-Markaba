@@ -35,6 +35,11 @@ return[
     'student_has_suggest_for_job'=>'Student Has Suggest For Job',
     'age'=>'Age',
 
+    'father created successfully wait admins for approve' => 'father created successfully wait admins for approve',
+    'Sorry Your Account Not Be Father' => 'Sorry Your Account Not Be Father',
+    'father successfully login' => 'father successfully login',
+
+
     'notConfirmed' => 'notConfirmed',
     'canceled' => 'canceled',
     'pending' => 'pending',

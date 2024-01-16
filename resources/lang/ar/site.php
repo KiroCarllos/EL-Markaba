@@ -14,6 +14,10 @@ return [
     'full_time' => 'دوام كامل',
     'work_hours' => 'سعات العمل',
     'area' => 'المنطقة',
+    'father created successfully wait admins for approve' => 'تم انشاء الحساب بنجاح برجاء انتظار التفعيل',
+    'Sorry Your Account Not Be Father' => 'نأسف حسابك ليس كاهن',
+    'father successfully login' => 'اهلا تم التسجيل بنجاح',
+
     'export' => 'تصدير الي ملف اكسل',
     'expected_salary_from' => 'الراتب المتوقع من ',
     'expected_salary_to' => 'الراتب المتوقع الي ',

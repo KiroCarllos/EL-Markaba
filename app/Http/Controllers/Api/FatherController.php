@@ -108,7 +108,7 @@ class FatherController extends Controller
     {
         $user = User::query()->where("id", auth("api")->id())->with("father_details")->first();
         $user->setAttribute("notificationCount",  Notification::where("user_id",auth("api")->id())->where("read","0")->count());
-        return api_response(1, __("site.profile father get successfully"), $user);
+        return api_response(1, __("site.get_successfully"), $user);
     }
 
     // company logout
