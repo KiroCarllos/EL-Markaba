@@ -156,6 +156,7 @@ class StudentController extends Controller
             'national_id' => 'required|string|size:14',
             "prior_experiences" => ["nullable", "array"],
             "courses" => ["nullable", "array"],
+            "area_id" => ["nullable"],
             "device_token" => ["nullable","string"],
             "address" => ["required", "string"],
         ]);
@@ -186,7 +187,7 @@ class StudentController extends Controller
 //                    'graduated_at' => ['required', 'date_format:Y'],
 //                ]);
 //            }
-            $studentData = $request->only(["gender", "national_id", "else_education","faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
+            $studentData = $request->only(["gender", "national_id", "area_id", "else_education","faculty_id","major", "graduated_at", "prior_experiences", "courses", "address"]);
 
             $studentProfile->update($studentData);
 
