@@ -64,6 +64,9 @@ class User extends Authenticatable implements JWTSubject
     public function scopeStudent($q)
     {
         return $q->where("role", "student")->whereIn("status", ["pending", "inProgress", "active", "blocked"]);
+    }    public function scopeFather($q)
+    {
+        return $q->where("role", "father")->whereIn("status", ["pending", "inProgress", "active", "blocked"]);
     }
 
     public function getFirstNameAttribute($value)
@@ -96,6 +99,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(StudentDetail::class, "user_id", "id");
     }
+
 
 
     ////////////////////////// Filter & Suggest

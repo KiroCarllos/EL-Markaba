@@ -34,6 +34,7 @@ return[
     'new_job_added'=>'A new job has been posted, please apply if it suits you',
     'student_has_suggest_for_job'=>'Student Has Suggest For Job',
     'age'=>'Age',
+    'fathers'=>'Fathers',
 
     'father created successfully wait admins for approve' => 'father created successfully wait admins for approve',
     'Sorry Your Account Not Be Father' => 'Sorry Your Account Not Be Father',

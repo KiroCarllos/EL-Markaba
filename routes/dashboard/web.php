@@ -22,6 +22,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::resource('student_details', 'StudentDetailController');
             Route::get('/export', 'StudentDetailController@export')->name('student_details.export');
 
+            //fathers
+            Route::resource('fathers', 'FatherController');
+            Route::get('/fathersExports', 'FatherController@export')->name('fathers.export');
+
+
             Route::resource('jobs', 'JobController');
             Route::get('job/exports', 'JobController@exportJobs')->name("jobs.exports");
 
@@ -38,7 +43,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('trainings/applications/{id}/edit', 'TrainingController@editApplication')->name("trainings.applications.edit");
             Route::put('trainings/applications/{id}/update', 'TrainingController@updateApplication')->name("trainings.applications.update");
             Route::delete('trainings/applications/{id}/destroy', 'TrainingController@deleteApplication')->name("trainings.applications.destroy");
-
 
             Route::get('jobs/applications/{id}', 'JobController@applications')->name("jobs.applications");
             Route::get('jobs/applications/{id}/edit', 'JobController@editApplication')->name("jobs.applications.edit");

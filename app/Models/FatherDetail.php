@@ -17,6 +17,8 @@ class FatherDetail extends Model
     public $timestamps = false;
     public function user(){
         return $this->belongsTo(User::class,"user_id","id");
+    }    public function area(){
+        return $this->belongsTo(Area::class,"area_id","id");
     }
     public function getAreaNameAttribute()
     {
