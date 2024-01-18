@@ -284,6 +284,8 @@ return [
     "Invalid or expired token" => 'ناسف رمز التسجيل منتهي او غير صحيح',
     "Sorry Wrong Password" => 'ناسف كلمه المرور غير صحيحه',
     "fathers" => 'الاباء الكهنه',
+    "areas" => 'المناطق',
+    "national_image" => 'صورة البطاقة الشخصيه',
 
 
 ];

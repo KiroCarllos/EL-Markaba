@@ -68,7 +68,7 @@
 
                         @if(!is_null($father->father_details->area_id))
                             <div class="form-group">
-                                <label>@lang('site.areas')</label>
+                                <label>@lang('site.area')</label>
                                 <select name="area_id" class="form-control">
                                     <option></option>
                                     @isset($areas)
