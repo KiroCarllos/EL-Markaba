@@ -153,7 +153,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('site.area')</label>
-                            <select required name="area_id" class="form-control">
+                            <select required name="area_id" class="form-control select2">
                                 <option></option>
                                 @foreach($areas as $area)
                                 <option  value="{{ $area->id }}" {{ $userStudentDetail->student_details->area_id == $area->id ? "selected" :"" }}>

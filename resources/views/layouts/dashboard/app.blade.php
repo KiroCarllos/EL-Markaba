@@ -293,6 +293,7 @@
         $(".js-enable-tags").select2({
             tags: true
         });
+        $(".select2").select2();
 
 
         $('.sidebar-menu').tree();
