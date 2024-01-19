@@ -6,7 +6,7 @@
 
         <section class="content-header">
 
-            <h1>@lang('site.jobs')</h1>
+            <h1>@lang('site.areas')</h1>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
