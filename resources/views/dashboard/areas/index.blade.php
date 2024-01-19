@@ -43,7 +43,7 @@
                 <div class="box-body">
                     @isset($areas)
                         @if ($areas->count() > 0)
-                            <table class="table table-hover">
+                            <table class="table table-hover dataTable">
                                 <thead>
                                 <tr>
                                     <th>#</th>
