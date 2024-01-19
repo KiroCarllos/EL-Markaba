@@ -18,6 +18,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::post('companies/updateStatus', 'CompanyController@updateStatus')->name("companies.updateStatus");
             Route::get('company/export', 'CompanyController@export')->name("companies.export");
 
+            // areas
+            Route::resource('areas', 'AreaController');
+
             //students
             Route::resource('student_details', 'StudentDetailController');
             Route::get('/export', 'StudentDetailController@export')->name('student_details.export');
