@@ -56,26 +56,36 @@
                                    value="{{ old('national_id') }}">
                         </div>
                         <div class="form-group">
+                            <label>@lang('site.education_level')</label>
+                            <select id="education_level" name="education" class="form-control ">
+                                <option ></option>
+                                <option {{ old("education_level" == "high") ? "selected" :"" }} value="high">عالي</option>
+                                <option  {{ old("education_level" == "else") ? "selected" :"" }}value="else">اخري</option>
+                            </select>
+                        </div>
+                        <div id="university" class="form-group">
                             <label>@lang('site.university')</label>
                             <select id="university_select" class="form-control">
                                 <option></option>
+                                @foreach($universities as $university)
+                                    <option value="{{ $university->id }}" > {{ $university->name_ar }}</option>
+                                @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div id="faculty" class="form-group">
                             <label>@lang('site.faculty')</label>
-                            <select id="faculty_select" class="form-control">
+                            <select id="faculty_select" name="faculty_id" class="form-control">
                                 <option></option>
                             </select>
                         </div>
-                        <div class="form-group">
+
+                        <div id="else_education" class="form-group">
+                            <label>@lang('site.else_education')</label>
+                            <input id="else_education_input" type="text" name="else_education" class="form-control" value="{{ old('else_education') }}">
+                        </div>
+                        <div  class="form-group">
                             <label>@lang('site.major')</label>
-                            <select id="major_select" name="major_id" class="form-control ">
-                                <option></option>
-                            </select>
-                        </div>
-                        <div id="else_major" class="form-group">
-                            <label>@lang('site.else_major')</label>
-                            <input id="else_major_input" type="text" name="else_major" class="form-control" value="{{ old('else_major') }}">
+                            <input type="text" name="major" class="form-control" value="{{ old('major') }}">
                         </div>
                         <div class="form-group">
                             <label>@lang('site.graduated_at')</label>
@@ -149,35 +159,12 @@
 
 @push("scripts")
     <script>
-        // university
-        $(document).ready(function() {
-            // AJAX request to fetch universities
-            $.ajax({
-                url: '{{ route("getUniversities") }}', // Replace with the actual endpoint to fetch universities
-                method: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    var universities = response.data; // Assuming the response contains an array of universities
-                    // Populate select element with universities
-                    var selectElement = $('#university_select');
-                    selectElement.empty(); // Clear existing options
-                    var defaultOption = $('<option>').val('').text("{{__("site.select_student_university")}}");
-                    selectElement.append(defaultOption);
-                    $.each(universities, function(index, university) {
-                        var option = $('<option>').val(university.id).text(university.name_{{app()->getLocale()}});
-                        selectElement.append(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
+
+
         //faculty
         $(document).ready(function() {
             var universitySelect = $('#university_select');
             var facultySelect = $('#faculty_select');
-
             universitySelect.on('change', function() {
                 var universityId = $(this).val();
                 facultySelect.empty();
@@ -186,14 +173,13 @@
                 $.ajax({
                     url: '{{ route("getFacultyByUniversity") }}', // Replace with the actual endpoint to fetch faculties
                     method: 'POST',
-                    data: { university_id : universityId },
+                    data: { university_id : universityId ,"lang":"ar" },
                     dataType: 'json',
                     success: function(response) {
                         var faculties = response.data; // Assuming the response contains an array of faculties
-
                         // Populate faculty select element with faculties
                         $.each(faculties, function(index, faculty) {
-                            var option = $('<option>').val(faculty.id).text(faculty.name_{{app()->getLocale()}});
+                            var option = $('<option>').val(faculty.id).text(faculty.name);
                             facultySelect.append(option);
                         });
                     },
@@ -233,16 +219,21 @@
         {{--    });--}}
         {{--});--}}
         $(document).ready(function(){
-             $("#else_major").hide();
-             $("#else_major_input").val("");
-            var majorSelect = $('#major_select');
+             $("#else_education").hide();
+             $("#else_education_input").val("");
+            $("#university").hide();
+            $("#faculty").hide();
+            var majorSelect = $('#education_level');
             majorSelect.on('change', function() {
                 var majorId = $(this).val();
-                if(majorId == "not_from_above"){
-                    $("#else_major").show();
+                if(majorId == "else"){
+                    $("#else_education").show();
+                    $("#university").hide();
+                    $("#faculty").hide();
                 }else{
-                    $("#else_major").hide();
-                    $("#else_major_input").val("");
+                    $("#else_education").hide();
+                    $("#university").show();
+                    $("#faculty").show();
                 }
             });
         });

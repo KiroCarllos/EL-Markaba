@@ -33,7 +33,7 @@ class AreaController extends Controller
     public
     function create()
     {
-        return view('dashboard.jobs.create');
+        return view('dashboard.areas.create');
 
     }//end of create
 

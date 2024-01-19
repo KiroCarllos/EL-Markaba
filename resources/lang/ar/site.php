@@ -288,6 +288,8 @@ return [
     "national_image" => 'صورة البطاقة الشخصيه',
     "name_ar" => 'الاسم بالعربي',
     "name_en" => 'الاسم بالانجليزيه',
+    "else_education" => 'التعليم',
+    "education_level" => 'مستوي التعليم',
 
 
 ];

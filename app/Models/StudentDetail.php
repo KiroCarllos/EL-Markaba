@@ -53,18 +53,23 @@ class StudentDetail extends Model
 
     public function getPriorExperiencesAttribute($priorExperiencesValue)
     {
+        if (!is_null($priorExperiencesValue)){
         $filteredArray = array_filter(json_decode($priorExperiencesValue), function ($value) {
             return $value !== null;
         });
         return $filteredArray;
+        }
     }
 
     public function getCoursesAttribute($coursesvalue)
     {
-        $filteredArray = array_filter(json_decode($coursesvalue), function ($value) {
-            return $value !== null;
-        });
-        return $filteredArray;
+        if (!is_null($coursesvalue)){
+            $filteredArray = array_filter(json_decode($coursesvalue), function ($value) {
+                return $value !== null;
+            });
+            return $filteredArray;
+        }
+
     }
 
     public function user()

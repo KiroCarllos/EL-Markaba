@@ -32,8 +32,10 @@ class StudentDetailController extends Controller
 
     public
     function create()
-    {$areas = Area::all();
-        return view('dashboard.user_student_details.create',compact("areas"));
+    {
+        $areas = Area::all();
+        $universities = $this->getAllUniversities();
+        return view('dashboard.user_student_details.create',compact("areas","universities"));
 
     }//end of create
 
@@ -49,15 +51,17 @@ class StudentDetailController extends Controller
             'graduated_at' => ['required', 'date_format:Y'],
             'image' => 'required|mimes:jpeg,png,jpg|max:4096',
             'gender' => 'required|in:male,female',
-            "prior_experiences" => ["required", "array"],
-            "courses" => ["required", "array"],
+            "prior_experiences" => ["nullable", "array"],
+            "courses" => ["nullable", "array"],
             "address" => ["required", "string"],
-            'major_id' => ["required", Rule::exists('majors',"id")->whereIn('id', Major::pluck('id')->toArray())->whereNotIn('id', ['not_from_above'])],
-            'else_major' => 'required_if:major_id,not_from_above',
+            'education' => 'in:high,else',
             'else_education' => 'nullable',
+            'faculty_id' => 'nullable',
             'area_id' => 'nullable',
 
         ]);
+
+
         $userData = $request->only(["name", "mobile", "email"]);
         $userData["password"] = Hash::make($request->password);
         try {
@@ -76,15 +80,8 @@ class StudentDetailController extends Controller
                 $user->update(["image" => uploadImage($request->image, "uploads/student/" . $user->id . "/profile")]);
             }
             $user->attachRole('student');
-            $studentData = $request->only(["gender", "national_id", "area_id", "graduated_at", "prior_experiences", "else_education","courses", "address"]);
-            if($request->has("major_id")){
-                $major_id = (int) $request->major_id;
-                if (is_int($major_id)){
-                    $studentData["major_id"] = (int) $request->major_id;
-                }else{
-                    $studentData["major_id"] = (int) $request->else_major;
-                }
-            }
+            $studentData = $request->only(["gender", "national_id","education", "area_id","faculty_id", "graduated_at", "major","prior_experiences", "else_education","courses", "address"]);
+
             $studentData = StudentDetail::query()->updateOrCreate([
                 "user_id" => $user->id
             ], $studentData);

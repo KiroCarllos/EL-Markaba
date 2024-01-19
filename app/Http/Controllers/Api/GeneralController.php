@@ -31,6 +31,9 @@ class GeneralController extends Controller
        $request->validate([
            "university_id" => ["required","numeric",Rule::exists("universities","id")]
        ]);
+       if ($request->has("lang") && $request->lang == "ar"){
+           app()->setLocale("ar") ;
+       }
        $faculties = Faculty::query()->select("id","name_en","name_ar")->where("university_id",$request->university_id)->get();
         foreach ($faculties as $faculty){
             $name = app()->getLocale() == "ar" ?$faculty->name_ar:$faculty->name_en;

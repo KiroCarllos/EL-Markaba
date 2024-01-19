@@ -40,7 +40,8 @@ return[
     'Sorry Your Account Not Be Father' => 'Sorry Your Account Not Be Father',
     'father successfully login' => 'father successfully login',
 
-
+    "else_education" => 'Education',
+    "education_level" => 'Education Level',
     "name_ar" => 'Name ar',
     "name_en" => 'Name en',
     "areas" => 'areas',
