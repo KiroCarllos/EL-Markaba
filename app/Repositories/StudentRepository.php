@@ -10,19 +10,23 @@ class StudentRepository
     public function search($filterValue)
     {
         $results = User::student()
+
             ->where(function ($query) use ($filterValue) {
-                $query->whereHas('student_details', function ($subquery) use ($filterValue) {
+                $query->SearchSuggestion($filterValue)
+                    ->orWhereHas('student_details', function ($subquery) use ($filterValue) {
                     $subquery->where("area_id", auth()->user()->father_details->area_id)
                         ->searchSuggestion($filterValue);
                 });
             })
             ->orWhere(function ($query) use ($filterValue){
                 $query->where("created_by", auth("api")->id())
+                    ->SearchSuggestion($filterValue)
                     ->whereHas('student_details', function ($subquery) use ($filterValue) {
                         $subquery->searchSuggestion($filterValue);
                     });
             })
-            ->searchSuggestion($filterValue) // Apply the scope to the main query
+
+
             ->paginate(5);
 
         return $results;
