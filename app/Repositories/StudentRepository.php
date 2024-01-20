@@ -19,8 +19,7 @@ class StudentRepository
                 });
             })
             ->orWhere(function ($query) use ($filterValue){
-                $query->where("created_by", auth("api")->id())
-                    ->SearchSuggestion($filterValue)
+                $query->SearchSuggestion($filterValue)->where("created_by", auth("api")->id())
                     ->whereHas('student_details', function ($subquery) use ($filterValue) {
                         $subquery->searchSuggestion($filterValue);
                     });
