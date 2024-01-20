@@ -16,10 +16,10 @@ class StudentRepository
                         ->searchSuggestion($filterValue);
                 });
             })
-            ->orWhere(function ($query) {
+            ->orWhere(function ($query) use ($filterValue){
                 $query->where("created_by", auth("api")->id())
-                    ->whereHas('father_details', function ($subquery) {
-                        $subquery->where("area_id", auth()->user()->father_details->area_id);
+                    ->whereHas('student_details', function ($subquery) use ($filterValue) {
+                        $subquery->searchSuggestion($filterValue);
                     });
             })
             ->with("student_details")
