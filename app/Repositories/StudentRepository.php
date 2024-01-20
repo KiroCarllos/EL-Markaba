@@ -10,7 +10,6 @@ class StudentRepository
     public function search($filterValue)
     {
         $results = User::student()
-
             ->where(function ($query) use ($filterValue) {
                 $query->whereHas('student_details', function ($subquery) use ($filterValue) {
                     $subquery->where("area_id", auth()->user()->father_details->area_id)
@@ -23,8 +22,7 @@ class StudentRepository
                         $subquery->searchSuggestion($filterValue);
                     });
             })
-            ->SearchSuggestion($filterValue)
-            ->with("student_details")
+            ->searchSuggestion($filterValue) // Apply the scope to the main query
             ->paginate(5);
 
         return $results;
