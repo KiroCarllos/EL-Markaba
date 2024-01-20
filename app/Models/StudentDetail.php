@@ -97,7 +97,7 @@ class StudentDetail extends Model
     public function scopeSearchSuggestion($query, $search)
     {
         return $query->where(function ($query) use ($search) {
-            $query->where('major', 'like', "%" . $search . "%")
+            $query->orWhere('major', 'like', "%" . $search . "%")
                 ->orWhere('gender', 'like', "%" . $search . "%")
                 ->orWhere('graduated_at', 'like', "%" . $search . "%")
                 ->orWhere('national_id', 'like', "%" . $search . "%")
