@@ -18,8 +18,8 @@ class StudentRepository
                 });
             })
             ->orWhere(function ($query) use ($filterValue) {
-                $query->searchSuggestion($filterValue) // Applying scope to the main query
-                ->where("created_by", auth("api")->id());
+//                $query->searchSuggestion($filterValue) // Applying scope to the main query
+                $query->where("created_by", auth("api")->id());
 //                    ->whereHas('student_details', function ($subquery) use ($filterValue) {
 //                        $subquery->searchSuggestion($filterValue);
 //                    });
