@@ -131,9 +131,30 @@ class User extends Authenticatable implements JWTSubject
     public function scopeSearchSuggestion($query, $search)
     {
         return $query->where(function ($query) use ($search) {
-            $query->orWhere('name', 'like', "%$search%")
-                ->orWhere('mobile', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%");
+            $query->orWhere('name', 'like', "%" . $search . "%")
+                ->orWhere('mobile', 'like', "%" . $search . "%")
+                ->orWhere('email', 'like', "%" . $search . "%")
+                ->orWhereHas('student_details', function ($subquery) use ($search) {
+                    $subquery->where('major', 'like', "%" . $search . "%")
+                        ->orWhere('gender', 'like', "%" . $search . "%")
+                        ->orWhere('graduated_at', 'like', "%" . $search . "%")
+                        ->orWhere('national_id', 'like', "%" . $search . "%")
+                        ->orWhere(function ($query) use ($search) {
+                            $query->whereJsonContains('prior_experiences', $search)
+                                ->orWhere('prior_experiences->key', 'like', "%$search%");
+                        })->orWhere(function ($query) use ($search) {
+                            $query->whereJsonContains('courses', $search)
+                                ->orWhere('courses->key', 'like', "%$search%");
+                        })
+                        ->orWhereHas('faculty', function ($subquery) use ($search) {
+                            $subquery->where('name_en', 'like', "%" . $search . "%")
+                                ->orWhere('name_ar', 'like', "%" . $search . "%")
+                                ->orWhereHas('university', function ($subquery) use ($search) {
+                                    $subquery->where('name_en', 'like', "%" . $search . "%")
+                                        ->orWhere('name_ar', 'like', "%" . $search . "%");
+                                });
+                        });
+                });
         });
     }
 
