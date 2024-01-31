@@ -26,8 +26,9 @@ class Kernel extends ConsoleKernel
     {
 //        $schedule->command("queue:work --stop-when-empty")->everyFiveMinutes()->withoutOverlapping();
 //        $schedule->command("queue:restart")->everyTenMinutes();
-        $schedule->call('\App\Http\Controllers\Api\ServiceController@checkExpiredJobs');
         if (!$this->osProcessIsRunning('queue:work')) {
+            $schedule->call('\App\Http\Controllers\Api\ServiceController@checkExpiredJobs');
+
             $schedule->command('queue:work')->everyMinute();
         }
         // $schedule->command('inspire')
