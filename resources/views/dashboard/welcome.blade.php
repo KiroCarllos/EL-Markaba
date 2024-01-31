@@ -102,6 +102,19 @@
                         <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-yellow-active">
+                        <div class="inner">
+                            <h3>{{ \App\Models\Job::where("status","enough")->count() }}</h3>
+
+                            <p>الوظايف المنتهيه</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-suitcase"></i>
+                        </div>
+                        <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
                 {{--Jobs not active--}}
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-yellow-gradient">
@@ -179,6 +192,19 @@
                         <div class="inner">
                             <h3>{{ \App\Models\Training::where("status","pending")->count() }}</h3>
                             <p>التدريبات الغير مفعلين</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-trademark"></i>
+                        </div>
+                        <a href="{{ route("dashboard.trainings.index") }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                {{--Trainings not active--}}
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-gray">
+                        <div class="inner">
+                            <h3>{{ \App\Models\Training::where("status","disActive")->count() }}</h3>
+                            <p>التدريبات المنتهيه</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-trademark"></i>
