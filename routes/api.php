@@ -35,6 +35,10 @@ Route::group(['namespace' => 'Api',"middleware"=>["changeLanguage"]], function (
     Route::post('sendMailForReset', 'GeneralController@sendMailForReset');
     Route::post('confirmTokenForReset', 'GeneralController@confirmTokenForReset');
 
+
+    // services
+    Route::post('checkExpiredJobs', 'ServiceController@checkExpiredJobs');
+
 });
 
 
