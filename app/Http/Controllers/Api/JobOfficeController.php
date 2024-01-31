@@ -69,7 +69,7 @@ class JobOfficeController extends Controller
                 "name" => $userData["name"],
                 "email" => $userData["email"],
                 "password" => $userData["password"],
-                "role" => "company",
+                "role" => "job_office",
                 "device_token" => $userData["device_token"],
             ]);
             deleteOldFiles("uploads/job_office/" . $user->id . "/logo");
