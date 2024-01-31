@@ -83,6 +83,34 @@ Route::group(['prefix' => "company",'middleware'=>['auth:api',"check_auth","chan
 // end company routes
 
 
+/// Job Office
+Route::group(['prefix' => "jobOffice",'namespace' => 'Api',"middleware" =>["changeLanguage"]], function () {
+    Route::post('login', 'JobOfficeController@login');
+    Route::post('register', 'JobOfficeController@register');
+});
+
+Route::group(['prefix' => "jobOffice",'middleware'=>['auth:api',"check_auth","changeLanguage"],'namespace' => 'Api'], function () {
+    Route::post('profile', 'JobOfficeController@profile');
+    Route::post('logout', 'JobOfficeController@logout');
+    Route::post('deleteAccount', 'JobOfficeController@deleteAccount');
+    Route::post('resetPassword', 'GeneralController@resetPassword');
+
+
+    // Jobs
+    Route::post('getMyJobs', 'JobOfficeController@getMyJobs');
+    Route::post('getJobDetails', 'JobController@getJobDetails');
+    Route::post('addJob', 'JobOfficeController@addJob');
+    Route::post('updateJob', 'JobOfficeController@updateJob');
+    Route::post('deleteJob', 'JobOfficeController@deleteJob');
+    Route::post('getJobApplications', 'JobOfficeController@getJobApplications');
+
+    Route::post('notifications', 'JobOfficeController@notifications');
+    Route::post('updateApplicationStatus', 'JobOfficeController@updateApplicationStatus');
+    Route::post('updateNotification', 'JobOfficeController@updateNotification');
+
+});
+
+
 
 
 

@@ -99,6 +99,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(StudentDetail::class, "user_id", "id");
     }
+    public function office_details()
+    {
+        return $this->hasOne(JobOfficeDetail::class, "user_id", "id");
+    }
 
 
 
