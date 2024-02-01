@@ -65,7 +65,7 @@
                         <div class="inner">
                             <h3>{{ \App\Models\User::where("role","company")->where("status","pending")->count() }}</h3>
 
-                            <p>@lang('site.companies')</p>
+                            <p>الشركات الغير المفعلين</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
@@ -125,6 +125,33 @@
                         </div>
                         <div class="icon">
                             <i class="fa fa-suitcase"></i>
+                        </div>
+                        <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-purple-active">
+                        <div class="inner">
+                            <h3>{{ \App\Models\User::where("role","job_office")->where("status","active")->count() }}</h3>
+
+                            <p>مكاتب التوظيف  المفعلة</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-desktop"></i>
+                        </div>
+                        <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                {{--Jobs not active--}}
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-maroon-active">
+                        <div class="inner">
+                            <h3>{{ \App\Models\User::where("role","job_office")->where("status","pending")->count() }}</h3>
+                            <p>مكاتب التوظيف الغير المفعلة</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-desktop"></i>
                         </div>
                         <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>

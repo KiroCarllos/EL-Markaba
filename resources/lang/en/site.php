@@ -27,7 +27,16 @@ return[
     'un_read_messages'=>'Un Read Messages',
     'actions'=>'Actions',
 
+    'father_name' => 'Father Name',
+    'church_name' => 'Church Name',
+    'amen_mobile' => 'Amen Mobile',
+    'ammen_national_image' => 'Ammen National Image',
+    'father_mobile' => 'Father Mobile',
+    'amen_name' => 'Amen Name',
+    'image_office' => 'Image Office',
+
     'confirmed' => 'confirmed',
+    'job_offices' => 'Job Offices',
     'student update successfully wait admins for approve' => 'student update successfully wait admins for approve',
     'sorry your should call admins to enable update' => 'sorry your should call admins to enable update',
 

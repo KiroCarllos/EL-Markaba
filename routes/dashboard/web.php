@@ -17,6 +17,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::resource('companies', 'CompanyController');
             Route::post('companies/updateStatus', 'CompanyController@updateStatus')->name("companies.updateStatus");
             Route::get('company/export', 'CompanyController@export')->name("companies.export");
+            // job_offices
+            Route::resource('job_offices', 'JobOfficeController');
+            Route::post('job_offices/updateStatus', 'JobOfficeController@updateStatus')->name("job_offices.updateStatus");
+            Route::get('job_offices/export', 'JobOfficeController@export')->name("job_offices.export");
 
             // areas
             Route::resource('areas', 'AreaController');

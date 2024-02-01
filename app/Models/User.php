@@ -55,6 +55,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $q->where("role", "company")->whereIn("status", ["pending", "inProgress", "active", "blocked"]);
     }
+    public function scopeJobOffice($q)
+    {
+        return $q->where("role", "job_office")->whereIn("status", ["pending", "inProgress", "active", "blocked"]);
+    }
 
     public function scopeActive($q)
     {

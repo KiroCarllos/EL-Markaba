@@ -290,11 +290,18 @@ return [
     "Sorry Wrong Password" => 'ناسف كلمه المرور غير صحيحه',
     "fathers" => 'الاباء الكهنه',
     "areas" => 'المناطق',
+    "job_offices" => 'مكاتب التوظيف',
     "national_image" => 'صورة البطاقة الشخصيه',
     "name_ar" => 'الاسم بالعربي',
     "name_en" => 'الاسم بالانجليزيه',
     "else_education" => 'التعليم',
     "education_level" => 'مستوي التعليم',
 
-
+    'father_name' => 'اسم الاب الكاهن',
+    'church_name' => 'اسم الكنيسه التابع لها',
+    'amen_mobile' => 'رقم امين الخدمه',
+    'ammen_national_image' => 'صورة بطاقة لامين الخدمه',
+    'father_mobile' => 'رقم الاب الكاهن',
+    'amen_name' => 'اسم امين الخدمه',
+    'image_office' => 'صورة لوجو المكتب',
 ];
