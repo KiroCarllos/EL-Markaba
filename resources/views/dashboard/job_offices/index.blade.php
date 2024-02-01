@@ -28,10 +28,10 @@
 
                         <div class="row">
 
-{{--                            <div class="col-md-4">--}}
-{{--                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"--}}
-{{--                                       value="{{ request()->search }}">--}}
-{{--                            </div>--}}
+                            {{--                            <div class="col-md-4">--}}
+                            {{--                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"--}}
+                            {{--                                       value="{{ request()->search }}">--}}
+                            {{--                            </div>--}}
 
                             <div class="col-md-4">
 
@@ -42,13 +42,13 @@
                                     <a href="#" class="btn btn-primary disabled"><i
                                             class="fa fa-plus"></i> @lang('site.add')</a>
                                 @endif
-{{--                                @if (auth()->user()->hasRole('super_admin'))--}}
-{{--                                    <a href="{{ route('dashboard.job_offices.export') }}" class="btn btn-primary"><i--}}
-{{--                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>--}}
-{{--                                @else--}}
-{{--                                    <a href="#" class="btn btn-primary disabled"><i--}}
-{{--                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>--}}
-{{--                                @endif--}}
+                                {{--                                @if (auth()->user()->hasRole('super_admin'))--}}
+                                {{--                                    <a href="{{ route('dashboard.job_offices.export') }}" class="btn btn-primary"><i--}}
+                                {{--                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>--}}
+                                {{--                                @else--}}
+                                {{--                                    <a href="#" class="btn btn-primary disabled"><i--}}
+                                {{--                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>--}}
+                                {{--                                @endif--}}
                             </div>
 
                         </div>
@@ -74,8 +74,12 @@
                                 @foreach ($job_offices as $index=>$job_office)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ $job_office->image }}" style="width: 100px;"
-                                                 class="img-thumbnail" alt=""></td>
+                                        <td>
+                                            <a href="{{ $job_office->image }}" class="img-preview">
+                                                <img src="{{ $job_office->image }}" style="width: 100px;"
+                                                     class="img-thumbnail" alt="">
+                                            </a>
+                                        </td>
                                         <td>{{ $job_office->status }}</td>
                                         <td>{{ $job_office->name }}</td>
                                         <td>{{ $job_office->email }}</td>
@@ -89,15 +93,19 @@
                                                         class="fa fa-edit"></i> @lang('site.edit')</a>
                                             @endif
                                             @if (auth()->user()->hasRole('super_admin') )
-                                                    <form
-                                                        action="{{ route('dashboard.job_offices.updateStatus') }}"
-                                                        method="post" style="display: inline-block">
-                                                        {{ csrf_field() }}
-                                                       <input type="hidden" name="user_id" value="{{ $job_office->id }}">
-                                                       <input type="hidden" name="status" value="{{ $job_office->status == "active" ? "pending" : "active" }}">
-                                                        <button type="submit" class="btn btn-primary approveIndexCompanies btn-sm" data-status="{{ $job_office->status }}"><i
-                                                                class="fa fa-check"></i> {{ $job_office->status == "active" ? __("site.pending") : __("site.approve") }}</button>
-                                                    </form><!-- end of form -->
+                                                <form
+                                                    action="{{ route('dashboard.job_offices.updateStatus') }}"
+                                                    method="post" style="display: inline-block">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="user_id" value="{{ $job_office->id }}">
+                                                    <input type="hidden" name="status"
+                                                           value="{{ $job_office->status == "active" ? "pending" : "active" }}">
+                                                    <button type="submit"
+                                                            class="btn btn-primary approveIndexCompanies btn-sm"
+                                                            data-status="{{ $job_office->status }}"><i
+                                                            class="fa fa-check"></i> {{ $job_office->status == "active" ? __("site.pending") : __("site.approve") }}
+                                                    </button>
+                                                </form><!-- end of form -->
                                             @else
                                                 <a href="#" class="btn btn-primary btn-sm disabled"><i
                                                         class="fa fa-check"></i> @lang('site.approve')</a>
@@ -124,7 +132,7 @@
 
                             </table><!-- end of table -->
 
-{{--                            {{ $job_offices->appends(request()->query())->links() }}--}}
+                            {{--                            {{ $job_offices->appends(request()->query())->links() }}--}}
 
                         @else
 

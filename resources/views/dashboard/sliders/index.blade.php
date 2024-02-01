@@ -67,8 +67,12 @@
                                 @foreach ($sliders as $index=>$slider)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ $slider->image }}" style="width: 100px;"
-                                                 class="img-thumbnail" alt=""></td>
+                                        <td>
+                                            <a href="{{ $slider->image }}" class="img-preview">
+                                            <img src="{{ $slider->image }}" style="width: 100px;"
+                                                 class="img-thumbnail" alt="">
+                                            </a>
+                                        </td>
                                         <td>{{ $slider->status }}</td>
                                         <td>
                                             @foreach($slider->role as $user)

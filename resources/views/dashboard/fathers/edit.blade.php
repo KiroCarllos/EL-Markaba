@@ -86,8 +86,10 @@
                             <input type="file" name="image" class="form-control image">
                         </div>
                         <div class="form-group">
+                            <a href="{{ $father->image }}" class="img-preview">
                             <img src="{{ $father->image }}" style="width: 100px"
                                  class="img-thumbnail image-preview" alt="">
+                            </a>
                         </div>
 
                         <div class="form-group">
@@ -95,8 +97,10 @@
                             <input type="file" name="national_image" class="form-control image_company">
                         </div>
                         <div class="form-group">
+                            <a href="{{ $father->father_details->national_image }}" class="img-preview">
                             <img src="{{ $father->father_details->national_image }}" style="width: 100px"
                                  class="img-thumbnail image_company-preview" alt="">
+                            </a>
                         </div>
 
                         <div class="form-group">

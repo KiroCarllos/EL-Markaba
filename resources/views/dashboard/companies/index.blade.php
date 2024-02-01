@@ -28,10 +28,10 @@
 
                         <div class="row">
 
-{{--                            <div class="col-md-4">--}}
-{{--                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"--}}
-{{--                                       value="{{ request()->search }}">--}}
-{{--                            </div>--}}
+                            {{--                            <div class="col-md-4">--}}
+                            {{--                                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"--}}
+                            {{--                                       value="{{ request()->search }}">--}}
+                            {{--                            </div>--}}
 
                             <div class="col-md-4">
 
@@ -74,8 +74,12 @@
                                 @foreach ($companies as $index=>$company)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ $company->image }}" style="width: 100px;"
-                                                 class="img-thumbnail" alt=""></td>
+                                        <td>
+                                            <a href="{{ $company->image }}" class="img-preview">
+                                                <img src="{{ $company->image }}" style="width: 100px;"
+                                                     class="img-thumbnail" alt="">
+                                            </a>
+                                        </td>
                                         <td>{{ $company->status }}</td>
                                         <td>{{ $company->name }}</td>
                                         <td>{{ $company->email }}</td>
@@ -89,15 +93,19 @@
                                                         class="fa fa-edit"></i> @lang('site.edit')</a>
                                             @endif
                                             @if (auth()->user()->hasRole('super_admin') )
-                                                    <form
-                                                        action="{{ route('dashboard.companies.updateStatus') }}"
-                                                        method="post" style="display: inline-block">
-                                                        {{ csrf_field() }}
-                                                       <input type="hidden" name="user_id" value="{{ $company->id }}">
-                                                       <input type="hidden" name="status" value="{{ $company->status == "active" ? "pending" : "active" }}">
-                                                        <button type="submit" class="btn btn-primary approveIndexCompanies btn-sm" data-status="{{ $company->status }}"><i
-                                                                class="fa fa-check"></i> {{ $company->status == "active" ? __("site.pending") : __("site.approve") }}</button>
-                                                    </form><!-- end of form -->
+                                                <form
+                                                    action="{{ route('dashboard.companies.updateStatus') }}"
+                                                    method="post" style="display: inline-block">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="user_id" value="{{ $company->id }}">
+                                                    <input type="hidden" name="status"
+                                                           value="{{ $company->status == "active" ? "pending" : "active" }}">
+                                                    <button type="submit"
+                                                            class="btn btn-primary approveIndexCompanies btn-sm"
+                                                            data-status="{{ $company->status }}"><i
+                                                            class="fa fa-check"></i> {{ $company->status == "active" ? __("site.pending") : __("site.approve") }}
+                                                    </button>
+                                                </form><!-- end of form -->
                                             @else
                                                 <a href="#" class="btn btn-primary btn-sm disabled"><i
                                                         class="fa fa-check"></i> @lang('site.approve')</a>
@@ -124,7 +132,7 @@
 
                             </table><!-- end of table -->
 
-{{--                            {{ $companies->appends(request()->query())->links() }}--}}
+                            {{--                            {{ $companies->appends(request()->query())->links() }}--}}
 
                         @else
 

@@ -36,7 +36,12 @@
                         @isset($users)
                             @foreach($users as $key => $user)
                                 <tr>
-                                    <td><img src="{{ $user->image }}" style="width: 100px;" class="img-thumbnail" alt=""></td>
+                                    <td>
+                                        <a href="{{ $user->image }}" class="img-preview">
+
+                                        <img src="{{ $user->image }}" style="width: 100px;" class="img-thumbnail" alt="">
+                                        </a>
+                                    </td>
                                     @php
                                         $countUnReadMessages = App\Models\ChatMessage::where("from_user_id", $user->id )->where("status", "notReaded")
                                                 ->count();

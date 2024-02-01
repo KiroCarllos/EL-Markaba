@@ -186,8 +186,10 @@
                             <input type="file" name="image" class="form-control image">
                         </div>
                         <div class="form-group">
+                            <a href="{{ $userStudentDetail->image }}" class="img-preview">
                             <img src="{{ $userStudentDetail->image }}" style="width: 100px"
                                  class="img-thumbnail image-preview" alt="">
+                            </a>
                         </div>
 
                         <div class="form-group">

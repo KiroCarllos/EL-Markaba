@@ -67,8 +67,12 @@
                                 @foreach ($posts as $index=>$post)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ $post->image }}" style="width: 100px;"
-                                                 class="img-thumbnail" alt=""></td>
+                                        <td>
+                                            <a href="{{ $post->image }}" class="img-preview">
+                                                <img src="{{ $post->image }}" style="width: 100px;"
+                                                     class="img-thumbnail" alt="">
+                                            </a>
+                                         </td>
                                         <td>{{ $post->status }}</td>
                                         <td>{{ app()->getLocale() == "ar" ? $post->title_ar : $post->title_en }}</td>
                                         <td>

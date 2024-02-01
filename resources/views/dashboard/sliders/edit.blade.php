@@ -49,7 +49,9 @@
                             <input type="file" name="image" class="form-control image">
                         </div>
                         <div class="form-group">
+                            <a href="{{ $slider->image ??'default.png' }}" class="img-preview">
                             <img src="{{ $slider->image ??'default.png' }}"  style="width: 400px" class="img-thumbnail image-preview" alt="">
+                            </a>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')</button>

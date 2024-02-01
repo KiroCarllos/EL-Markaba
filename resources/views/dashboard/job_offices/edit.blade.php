@@ -86,14 +86,18 @@
                             <input type="file" name="logo" class="form-control image">
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset($jobOffice->image ??'default.png') }}"  style="width: 400px" class="img-thumbnail image-preview" alt="">
+                            <a href="{{ asset($jobOffice->image ??'default.png') }}" class="img-preview">
+                                <img src="{{ asset($jobOffice->image ??'default.png') }}"  style="width: 400px" class="img-thumbnail image-preview" alt="">
+                            </a>
                         </div>
                         <div class="form-group">
                             <label>@lang('site.ammen_national_image')</label>
                             <input type="file" name="amen_national_image" class="form-control image_commercial_record">
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset($jobOffice->office_details->amen_national_image ??'default.png') }}"  style="width: 400px" class="img-thumbnail image_commercial_record-preview" alt="">
+                            <a href="{{ asset($jobOffice->office_details->amen_national_image ??'default.png') }}" class="img-preview">
+                                <img src="{{ asset($jobOffice->office_details->amen_national_image ??'default.png') }}"  style="width: 400px" class="img-thumbnail image_commercial_record-preview" alt="">
+                            </a>
                         </div>
 
                         <div class="form-group">

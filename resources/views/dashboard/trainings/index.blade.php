@@ -64,8 +64,12 @@
                                 @foreach ($trainings as $index=>$training)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><img src="{{ $training->image }}" style="width: 100px;"
-                                                 class="img-thumbnail" alt=""></td>
+                                        <td>
+                                            <a href="{{ $training->image }}" class="img-preview">
+                                            <img src="{{ $training->image }}" style="width: 100px;"
+                                                 class="img-thumbnail" alt="">
+                                            </a>
+                                        </td>
                                         <td>{{ $training->status }}</td>
                                         <td>{{ app()->getLocale() == "ar" ? $training->title_ar : $training->title_en }}</td>
                                         <td>{{  $training->applications->count() }}</td>
