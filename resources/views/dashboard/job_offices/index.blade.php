@@ -42,13 +42,13 @@
                                     <a href="#" class="btn btn-primary disabled"><i
                                             class="fa fa-plus"></i> @lang('site.add')</a>
                                 @endif
-                                @if (auth()->user()->hasRole('super_admin'))
-                                    <a href="{{ route('dashboard.job_offices.export') }}" class="btn btn-primary"><i
-                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>
-                                @else
-                                    <a href="#" class="btn btn-primary disabled"><i
-                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>
-                                @endif
+{{--                                @if (auth()->user()->hasRole('super_admin'))--}}
+{{--                                    <a href="{{ route('dashboard.job_offices.export') }}" class="btn btn-primary"><i--}}
+{{--                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>--}}
+{{--                                @else--}}
+{{--                                    <a href="#" class="btn btn-primary disabled"><i--}}
+{{--                                            class="fa fa-file-excel-o"></i> @lang('site.export')</a>--}}
+{{--                                @endif--}}
                             </div>
 
                         </div>
