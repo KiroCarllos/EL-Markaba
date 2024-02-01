@@ -119,7 +119,7 @@ class JobOfficeController extends Controller
         ]);
         $user = auth("api")->user();
         if (Hash::check($request->password, $user->password)) {
-            $user->update(["email" => rand(1000, 9999) . "#" . $user->email, "mobile" => rand(1000, 9999) . "#" . $user->mobile]);
+            $user->update(["status"=>"deleted","email" => rand(1000, 9999) . "#" . $user->email, "mobile" => rand(1000, 9999) . "#" . $user->mobile]);
             $user->delete();
             return api_response(1, __("site.account deleted successfully"));
         }
