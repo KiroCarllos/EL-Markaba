@@ -140,7 +140,7 @@
                         <div class="icon">
                             <i class="fa fa-desktop"></i>
                         </div>
-                        <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('dashboard.job_offices.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 {{--Jobs not active--}}
@@ -153,7 +153,7 @@
                         <div class="icon">
                             <i class="fa fa-desktop"></i>
                         </div>
-                        <a href="{{ route('dashboard.jobs.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('dashboard.job_offices.index') }}" class="small-box-footer">@lang('site.read') <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
