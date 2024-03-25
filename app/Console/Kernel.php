@@ -28,8 +28,9 @@ class Kernel extends ConsoleKernel
 //        $schedule->command("queue:restart")->everyTenMinutes();
 
         if (!$this->osProcessIsRunning('queue:work')) {
-            $schedule->call('\App\Http\Controllers\Api\ServiceController@checkExpiredJobs')->withoutOverlapping();
+//            $schedule->call('\App\Http\Controllers\Api\ServiceController@checkExpiredJobs')->withoutOverlapping();
             $schedule->command('queue:work')->everyMinute();
+            $schedule->command('queue:restart')->everyFiveMinutes();
         }
         // $schedule->command('inspire')
         //          ->hourly();
