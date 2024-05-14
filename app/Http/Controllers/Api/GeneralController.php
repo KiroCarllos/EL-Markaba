@@ -89,7 +89,7 @@ class GeneralController extends Controller
             $data["token"] = $token;
             $data["email"] = $userEmail;
             Mail::send("mail.reset_password", ['data' => $data], function ($message) use ($userEmail) {
-                $message->from("elmarkaba.careerguidance@gmail.com", 'El Markaba');
+//                $message->from("elmarkaba.careerguidance@gmail.com", 'El Markaba');
                 $message->to($userEmail);
                 $message->subject('El Markaba Reset Password');
             });
