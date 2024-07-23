@@ -98,6 +98,7 @@ class GeneralController extends Controller
             }
             return api_response(1, __("site.Sent successfully Please, Check Your Inbox or Spam"));
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             return api_response(0, "نأسف تغير الباسورد متاح من خلال التواصل مع المركبة");
         }
     }

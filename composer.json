@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5|^8.0",
+        "php": "^7.3|^8.0",
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -16,13 +16,14 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
         "kawankoding/laravel-fcm": "^0.2.8",
-        "laravel/framework": "^7.29",
+        "laravel/framework": "^8.75",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.0",
         "maatwebsite/excel": "^3.1",
         "mcamara/laravel-localization": "^1.6",
         "santigarcor/laratrust": "^7.2",
         "tymon/jwt-auth": "^1.0"
+
     },
     "require-dev": {
         "facade/ignition": "^2.0",
